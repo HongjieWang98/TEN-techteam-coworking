@@ -1,18 +1,24 @@
 // ApplicationForm.js
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, set, onValue } from 'firebase/database';
-import firebase from '../firebase/firebase_config';
+import {firebase, db} from '../firebase/firebase_config';
+import { getFirestore, collection, getDocs, addDoc} from 'firebase/firestore/lite';
 
-function writeUserData(id, isbn, titleName, ed, department, courseNo, price) {
-  const db = getDatabase();
-  set(ref(db, 'Book-lists/' + id), {
-    ISBN: isbn,
-    Title: titleName,
-    Edition: ed,
-    Department: department,
-    CourseNumber: courseNo,
-    Price: price
-  });
+
+
+async function writeUserData(id, isbn, titleName, ed, department, courseNo, price) {
+  console.log("writeUserData");
+  console.log(typeof(firestore));
+  try {
+    const docRef = await addDoc(collection(db, "users"), {
+      first: "Ada",
+      last: "Lovelace",
+      born: 1815
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
 }
 
 const ApplicationForm = () => {
