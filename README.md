@@ -9,6 +9,8 @@ firebase login
 npm run deploy-prod
 ```
 
+[We may want to limit what we deploy with `--only` in the future](https://firebase.google.com/docs/cli#partial_deploys)
+
 ## Available Scripts
 
 In the project directory, you can run:
