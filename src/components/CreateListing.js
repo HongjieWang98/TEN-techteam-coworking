@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, set, onValue } from 'firebase/database';
 import {firebase, db} from '../firebase/firebase_config';
 import { getFirestore, collection, getDocs, addDoc} from 'firebase/firestore/lite';
-
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 
 async function writeUserData(id, isbn, titleName, ed, department, courseNo, price) {
@@ -21,7 +21,7 @@ async function writeUserData(id, isbn, titleName, ed, department, courseNo, pric
   }
 }
 
-const ApplicationForm = () => {
+const ApplicationForm = (props) => {
   const [formData, setFormData] = useState({
     ISBN: '',
     Title: '',
@@ -62,6 +62,9 @@ const ApplicationForm = () => {
   };
 
   return (
+    <>
+      <Link to='/'>Click Here to go to Login Page</Link>
+
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="ISBN">ISBN:</label>
@@ -125,6 +128,7 @@ const ApplicationForm = () => {
       </div>
       <button type="submit">Submit</button>
     </form>
+    </>
   );
 };
 
