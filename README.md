@@ -1,12 +1,27 @@
-# Getting Started with Create React App
+# For building up the local environment
 
-Create React App:
+## Create React App:
 1. In Visual Studio Code, open up a terminal
 2. cd to the directory where you want
-3. ### `npx create-react-app my-app`
-   ### `cd my-app`
-   ### `npm start`
-   
+
+```
+npx create-react-app my-app
+cd my-app
+npm start
+```
+
+
+## Install React Router:
+If encounter the error: Failed to compile ./src/components/App/App.js Module not found: Can't resolve 'react-router-dom'
+The following command will resolve it: 
+
+```
+npm install react-router-dom --save
+```
+
+
+# Temporarily ignore the rest of the notes
+---------------------------------------------------------------------------------------------------------------
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
