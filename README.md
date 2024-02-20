@@ -3,9 +3,10 @@
 Create React App:
 1. In Visual Studio Code, open up a terminal
 2. cd to the directory where you want
-3. npx create-react-app my-app
-   cd my-app
-   npm start
+3. ### `npx create-react-app my-app`
+   ### `cd my-app`
+   ### `npm start`
+   
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
