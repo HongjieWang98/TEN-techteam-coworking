@@ -11,15 +11,19 @@ npm start
 ```
 
 
-## Install React Router:
+## Module Needed to be Installed in your Local Computer
+1. Install React Router:
 If encounter the error: Failed to compile ./src/components/App/App.js Module not found: Can't resolve 'react-router-dom'
 The following command will resolve it: 
 
 ```
 npm install react-router-dom --save
 ```
-
-
+2. Install Bootstrap
+```
+npm install react-bootstrap --save
+```
+  
 # Temporarily ignore the rest of the notes
 ---------------------------------------------------------------------------------------------------------------
 
