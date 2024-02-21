@@ -23,6 +23,11 @@ npm install react-router-dom --save
 ```
 npm install react-bootstrap --save
 ```
+
+## When Merge your code:
+1. git pull //before making any modification in your local environment
+2. git status
+3. git pull name-of-your-branch
   
 # Temporarily ignore the rest of the notes
 ---------------------------------------------------------------------------------------------------------------
