@@ -1,10 +1,227 @@
+html {
+  height: 100%;
+  color: black;
+  font-size: 14px;
+  font-family: 'Avenir', 'Nunito Sans', sans-serif;
+  font-weight: 100;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  color: black;
+  font-family: 'Avenir', 'Nunito Sans', sans-serif;
+  font-weight: 100;
+}
+h1 {
+  color: #4f4f4f;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 48px;
+}
+h2 {
+  color: #4f4f4f;
+  font-family: 'Poppins', sans-serif;
+}
+h3 {
+  color: #4f4f4f;
+  font-family: 'Poppins', sans-serif;
+}
+h4 {
+  color: #4f4f4f;
+  font-family: 'Poppins', sans-serif;
+}
+div {
+  color: #828282;
+  font-family: 'Avenir', 'Nunito Sans', sans-serif;
+  font-size: 1rem;
+}
+div.dark {
+  color: #393939;
+  font-weight: 100;
+}
+
+/* Button Styling */
+
+button.btn,
+input.btn {
+  background-color: #4f8fcc !important;
+  border-color: #4f8fcc !important;
+  color: white;
+  height: 50px;
+  width: 200px;
+  font-size: 1rem;
+}
+button.btn.light,
+input.btn.light {
+  color: #4f8fcc !important;
+  background-color: white !important;
+}
+button.btn.dark,
+input.btn.dark {
+  background-color: #1a3157 !important;
+  border-color: #1a3157 !important;
+}
+
+button.btn:hover,
+input.btn:hover,
+button.btn.dark:hover,
+input.btn.dark:hover {
+  color: white;
+}
+
+button.btn.light:hover,
+input.btn.light:hover {
+  color: #4f8fcc !important;
+}
+
+/* Hide arrows on input type number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* Text Styling */
+
+.defaultTextColor {
+  color: #4f8fcc;
+}
+
+.TextCenter {
+  text-align: center;
+}
+
+/* Input Stying*/
+
+.DefaultFieldInput {
+  display: block;
+  height: 50px;
+  border: none;
+  border-radius: 4px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #f8f8f8;
+}
+
+/* Placeholder Text Color*/
+::placeholder {
+  color: #bebebe;
+}
+:-ms-input-placeholder {
+  color: #bebebe;
+}
+::-ms-input-placeholder {
+  color: #bebebe;
+}
+
+/* Venmo Box Styling*/
+.PaymentBox {
+  padding: 20px;
+  width: 165px;
+  height: 136px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+.VenmoLogo {
+  height: 96px;
+  vertical-align: baseline;
+  margin-left: 10px;
+}
+.CashLogo {
+  height: 100%;
+  vertical-align: center;
+  display: block;
+  margin: auto;
+}
+
+/* Misc. */
+
+.container {
+  position: relative;
+}
+.FullWidth {
+  width: 100% !important;
+}
+.FullHeight {
+  height: 100% !important;
+}
+.fa-size {
+  font-size: 1.2rem;
+}
+.Box {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.CenterOfPage {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.HorizontalCenterOfPage {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
+}
+.CenterOfDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Allow Elements Inside Inputs */
+
+.input-inner-addon {
+  position: relative;
+}
+
+/* style icon */
+.input-inner-addon .ElementInsideInput {
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+/* align icon */
+.input-left-addon .ElementInsideInput {
+  left: 15px;
+}
+.input-right-addon .ElementInsideInput {
+  right: 15px;
+}
+
+/* add padding  */
+.input-left-addon input {
+  padding-left: 30px;
+}
+.input-right-addon input {
+  padding-right: 30px;
+}
+
+@media only screen and (max-width: 1200px) {
+  button.btn,
+  input.btn {
+    min-width: 100px;
+    width: auto;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+  .container {
+    max-width: 1500px;
+  }
 }
 
 code {
