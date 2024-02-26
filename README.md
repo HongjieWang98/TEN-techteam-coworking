@@ -1,13 +1,25 @@
 # For building up the local environment
 
-## Create React App:
+## Link VS code to Github: https://github.com/HongjieWang98/TEN-techteam-coworking
 1. In Visual Studio Code, open up a terminal
-2. cd to the directory where you want
+2. cd to a desired path, download the code locally
 
+## Install node.js and npm
+1. https://nodejs.org/en
 ```
-npx create-react-app my-app
-cd my-app
+node -v
+npm -v  //to make sure they are installed
+```
+
+## Install react-scripts
+```
+npm install react-scripts
+```
+
+## Run in localhost
+```
 npm start
+//if run into dependency error, rm package-lock.json
 ```
 
 
