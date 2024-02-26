@@ -1,15 +1,27 @@
 # For building up the local environment
 
-## Create React App:
-1. In Visual Studio Code, open up a terminal
-2. cd to the directory where you want
 
+## Link VS code to github
+1. In Visual Studio Code, open up a terminal
+2. cd to a desired path, and download the code locally
+
+## Install node.js and npm
+1. https://nodejs.org/en
+2. 
 ```
-npx create-react-app my-app
-cd my-app
+node -v
+npm -v  //to make sure they are installed
+```
+
+## Install react-scripts
+```
+npm install react-scripts
+```
+
+## Run in localhost
+```
 npm start
 ```
-
 
 ## Module Needed to be Installed in your Local Computer
 1. Install React Router:
