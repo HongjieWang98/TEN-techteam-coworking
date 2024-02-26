@@ -1,11 +1,12 @@
 # For building up the local environment
 
 ## Link VS code to Github: https://github.com/HongjieWang98/TEN-techteam-coworking
-1. In Visual Studio Code, open up a terminal
-2. cd to a desired path, download the code locally
+1. In Visual Studio Code, open up a bash terminal
+2. "Git Clone Repository" in welcome page
 
 ## Install node.js and npm
-1. https://nodejs.org/en
+1. Go to https://nodejs.org/en, and download Nodejs 20.11.1 LTS
+
 ```
 node -v
 npm -v  //to make sure they are installed
