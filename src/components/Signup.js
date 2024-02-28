@@ -24,7 +24,7 @@ export default function Signup() {
     
     try{
       setError('')
-      // set up a load state, so when signing up the user, we diabled the "Sign Up" botton below, 
+      // set up a load state, so when signing up the user, we disabled the "Sign Up" botton below, 
       // so they don't automatically keep clicking the button and create multiple of accounts at the same time
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
