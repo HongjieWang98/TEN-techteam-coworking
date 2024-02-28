@@ -1,11 +1,10 @@
 import React, {useRef} from 'react'
-// import {Form, Button, Card} from 'react-bootstrap'
 import { Form, Button, Card} from 'react-bootstrap'
 
 export default function Signin() {
   const emailRef = useRef()
   const passwordRef = useRef()
-  const passwordConfirmRef = useRef()
+  
   
   return (
     <>
