@@ -2,6 +2,8 @@ import React, {useRef} from 'react'
 // import {Form, Button, Card} from 'react-bootstrap'
 import { Form, Button, Card} from 'react-bootstrap'
 
+import {BrowserRouter as Router, Link} from 'react-router-dom'
+
 export default function Signin() {
   const emailRef = useRef()
   const passwordRef = useRef()
@@ -29,9 +31,9 @@ export default function Signin() {
       
       
       </Card>
-      <div className="w-100 text-center mt-2">
+      <Link to="/signup" className="w-100 text-center mt-2">
         Don't have an account? Sign up
-      </div>
+      </Link>
     
     </>
     
