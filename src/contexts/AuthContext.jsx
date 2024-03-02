@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 // tutorial of useContext: https://www.youtube.com/watch?v=5LrDIWkK_Bc
 // Context in React is a way to share data between components
 // In authentication/signin page, we want to use React.context to share the loginin status of the user in different pages
+import PropTypes from 'prop-types';
 
 import { auth } from '../firebase/firebase_config';
 
@@ -11,7 +12,7 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-export function AuthProvider() {
+export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
 
   function signup(email, password) {
@@ -33,6 +34,10 @@ export function AuthProvider() {
 
   return (
     // return a value, contain all information of authentication
-    <AuthContext.Provider value={value} />
+    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired
+};
