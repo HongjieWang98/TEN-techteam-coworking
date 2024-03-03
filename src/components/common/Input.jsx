@@ -11,18 +11,19 @@ export default function Input({
 }) {
   return (
     <>
-      <label htmlFor={name}>{label}{(required && "*")}</label>
+      <label htmlFor={name}>
+        {label}
+        {required && '*'}
+      </label>
       <input
         ref={inputRef}
         name={name}
-        placeholder={placeholder ?? ""}
+        placeholder={placeholder ?? ''}
         disabled={isLoading}
         type={type}
         required={required}
       />
-      <div>
-        {errorMessage}
-      </div>
+      <div>{errorMessage}</div>
     </>
-  )
+  );
 }
