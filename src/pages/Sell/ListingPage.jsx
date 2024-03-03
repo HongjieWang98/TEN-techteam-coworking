@@ -30,9 +30,7 @@ export default function ListingPage(_props) {
 
     return (
         <>
-            Hello there
             <form onSubmit={handleSubmit} ref={formRef}>
-                Some inputs
                 {/* TODO: Need to add input validation */}
                 <Input
                     name="isbn"
