@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import Input from "../../components/common/Input";
 import { useRef, useState } from "react";
+import { useSellContext } from "../../contexts/SellContext";
 
 export default function ListingPage(_props) {
     const [isLoading, setIsLoading] = useState(false)
+    const { setListing } = useSellContext();
     const formRef = useRef(null)
     const navigate = useNavigate()
     async function handleSubmit(e) {
@@ -18,8 +20,8 @@ export default function ListingPage(_props) {
             });
 
             console.log(data)
+            setListing(data)
             // TODO upload to database
-
             navigate("/sell/confirmation/")
         }
 
