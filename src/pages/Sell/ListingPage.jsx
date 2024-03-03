@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import Input from '../../components/common/Input';
 import { useRef, useState } from 'react';
+import Input from '../../components/common/Input';
 import { useSellContext } from '../../contexts/SellContext';
 
-export default function ListingPage(_props) {
+export default function ListingPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { setListing } = useSellContext();
   const formRef = useRef(null);
@@ -19,7 +19,6 @@ export default function ListingPage(_props) {
         data[key] = value;
       });
 
-      console.log(data);
       setListing(data);
       // TODO upload to database
       navigate('/sell/confirmation/');
@@ -29,68 +28,66 @@ export default function ListingPage(_props) {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit} ref={formRef}>
-        {/* TODO: Need to add input validation */}
-        <Input
-          name="isbn"
-          label="ISBN"
-          placeholder={'978123345488777'}
-          type="number"
-          isLoading={isLoading}
-          required={true}
-        />
-        <Input
-          name="title"
-          label="Title"
-          placeholder={'Stats: Modeling the World'}
-          type="text"
-          isLoading={isLoading}
-          required={true}
-        />
-        <Input name="edition" label="Edition" placeholder={'1'} type="text" isLoading={isLoading} />
-        <Input
-          name="author"
-          label="Author"
-          placeholder={'John Smit'}
-          type="text"
-          isLoading={isLoading}
-        />
-        <Input
-          name="department"
-          label="Department"
-          placeholder={'BIO'}
-          type="text"
-          isLoading={isLoading}
-          required={true}
-        />
-        <Input
-          name="courseNumber"
-          label="Course Number"
-          placeholder={'101'}
-          type="text"
-          isLoading={isLoading}
-          required={true}
-        />
-        <Input
-          name="price"
-          label="Price"
-          placeholder={'10'}
-          type="number"
-          isLoading={isLoading}
-          required={true}
-        />
-        <Input
-          name="notes"
-          label="Notes (e.g., is an access code or CD included?)"
-          placeholder={'Access code included'}
-          type="text"
-          isLoading={isLoading}
-        />
-        <button type="submit" disabled={isLoading}>
-          Submit
-        </button>
-      </form>
-    </>
+    <form onSubmit={handleSubmit} ref={formRef}>
+      {/* TODO: Need to add input validation */}
+      <Input
+        name="isbn"
+        label="ISBN"
+        placeholder="978123345488777"
+        type="number"
+        isLoading={isLoading}
+        required
+      />
+      <Input
+        name="title"
+        label="Title"
+        placeholder="Stats: Modeling the World"
+        type="text"
+        isLoading={isLoading}
+        required
+      />
+      <Input name="edition" label="Edition" placeholder="1" type="text" isLoading={isLoading} />
+      <Input
+        name="author"
+        label="Author"
+        placeholder="John Smit"
+        type="text"
+        isLoading={isLoading}
+      />
+      <Input
+        name="department"
+        label="Department"
+        placeholder="BIO"
+        type="text"
+        isLoading={isLoading}
+        required
+      />
+      <Input
+        name="courseNumber"
+        label="Course Number"
+        placeholder="101"
+        type="text"
+        isLoading={isLoading}
+        required
+      />
+      <Input
+        name="price"
+        label="Price"
+        placeholder="10"
+        type="number"
+        isLoading={isLoading}
+        required
+      />
+      <Input
+        name="notes"
+        label="Notes (e.g., is an access code or CD included?)"
+        placeholder="Access code included"
+        type="text"
+        isLoading={isLoading}
+      />
+      <button type="submit" disabled={isLoading}>
+        Submit
+      </button>
+    </form>
   );
 }
