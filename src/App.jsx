@@ -6,8 +6,11 @@ import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import { SellProvider } from './contexts/SellContext';
 import Profile from './pages/Profile';
+<<<<<<< Updated upstream
 
 import CreateAccount from './pages/CreateAccount';
+=======
+>>>>>>> Stashed changes
 
 function App() {
   return (
@@ -23,8 +26,12 @@ function App() {
 
           <Route path="/sell/list" element={<ListingPage />} />
           <Route path="/sell/confirmation" element={<ConfirmationPage />} />
+<<<<<<< Updated upstream
           <Route path="/signup" element={<CreateAccount />} />
 
+=======
+          <Route path='/profile' element={<Profile/>}></Route>
+>>>>>>> Stashed changes
         </Routes>
       </SellProvider>
     </Router>
