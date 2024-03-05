@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import { SellProvider } from './contexts/SellContext';
+import CreateAccount from './pages/CreateAccount';
 
 function App() {
   return (

@@ -1,8 +1,12 @@
-// eslint-disable-next-line import/no-unresolved
-import SignUp from '../components/Signup.js';
+import SchoolSelect from '../components/common/SchoolAttend';
 
 function CreateAccount() {
-  return <SignUp />;
+  return (
+    <>
+      <div>Blah</div>
+      <SchoolSelect />
+    </>
+  );
 }
 
 export default CreateAccount;
