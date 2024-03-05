@@ -15,6 +15,7 @@ function App() {
           <Route path="/applicationform" element={<ApplicationForm />} />
           <Route path="/sell/list" element={<ListingPage />} />
           <Route path="/sell/confirmation" element={<ConfirmationPage />} />
+          <Route path="/signup" element={<CreateAccount />} />
         </Routes>
       </SellProvider>
     </Router>
