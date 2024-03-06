@@ -1,10 +1,10 @@
-import SchoolSelect from '../components/common/SchoolAttend';
+import FilterDropdown from '../components/common/FilterDropdown';
 
 function CreateAccount() {
   return (
     <>
       <div>Blah</div>
-      <SchoolSelect />
+      <FilterDropdown />
     </>
   );
 }
