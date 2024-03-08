@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, createContext } from 'react';
+import React, { useContext, useState, createContext, useMemo } from 'react';
 
 const SellContext = createContext({
   listing: null,
@@ -14,10 +14,13 @@ export function SellProvider({ children }) {
     setListingData(listing);
   };
 
-  const value = {
-    listing: listingData,
-    setListing
-  };
+  const value = useMemo(
+    () => ({
+      listing: listingData,
+      setListing
+    }),
+    [listingData, setListing]
+  );
 
   return <SellContext.Provider value={value}>{children}</SellContext.Provider>;
 }
