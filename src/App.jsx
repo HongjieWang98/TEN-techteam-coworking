@@ -4,20 +4,26 @@ import ApplicationForm from './components/CreateListing';
 import LoginPage from './pages/LoginPage';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
-import { SellProvider } from './contexts/SellContext';
+import ViewListingPage from './pages/Listing/ViewListingPage'
+import { Providers } from './contexts/Providers';
 
 function App() {
   return (
     <Router>
-      <SellProvider>
+      <Providers>
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/applicationform" element={<ApplicationForm />} />
-          <Route path="/sell/list" element={<ListingPage />} />
-          <Route path="/sell/confirmation" element={<ConfirmationPage />} />
+          <Route path="sell">
+            <Route path="list" element={<ListingPage />} />
+            <Route path="confirmation" element={<ConfirmationPage />} />
+          </Route>
+          <Route path="/listing/" >
+            <Route path=":listingId" element={<ViewListingPage />} />
+          </Route>
         </Routes>
-      </SellProvider>
-    </Router>
+      </Providers>
+    </Router >
   );
 }
 
