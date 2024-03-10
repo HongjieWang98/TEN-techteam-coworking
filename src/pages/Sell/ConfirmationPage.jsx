@@ -1,20 +1,20 @@
 import { useSellContext } from '../../contexts/SellContext';
 
-export default function ConfirmationPage(_props) {
+export default function ConfirmationPage() {
   const { listing } = useSellContext();
   return (
     <>
       {listing && (
         <>
           <div>
-            <span></span>
+            <span />
             <span>{listing.title}</span>
           </div>
           <div>
             <span>Department</span>
             <span>
               {listing.department && listing.courseNumber
-                ? listing.department + ' ' + listing.courseNumber
+                ? `${listing.department} ${listing.courseNumber}`
                 : ''}
             </span>
           </div>

@@ -1,10 +1,12 @@
 # For building up the local environment
 
 ## Link VS code to Github: https://github.com/HongjieWang98/TEN-techteam-coworking
+
 1. In Visual Studio Code, open up a bash terminal
 2. "Git Clone Repository" in welcome page
 
 ## Install node.js and npm
+
 1. Go to https://nodejs.org/en, and download Nodejs 20.11.1 LTS
 
 ```
@@ -13,31 +15,36 @@ npm -v  //to make sure they are installed
 ```
 
 ## Install react-scripts
+
 ```
 npm install react-scripts
 ```
 
 ## Run in localhost
+
 ```
 npm start
 //if run into dependency error, rm package-lock.json
 ```
 
-
 ## Module Needed to be Installed in your Local Computer
+
 1. Install React Router:
-If encounter the error: Failed to compile ./src/components/App/App.js Module not found: Can't resolve 'react-router-dom'
-The following command will resolve it: 
+   If encounter the error: Failed to compile ./src/components/App/App.js Module not found: Can't resolve 'react-router-dom'
+   The following command will resolve it:
 
 ```
 npm install react-router-dom --save
 ```
+
 2. Install Bootstrap
+
 ```
 npm install react-bootstrap --save
 ```
 
 ## To push your code to GitHub using Git:
+
 ```
 git init
 git remote add origin https://github.com/yourusername/your-repository.git
@@ -46,9 +53,10 @@ git commit -m "Initial commit"
 git push -u origin your-branch
 
 ```
-  
+
 # Temporarily ignore the rest of the notes
----------------------------------------------------------------------------------------------------------------
+
+---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -120,4 +128,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
