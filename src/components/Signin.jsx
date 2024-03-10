@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 // import {Form, Button, Card} from 'react-bootstrap'
 import { Form, Button, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export default function Signin() {
   const emailRef = useRef();
@@ -26,7 +27,9 @@ export default function Signin() {
           </Form>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">Do not have an account? Sign up</div>
+      <Link to="/signup">
+        <div className="w-100 text-center mt-2">Do not have an account? Sign up</div>
+      </Link>
     </>
   );
 }
