@@ -8,17 +8,22 @@ import SchoolNavPage from './pages/Overview/SchoolNav/SchoolNav';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import { SellProvider } from './contexts/SellContext';
-import NavigationBar from './components/ExternalNavigationBar/NavigationBar'
-
+import NavigationBar from './components/ExternalNavigationBar/ExternalNavBar';
 
 function App() {
   return (
     <Router>
-      <NavigationBar></NavigationBar>
+      <NavigationBar />
       <Routes>
-        <Route path="/Home" element={<HomePage />}> </Route>
-        <Route path="/Home/howto" element={<HowToPage />}> </Route>
-        <Route path="/Home/schoolnav" element={<SchoolNavPage />}> </Route>
+        <Route path="/Home" element={<HomePage />}>
+          {' '}
+        </Route>
+        <Route path="/Home/howto" element={<HowToPage />}>
+          {' '}
+        </Route>
+        <Route path="/Home/schoolnav" element={<SchoolNavPage />}>
+          {' '}
+        </Route>
       </Routes>
 
       <SellProvider>
