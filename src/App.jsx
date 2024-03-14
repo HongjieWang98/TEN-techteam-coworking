@@ -9,6 +9,7 @@ import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import { SellProvider } from './contexts/SellContext';
 import NavigationBar from './components/ExternalNavigationBar/ExternalNavBar';
+import CreateAccount from './pages/CreateAccount';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/applicationform" element={<ApplicationForm />} />
           <Route path="/sell/list" element={<ListingPage />} />
           <Route path="/sell/confirmation" element={<ConfirmationPage />} />
+          <Route path="/signup" element={<CreateAccount />} />
         </Routes>
       </SellProvider>
     </Router>
