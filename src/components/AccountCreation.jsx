@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import FilterDropdown from './common/FilterDropdown';
+import postCustomer from '../api/post-user';
 
-function AccountCreation() {
+export default function AccountCreation() {
   // @TODO Fetch the schools from the database
   // For now mock the data
   const schools = [
@@ -16,19 +17,14 @@ function AccountCreation() {
   const schoolEmailConfirmRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  // const { signup } = useAuth();
-  const [preferredContact, setPreferredContact] = useState({
-    schoolEmail: false,
-    secondaryEmail: false,
-    phone: false
-  });
-  const secondaryEmailRef = useRef();
-  const phoneRef = useRef();
+  const [preferredContact, setPreferredContact] = useState(0);
+  const secondaryEmailRef = useRef(null);
+  const phoneRef = useRef(null);
   const [paymentMethod, setPaymentMethod] = useState({
     cash: false,
     venmo: false
   });
-  const venmoRef = useRef();
+  const venmoRef = useRef(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -45,23 +41,40 @@ function AccountCreation() {
       setError('Emails do not match');
     }
 
-    if (
-      !(preferredContact.schoolEmail || preferredContact.secondaryEmail || preferredContact.phone)
-    ) {
-      setError('No preferred contact method selected');
-    }
-
     if (!(paymentMethod.cash || paymentMethod.venmo)) {
       setError('No preferred payment method selected');
     }
 
     try {
-      // setError('');
-      // set up a load state, so when signing up the user, we disabled the "Sign Up" botton below,
-      // so they don't automatically keep clicking the button and create multiple of accounts at the same time
+      setError('');
+      console.log(phoneRef);
+      // // set up a load state, so when signing up the user, we disabled the "Sign Up" botton below,
+      // // so they don't automatically keep clicking the button and create multiple of accounts at the same time
       setLoading(true);
-      // await signup(schoolEmailRef.current.value, passwordRef.current.value);
-    } catch {
+      const customer = await postCustomer(
+        schoolEmailRef.current.value,
+        passwordRef.current.value,
+        school,
+        preferredContact,
+        secondaryEmailRef?.current?.value ?? null,
+        phoneRef?.current?.value ?? null,
+        paymentMethod,
+        venmoRef?.current?.value ?? null
+      );
+      // const customer = await postCustomer(
+      //   schoolEmailRef.current.value,
+      //   passwordRef.current.value,
+      //   school,
+      //   preferredContact,
+      //   secondaryEmailRef.current.value,
+      //   phoneRef.current.value,
+      //   paymentMethod,
+      //   venmoRef.current.value
+      // );
+      // eslint-disable-next-line no-console
+      console.log(customer);
+    } catch (e2) {
+      console.log(e2);
       setError('Failed to create an account');
     } finally {
       setLoading(false);
@@ -69,11 +82,8 @@ function AccountCreation() {
   }
 
   const handlePreferredContact = (e) => {
-    const { checked, name } = e.target;
-    setPreferredContact({
-      ...preferredContact,
-      [name]: checked
-    });
+    const { value } = e.target;
+    setPreferredContact(parseInt(value, 10));
   };
 
   const handlePreferredPayment = (e) => {
@@ -84,11 +94,16 @@ function AccountCreation() {
     });
   };
 
+  let maybeAlert = null;
+  if (error) {
+    maybeAlert = <Alert variant="danger">{error}</Alert>;
+  }
+
   return (
     <Card>
       <Card.Body>
         <h2 className="text-center mb-4">Sign Up</h2>
-        {error && <Alert variant="danger">{error}</Alert>}
+        {maybeAlert}
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Form.Group id="school-select">
             <Form.Label>What school do you attend?</Form.Label>
@@ -115,34 +130,37 @@ function AccountCreation() {
             <Form.Label>Preferred Contact Method</Form.Label>
             <Form.Label className="muted">(from buyer and TEN)</Form.Label>
             <Form.Check
-              type="checkbox"
+              type="radio"
               id="prefer-school-email"
               label="School email"
-              name="schoolEmail"
+              value="0"
+              name="preferredContact"
               onChange={handlePreferredContact}
             />
             <Form.Check
-              type="checkbox"
+              type="radio"
               id="prefer-secondary-email"
               label="Secondary email"
-              name="secondaryEmail"
+              value="1"
+              name="preferredContact"
               onChange={handlePreferredContact}
             />
             <Form.Check
-              type="checkbox"
+              type="radio"
               id="prefer-phone-number"
               label="Phone number (text)"
-              name="phone"
+              value="2"
+              name="preferredContact"
               onChange={handlePreferredContact}
             />
           </Form.Group>
-          {preferredContact.secondaryEmail && (
+          {preferredContact === 1 && (
             <Form.Group id="secondary-email">
               <Form.Label>Secondary Email</Form.Label>
               <Form.Control type="email" ref={secondaryEmailRef} required />
             </Form.Group>
           )}
-          {preferredContact.phone && (
+          {preferredContact === 2 && (
             <Form.Group id="phone">
               <Form.Label>Phone number</Form.Label>
               <Form.Control type="tel" ref={phoneRef} required />
@@ -181,5 +199,3 @@ function AccountCreation() {
     </Card>
   );
 }
-
-export default AccountCreation;
