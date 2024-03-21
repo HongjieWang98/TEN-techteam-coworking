@@ -5,6 +5,8 @@ import LoginPage from './pages/LoginPage';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import { SellProvider } from './contexts/SellContext';
+import Profile from './pages/Profile';
+
 import CreateAccount from './pages/CreateAccount';
 
 function App() {
@@ -14,9 +16,15 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/applicationform" element={<ApplicationForm />} />
+
+          <Route path="/sell/list" element={<ListingPage />}></Route>
+          <Route path="/sell/confirmation" element={<ConfirmationPage />}></Route>
+          <Route path='/profile' element={<Profile/>}></Route>
+
           <Route path="/sell/list" element={<ListingPage />} />
           <Route path="/sell/confirmation" element={<ConfirmationPage />} />
           <Route path="/signup" element={<CreateAccount />} />
+
         </Routes>
       </SellProvider>
     </Router>
