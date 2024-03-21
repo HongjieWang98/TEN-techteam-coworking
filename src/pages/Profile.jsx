@@ -5,13 +5,40 @@ import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 
+const navStyle = {
+    backgroundColor: '#DBEEFF',
+    overflow: 'hidden'
+};
+
+const linkStyle = {
+    display: 'block',
+    color: 'white',
+    textAlign: 'center',
+    padding: '14px 16px',
+    textDecoration: 'none',
+	float: 'left',
+	color: '#000000'
+};
+
+const containerStyle = {
+	padding: '50px'
+}
 
 const Profile = (props) => {
 	return (
 	  <>
-		<h1>Profile</h1>
-		<Container>
+		<nav style={navStyle}>
+			<ul style={{ listStyleType: 'none', margin: 0, padding: 0 }}>
+				<li><a href="#home" style={linkStyle}>Home</a></li>
+				<li><a href="#about" style={linkStyle}>About</a></li>
+				<li><a href="#services" style={linkStyle}>Services</a></li>
+				<li><a href="#contact" style={linkStyle}>Contact</a></li>
+			</ul>
+    	</nav>
+		<Container style={containerStyle}>
 		  <Row>
 			<Col>
 			<Container>
@@ -53,9 +80,6 @@ const Profile = (props) => {
 			</Col>
 		  </Row>
 		</Container>
-		  
-		  <Link to='/applicationform'>Click Here to go to CreateListing Component</Link>
-  
 	  </>
 	);
 };
