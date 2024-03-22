@@ -11,7 +11,7 @@ export default async function postCustomer(
   paymentMethod,
   venmo
 ) {
-  console.log('Hello');
+  // @todo Error check for duplicate schoolEmail
   try {
     const newCustomer = await addDoc(collection(db, 'customers'), {
       schoolEmail,
@@ -25,8 +25,6 @@ export default async function postCustomer(
     });
     return newCustomer;
   } catch (e) {
-    console.log(e);
-    // throw new Error('Issue in creating account');
-    return null;
+    throw new Error('Issue in creating account');
   }
 }

@@ -47,11 +47,10 @@ export default function AccountCreation() {
 
     try {
       setError('');
-      console.log(phoneRef);
       // // set up a load state, so when signing up the user, we disabled the "Sign Up" botton below,
       // // so they don't automatically keep clicking the button and create multiple of accounts at the same time
       setLoading(true);
-      const customer = await postCustomer(
+      await postCustomer(
         schoolEmailRef.current.value,
         passwordRef.current.value,
         school,
@@ -61,20 +60,7 @@ export default function AccountCreation() {
         paymentMethod,
         venmoRef?.current?.value ?? null
       );
-      // const customer = await postCustomer(
-      //   schoolEmailRef.current.value,
-      //   passwordRef.current.value,
-      //   school,
-      //   preferredContact,
-      //   secondaryEmailRef.current.value,
-      //   phoneRef.current.value,
-      //   paymentMethod,
-      //   venmoRef.current.value
-      // );
-      // eslint-disable-next-line no-console
-      console.log(customer);
     } catch (e2) {
-      console.log(e2);
       setError('Failed to create an account');
     } finally {
       setLoading(false);
