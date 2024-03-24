@@ -35,14 +35,17 @@ export default function AccountCreation() {
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       setError('Passwords do not match');
+      return;
     }
 
     if (schoolEmailRef.current.value !== schoolEmailConfirmRef.current.value) {
       setError('Emails do not match');
+      return;
     }
 
     if (!(paymentMethod.cash || paymentMethod.venmo)) {
       setError('No preferred payment method selected');
+      return;
     }
 
     try {
@@ -60,8 +63,8 @@ export default function AccountCreation() {
         paymentMethod,
         venmoRef?.current?.value ?? null
       );
-    } catch (e2) {
-      setError('Failed to create an account');
+    } catch (backendError) {
+      setError(backendError.message);
     } finally {
       setLoading(false);
     }
