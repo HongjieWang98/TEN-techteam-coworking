@@ -9,11 +9,14 @@ import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import { SellProvider } from './contexts/SellContext';
 import NavigationBar from './components/ExternalNavigationBar/ExternalNavBar';
+import ViewListingPage from './pages/Listing/ViewListingPage'
+import { Providers } from './contexts/Providers';
 import CreateAccount from './pages/CreateAccount';
 
 function App() {
   return (
     <Router>
+
       <NavigationBar />
       <Routes>
         <Route path="/Home" element={<HomePage />}>
@@ -28,15 +31,21 @@ function App() {
       </Routes>
 
       <SellProvider>
+      <Providers>
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/applicationform" element={<ApplicationForm />} />
-          <Route path="/sell/list" element={<ListingPage />} />
-          <Route path="/sell/confirmation" element={<ConfirmationPage />} />
+          <Route path="sell">
+            <Route path="list" element={<ListingPage />} />
+            <Route path="confirmation" element={<ConfirmationPage />} />
+          </Route>
+          <Route path="/listing/" >
+            <Route path=":listingId" element={<ViewListingPage />} />
+          </Route>
           <Route path="/signup" element={<CreateAccount />} />
         </Routes>
-      </SellProvider>
-    </Router>
+      </Providers>
+    </Router >
   );
 }
 
