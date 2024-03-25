@@ -1,7 +1,7 @@
 const preferredContact = Object.freeze({
-  schoolEmail: 0,
-  secondayEmail: 1,
-  phone: 2
+  SCHOOL_EMAIL: 'schoolEmail',
+  SECONDARY_EMAIL: 'secondaryEmail',
+  PHONE: 'phone'
 });
 
 export default preferredContact;
