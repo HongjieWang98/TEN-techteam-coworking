@@ -1,4 +1,6 @@
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore/lite';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 import { db } from '../firebase/firebase_config';
 
 export default async function postCustomer(
