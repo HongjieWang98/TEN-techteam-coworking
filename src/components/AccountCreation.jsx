@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import FilterDropdown from './common/FilterDropdown';
-import postCustomer from '../api/post-user';
+import postCustomer from '../api/post_user';
 
 export default function AccountCreation() {
   // @TODO Fetch the schools from the database
@@ -33,6 +33,10 @@ export default function AccountCreation() {
     e.preventDefault();
     // do the validation checks
 
+    if (passwordRef.current.value.length < 6) {
+      setError('Please have a password of at least 6 characters long');
+      return;
+    }
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       setError('Passwords do not match');
       return;
