@@ -1,4 +1,6 @@
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore/lite';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 import { db } from '../firebase/firebase_config';
 
 export default async function postCustomer(
@@ -30,7 +32,10 @@ export default async function postCustomer(
     // Document with the same email already exists
     throw new Error('An account with this email already exists.');
   }
+
   try {
+    // Get the current date/time
+    const currTime = firebase.firestore.FieldValue.serverTimestamp();
     const newCustomer = await addDoc(collection(db, 'customers'), {
       schoolEmail,
       password,
@@ -39,7 +44,9 @@ export default async function postCustomer(
       secondaryEmail,
       phone,
       paymentMethod,
-      venmo
+      venmo,
+      created_at: currTime,
+      updated_at: currTime
     });
     return newCustomer;
   } catch (e) {
