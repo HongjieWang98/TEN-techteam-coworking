@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import BuyerListing from '../../components/Listing/BuyerListing';
+import SellerListing from '../../components/Listing/SellerListing';
 
 const UserRolesInListingTypes = Object.freeze({
   SELLER: 'seller',
@@ -10,7 +12,7 @@ const UserRolesInListingTypes = Object.freeze({
 
 function ViewListingPage() {
   const { listingId } = useParams();
-  const [listingDetails, setListingDetails] = useState(null);
+  const [listingComponent, setListingComponent] = useState(null);
   const [currUserRoleInListing, setCurrUserRoleInListing] = useState(
     UserRolesInListingTypes.NOT_INVOLVED
   );
@@ -50,29 +52,19 @@ function ViewListingPage() {
 
     if (dummyListingDetails.buyer.id === userId) {
       setCurrUserRoleInListing(UserRolesInListingTypes.BUYER);
+      setListingComponent(<BuyerListing listingData={dummyListingDetails} />);
     } else if (dummyListingDetails.seller.id === userId) {
       setCurrUserRoleInListing(UserRolesInListingTypes.SELLER);
+      setListingComponent(<SellerListing listingData={dummyListingDetails} />);
     } else {
       // TODO we might have to redirect the user or show a non authorized page
       setCurrUserRoleInListing(UserRolesInListingTypes.NOT_INVOLVED);
-    }
-
-    if (UserRolesInListingTypes.NOT_INVOLVED !== currUserRoleInListing) {
-      // TODO utilize real data later
-      setListingDetails(dummyListingDetails);
     }
   }, [listingId]);
 
   return (
     <>
-      <div>
-        {listingId}
-        <br />
-        {currUserRoleInListing}
-        {UserRolesInListingTypes.NOT_INVOLVED !== currUserRoleInListing && (
-          <div>You are involved in this listing!</div>
-        )}
-      </div>
+      <div>{listingComponent}</div>
     </>
   );
 }
