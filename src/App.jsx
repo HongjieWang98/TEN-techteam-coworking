@@ -4,7 +4,7 @@ import ApplicationForm from './components/CreateListing';
 import LoginPage from './pages/LoginPage';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
-import ViewListingPage from './pages/Listing/ViewListingPage'
+import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
 import CreateAccount from './pages/CreateAccount';
 
@@ -19,13 +19,13 @@ function App() {
             <Route path="list" element={<ListingPage />} />
             <Route path="confirmation" element={<ConfirmationPage />} />
           </Route>
-          <Route path="/listing/" >
+          <Route path="/listing/">
             <Route path=":listingId" element={<ViewListingPage />} />
           </Route>
           <Route path="/signup" element={<CreateAccount />} />
         </Routes>
       </Providers>
-    </Router >
+    </Router>
   );
 }
 
