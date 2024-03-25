@@ -54,8 +54,8 @@ export default function AccountCreation() {
 
     try {
       setError('');
-      // // set up a load state, so when signing up the user, we disabled the "Sign Up" botton below,
-      // // so they don't automatically keep clicking the button and create multiple of accounts at the same time
+      // set up a load state, so when signing up the user, we disabled the "Sign Up" botton below,
+      // so they don't automatically keep clicking the button and create multiple of accounts at the same time
       setLoading(true);
       await postCustomer(
         schoolEmailRef.current.value,
