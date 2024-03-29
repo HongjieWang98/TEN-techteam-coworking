@@ -7,6 +7,7 @@ import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import ViewListingPage from './pages/Listing/ViewListingPage'
 import { Providers } from './contexts/Providers';
 import CreateAccount from './pages/CreateAccount';
+import AcceptDenyBuyerPage from './pages/Listing/AceeptDenyBuyerPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           </Route>
           <Route path="/listing/" >
             <Route path=":listingId" element={<ViewListingPage />} />
+            <Route path=":listingId/accept" element={<AcceptDenyBuyerPage />} />
           </Route>
           <Route path="/signup" element={<CreateAccount />} />
         </Routes>
