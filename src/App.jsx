@@ -30,7 +30,6 @@ function App() {
         </Route>
       </Routes>
 
-      <SellProvider>
       <Providers>
         <Routes>
           <Route path="/" element={<LoginPage />} />
