@@ -9,8 +9,14 @@ export default function Input({
   label,
   required
 }) {
+  const inputContainerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: '10px'
+  }
+
   return (
-    <>
+    <div style={inputContainerStyle}>
       <label htmlFor={name}>
         {label}
         {required && '*'}
@@ -24,6 +30,6 @@ export default function Input({
         required={required}
       />
       <div>{errorMessage}</div>
-    </>
+    </div>
   );
 }

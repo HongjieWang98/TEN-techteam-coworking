@@ -11,7 +11,6 @@ const innerPageWrapperStyles = {
     maxWidth: '1500px'
 }
 
-
 // Create your Wrapper component
 const PageWrapper = ({ children }) => {
     return (
