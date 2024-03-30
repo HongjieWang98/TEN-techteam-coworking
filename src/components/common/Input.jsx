@@ -17,7 +17,7 @@ export default function Input({
 
   return (
     <div style={inputContainerStyle}>
-      <label htmlFor={name}>
+      <label htmlFor={name} style={{ "fontWeight": "bold" }}>
         {label}
         {required && '*'}
       </label>
