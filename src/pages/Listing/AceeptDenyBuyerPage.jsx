@@ -68,7 +68,7 @@ function AcceptDenyBuyerPage() {
         <>
             {listingDetails && (
                 <>
-                    <DisplayInput name="buyerName" type="text" value={listingDetails.buyer.name} label="Buyer:" />
+                    <DisplayInput name="buyerName" type="text" value={listingDetails.buyer.email} label="Buyer:" />
                     <DisplayCheckboxGroup
                         label="Buyer Accepted Payment Methods:"
                         options={userPaymentMethods}
