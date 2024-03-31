@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import FilterDropdown from './common/FilterDropdown';
 import postCustomer from '../api/post_user';
+import preferredContactEnum from '../db-enums/preferred_contact';
 
 export default function AccountCreation() {
   // @TODO Fetch the schools from the database
@@ -18,7 +19,7 @@ export default function AccountCreation() {
   const schoolEmailConfirmRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const [preferredContact, setPreferredContact] = useState(0);
+  const [preferredContact, setPreferredContact] = useState('');
   const secondaryEmailRef = useRef(null);
   const phoneRef = useRef(null);
   const [paymentMethod, setPaymentMethod] = useState({
@@ -82,7 +83,7 @@ export default function AccountCreation() {
 
   const handlePreferredContact = (e) => {
     const { value } = e.target;
-    setPreferredContact(parseInt(value, 10));
+    setPreferredContact(value);
   };
 
   const handlePreferredPayment = (e) => {
@@ -132,7 +133,7 @@ export default function AccountCreation() {
               type="radio"
               id="prefer-school-email"
               label="School email"
-              value="0"
+              value={preferredContactEnum.SCHOOL_EMAIL}
               name="preferredContact"
               onChange={handlePreferredContact}
             />
@@ -140,7 +141,7 @@ export default function AccountCreation() {
               type="radio"
               id="prefer-secondary-email"
               label="Secondary email"
-              value="1"
+              value={preferredContactEnum.SECONDARY_EMAIL}
               name="preferredContact"
               onChange={handlePreferredContact}
             />
@@ -148,18 +149,18 @@ export default function AccountCreation() {
               type="radio"
               id="prefer-phone-number"
               label="Phone number (text)"
-              value="2"
+              value={preferredContactEnum.PHONE}
               name="preferredContact"
               onChange={handlePreferredContact}
             />
           </Form.Group>
-          {preferredContact === 1 && (
+          {preferredContact === preferredContactEnum.SECONDARY_EMAIL && (
             <Form.Group id="secondary-email">
               <Form.Label>Secondary Email</Form.Label>
               <Form.Control type="email" ref={secondaryEmailRef} required />
             </Form.Group>
           )}
-          {preferredContact === 2 && (
+          {preferredContact === preferredContactEnum.PHONE && (
             <Form.Group id="phone">
               <Form.Label>Phone number</Form.Label>
               <Form.Control type="tel" ref={phoneRef} required />

@@ -1,7 +1,7 @@
-const preferredContact = Object.freeze({
+const preferredContactEnum = Object.freeze({
   SCHOOL_EMAIL: 'schoolEmail',
   SECONDARY_EMAIL: 'secondaryEmail',
   PHONE: 'phone'
 });
 
-export default preferredContact;
+export default preferredContactEnum;
