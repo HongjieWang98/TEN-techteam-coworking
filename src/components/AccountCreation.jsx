@@ -60,7 +60,7 @@ export default function AccountCreation() {
       // set up a load state, so when signing up the user, we disabled the "Sign Up" botton below,
       // so they don't automatically keep clicking the button and create multiple of accounts at the same time
       setLoading(true);
-      await postCustomer(
+      const newUser = await postCustomer(
         schoolEmailRef.current.value,
         passwordRef.current.value,
         school,
@@ -70,7 +70,9 @@ export default function AccountCreation() {
         paymentMethod,
         venmoRef?.current?.value ?? null
       );
-      navigate('/signup/success', { replace: true });
+      if (newUser != null) {
+        navigate('/signup/success', { replace: true });
+      }
     } catch (backendError) {
       setError(backendError.message);
     } finally {
