@@ -11,9 +11,10 @@ import { SellProvider } from './contexts/SellContext';
 import NavigationBar from './components/ExternalNavigationBar/ExternalNavBar';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
-import CreateAccount from './pages/CreateAccount';
+import CreateAccount from './pages/Account/CreateAccount';
 import AcceptDenyBuyerPage from './pages/Listing/AceeptDenyBuyerPage';
 import PageWrapper from './components/PageWrapper';
+import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 
 function App() {
   return (
@@ -46,7 +47,8 @@ function App() {
               <Route path=":listingId/accept" element={<AcceptDenyBuyerPage />} />
             </Route>
             <Route path="/signup" element={<CreateAccount />} />
-          </Routes>
+            <Route path="/signup/success" element={<SuccessCreateAccount />} />
+        </Routes>
         </PageWrapper>
       </Providers>
     </Router>
