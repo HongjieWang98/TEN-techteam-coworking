@@ -13,6 +13,7 @@ import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
 import CreateAccount from './pages/CreateAccount';
 import AcceptDenyBuyerPage from './pages/Listing/AceeptDenyBuyerPage';
+import PageWrapper from './components/PageWrapper';
 
 function App() {
   return (
@@ -32,19 +33,21 @@ function App() {
       </Routes>
 
       <Providers>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/applicationform" element={<ApplicationForm />} />
-          <Route path="sell">
-            <Route path="list" element={<ListingPage />} />
-            <Route path="confirmation" element={<ConfirmationPage />} />
-          </Route>
-          <Route path="/listing/">
-            <Route path=":listingId" element={<ViewListingPage />} />
-            <Route path=":listingId/accept" element={<AcceptDenyBuyerPage />} />
-          </Route>
-          <Route path="/signup" element={<CreateAccount />} />
-        </Routes>
+        <PageWrapper>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/applicationform" element={<ApplicationForm />} />
+            <Route path="sell">
+              <Route path="list" element={<ListingPage />} />
+              <Route path="confirmation" element={<ConfirmationPage />} />
+            </Route>
+            <Route path="/listing/">
+              <Route path=":listingId" element={<ViewListingPage />} />
+              <Route path=":listingId/accept" element={<AcceptDenyBuyerPage />} />
+            </Route>
+            <Route path="/signup" element={<CreateAccount />} />
+          </Routes>
+        </PageWrapper>
       </Providers>
     </Router>
   );
