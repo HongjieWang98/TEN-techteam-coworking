@@ -7,7 +7,7 @@ import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
 import CreateAccount from './pages/CreateAccount';
-import PageWrapper from './pages/PageWrapper';
+import PageWrapper from './components/PageWrapper';
 
 function App() {
   return (
