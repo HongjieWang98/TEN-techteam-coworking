@@ -5,7 +5,8 @@ import LoginPage from './pages/LoginPage';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import { SellProvider } from './contexts/SellContext';
-import CreateAccount from './pages/CreateAccount';
+import CreateAccount from './pages/Account/CreateAccount';
+import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/sell/list" element={<ListingPage />} />
           <Route path="/sell/confirmation" element={<ConfirmationPage />} />
           <Route path="/signup" element={<CreateAccount />} />
+          <Route path="/signup/success" element={<SuccessCreateAccount />} />
         </Routes>
       </SellProvider>
     </Router>

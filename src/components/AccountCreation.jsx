@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import FilterDropdown from './common/FilterDropdown';
 import postCustomer from '../api/post_user';
@@ -27,6 +28,8 @@ export default function AccountCreation() {
   const venmoRef = useRef(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     // prevent the form from refreshing
@@ -67,6 +70,7 @@ export default function AccountCreation() {
         paymentMethod,
         venmoRef?.current?.value ?? null
       );
+      navigate('/signup/success', { replace: true });
     } catch (backendError) {
       setError(backendError.message);
     } finally {
