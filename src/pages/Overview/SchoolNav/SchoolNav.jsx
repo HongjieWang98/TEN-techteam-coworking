@@ -11,9 +11,14 @@ function SchoolNavPage() {
           Product 2
         </button>
       </Link>
-      <Link to="./Home">
+      <Link to="../Home">
         <button type="button" className="btn btn-outline-primary btn-rounded left center padded">
           Product 1 - not implemented
+        </button>
+      </Link>
+      <Link to="../Home/signin">
+        <button type="button" className="btn btn-outline-primary btn-rounded left center padded">
+          Sign in
         </button>
       </Link>
     </>

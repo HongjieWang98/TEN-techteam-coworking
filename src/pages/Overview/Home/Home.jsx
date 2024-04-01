@@ -9,12 +9,12 @@ function HomePage() {
       <div>
         <div className="SectionTitleHeader left">Textbook Exchange Network</div>
         <div className="SectionSubtitleHeader left">Changing the textbook game.</div>
-        <Link to="./schoolnav">
+        <Link to="../Home/schoolnav">
           <button type="button" className="btn btn-outline-primary btn-rounded left center padded">
             Get Started!
           </button>
         </Link>
-        <Link to="./HowTo">
+        <Link to="../Home/HowTo">
           <button type="button" className="btn btn-outline-primary btn-rounded left center padded">
             Learn more
           </button>

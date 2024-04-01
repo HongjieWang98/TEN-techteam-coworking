@@ -5,7 +5,7 @@ function CreateAccount() {
   return (
     <>
       <AccountCreation />
-      <Link to="/">
+      <Link to="../Home/signin">
         <div className="w-100 text-center mt-2">Already have an account? Sign in</div>
       </Link>
     </>
