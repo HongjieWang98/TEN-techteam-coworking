@@ -19,7 +19,6 @@ import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 function App() {
   return (
     <Router>
-
       <NavigationBar />
       <Routes>
         <Route path="/Home" element={<HomePage />}>
@@ -48,7 +47,7 @@ function App() {
             </Route>
             <Route path="/signup" element={<CreateAccount />} />
             <Route path="/signup/success" element={<SuccessCreateAccount />} />
-        </Routes>
+          </Routes>
         </PageWrapper>
       </Providers>
     </Router>
