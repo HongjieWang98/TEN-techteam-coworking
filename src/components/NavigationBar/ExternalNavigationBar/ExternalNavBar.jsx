@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import './NavigationBar.css';
-import logo from '../../images/logo2.png';
-import NavigationBarItem from '../ExternalNavigationBar/NavigationBarDef';
+import logo from '../../../images/logo2.png';
+import NavigationBarItem from '../NavigationBarDef';
 
 function NavigationBar() {
-    // **** @todo Fix the linking of the nav bar items ***
   return (
     <div className="NavigationBarContainer">
       <div
@@ -19,28 +18,21 @@ function NavigationBar() {
       </div>
       <NavigationBarItem
         float="Left"
-        text="My account"
-        link="/profile"
+        text="Get started"
+        link="/Home/SchoolNav"
         /* id='nav-your-listings' */
       />
       <NavigationBarItem
         float="Left"
-        text="Sell"
-        link="/sell"
+        text="How it works"
+        link="/Home/HowTo"
         /* class='NoDisplayAtPhone600'
         id='nav-about' */
       />
       <NavigationBarItem
         float="Left"
-        text="Buy"
-        link="/buy"
-        /* class='NoDisplayAtPhone480'
-        id='nav-members' */
-      />
-      <NavigationBarItem
-        float="Left"
         text="Home"
-        link="/home"
+        link="/Home"
         /* class='NoDisplayAtPhone480'
         id='nav-members' */
       />
