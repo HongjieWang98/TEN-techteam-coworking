@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import './NavigationBar.css';
-import logo from '../../images/logo2.png';
-import NavigationBarItem from '../ExternalNavigationBar/NavigationBarDef';
+import logo from '../../../images/logo2.png';
+import NavigationBarItem from '../NavigationBarDef';
 
 function NavigationBar() {
-    // **** @todo Fix the linking of the nav bar items ***
+  // **** @todo Fix the linking of the nav bar items ***
   return (
     <div className="NavigationBarContainer">
       <div
