@@ -20,6 +20,9 @@ function App() {
     <Router>
       <ExternalNavigationBar />
       <Routes>
+        <Route path="/" element={<HomePage />}>
+          {' '}
+        </Route>
         <Route path="/Home" element={<HomePage />}>
           {' '}
         </Route>
@@ -29,12 +32,19 @@ function App() {
         <Route path="/Home/schoolnav" element={<SchoolNavPage />}>
           {' '}
         </Route>
+        <Route path="/Home/signin" element={<LoginPage />}>
+          {' '}
+        </Route>
+        <Route path="/Home/signup" element={<CreateAccount />}>
+          {' '}
+        </Route>
       </Routes>
 
       <Providers>
         <PageWrapper>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            {/* <Route path="/signin" element={<LoginPage />} />
+            <Route path="/signup" element={<CreateAccount />} /> */}
             <Route path="/applicationform" element={<ApplicationForm />} />
             <Route path="sell">
               <Route path="list" element={<ListingPage />} />
@@ -46,6 +56,7 @@ function App() {
             </Route>
             <Route path="/signup" element={<CreateAccount />} />
             <Route path="/signup/success" element={<SuccessCreateAccount />} />
+           
           </Routes>
         </PageWrapper>
       </Providers>
