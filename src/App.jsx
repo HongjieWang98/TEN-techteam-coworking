@@ -4,8 +4,7 @@ import ApplicationForm from './components/CreateListing';
 import LoginPage from './pages/LoginPage';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
-import ViewListingPage from './pages/Listing/ViewListingPage';
-import { Providers } from './contexts/Providers';
+import { SellProvider } from './contexts/SellContext';
 import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 
