@@ -9,7 +9,6 @@ function LoginPage() {
   return (
     <>
       <h1>LoginPage</h1>
-
       <AuthProvider>
         <Container
           className="d-flex align-items-center justify-content-center"

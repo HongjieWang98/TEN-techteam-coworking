@@ -11,7 +11,8 @@ function NavigationBar() {
         style={{
           float: 'left',
           padding: '5px 0'
-        }}>
+        }}
+      >
         <Link to="/" className="NavigationBarItemAnchor">
           <img src={logo} className="NavigationBarImage" alt="TEN Logo" />
         </Link>
@@ -27,14 +28,14 @@ function NavigationBar() {
         text="How it works"
         link="/Home/HowTo"
         /* class='NoDisplayAtPhone600'
-        id='nav-about' */
+      id='nav-about' */
       />
       <NavigationBarItem
         float="Left"
         text="Home"
         link="/Home"
         /* class='NoDisplayAtPhone480'
-        id='nav-members' */
+      id='nav-members' */
       />
     </div>
   );
