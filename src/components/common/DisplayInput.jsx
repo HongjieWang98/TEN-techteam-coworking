@@ -11,7 +11,7 @@ export default function DisplayInput({ name, value, type, label }) {
   return (
     <>
       <label htmlFor={name}>{label}</label>
-      <input name={name} value={value} type={type} disabled={true} />
+      <input name={name} value={value} type={type} disabled />
     </>
   );
 }

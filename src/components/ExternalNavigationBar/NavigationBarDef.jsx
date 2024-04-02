@@ -8,9 +8,9 @@ class NavigationBarItem extends Component {
   render() {
     return (
       <div
-        className={`NavigationBarItemContainer ${
-          this.props.float === 'left' ? 'ItemLeft' : 'ItemRight'
-        } ${this.props.class}`}>
+        className={`NavigationBarItemContainer ${this.props.float === 'left' ? 'ItemLeft' : 'ItemRight'
+          } ${this.props.class}`}
+      >
         <Link to={this.props.link} className="NavigationBarItemAnchor">
           <div id={this.props.id} className="NavigationBarItemText">
             {this.props.text}

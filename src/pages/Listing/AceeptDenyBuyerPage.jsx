@@ -1,6 +1,6 @@
-import { useParams } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import DisplayInput from '../../components/common/DisplayInput';
 import DisplayCheckboxGroup from '../../components/common/DisplayCheckboxGroup';
 
@@ -18,7 +18,7 @@ function AcceptDenyBuyerPage() {
   // TODO for now dont do this check for dev purposes
   // if the current user is not logged in
   if (!currentUser && false) {
-    navigate('../..', { relative: 'path' });
+    useNavigate()('../..', { relative: 'path' });
   }
 
   const handleAcceptBuyer = () => {
@@ -64,26 +64,24 @@ function AcceptDenyBuyerPage() {
   }, [listingId]);
 
   return (
-    <>
-      {listingDetails && (
-        <>
-          <DisplayInput
-            name="buyerName"
-            type="text"
-            value={listingDetails.buyer.email}
-            label="Buyer:"
-          />
-          {/* TODO: show buyer's preferred contact info */}
-          <DisplayCheckboxGroup
-            label="Buyer Accepted Payment Methods:"
-            options={userPaymentMethods}
-            checkedOptions={listingDetails.buyer.acceptedPaymentMethods}
-          />
-          <button onClick={handleAcceptBuyer}>Accept Buyer</button>
-          <button onClick={handleDenyBuyer}>Deny Buyer</button>
-        </>
-      )}
-    </>
+    listingDetails && (
+      <>
+        <DisplayInput
+          name="buyerName"
+          type="text"
+          value={listingDetails.buyer.email}
+          label="Buyer:"
+        />
+        {/* TODO: show buyer's preferred contact info */}
+        <DisplayCheckboxGroup
+          label="Buyer Accepted Payment Methods:"
+          options={userPaymentMethods}
+          checkedOptions={listingDetails.buyer.acceptedPaymentMethods}
+        />
+        <button type="button" onClick={handleAcceptBuyer}>Accept Buyer</button>
+        <button type="button" onClick={handleDenyBuyer}>Deny Buyer</button>
+      </>
+    )
   );
 }
 

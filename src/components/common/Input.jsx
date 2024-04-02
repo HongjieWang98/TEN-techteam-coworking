@@ -13,11 +13,11 @@ export default function Input({
     display: 'flex',
     flexDirection: 'column',
     marginBottom: '10px'
-  }
+  };
 
   return (
     <div style={inputContainerStyle}>
-      <label htmlFor={name} style={{ "fontWeight": "bold" }}>
+      <label htmlFor={name} style={{ fontWeight: 'bold' }}>
         {label}
         {required && '*'}
       </label>
