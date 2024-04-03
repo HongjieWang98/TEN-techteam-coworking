@@ -19,7 +19,6 @@ import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 function App() {
   return (
     <Router>
-
       <NavigationBar />
       <Routes>
         <Route path="/Home" element={<HomePage />}>
