@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import './NavigationBar.css';
+import '../NavigationBar.css';
 import logo from '../../../images/logo2.png';
 import NavigationBarItem from '../NavigationBarDef';
 
-function NavigationBar() {
+function InternalNavigationBar() {
   // **** @todo Fix the linking of the nav bar items ***
   return (
-    <div className="NavigationBarContainer">
+    <div className="NavigationBarContainer" style={{ backgroundColor: '#DBEEFF' }}>
       <div
         className="NavigationBarItemContainer"
         style={{
@@ -48,4 +48,4 @@ function NavigationBar() {
   );
 }
 
-export default NavigationBar;
+export default InternalNavigationBar;

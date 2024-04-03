@@ -3,7 +3,7 @@ import Listing from './Listing';
 
 function SellerListing({ listingData }) {
   let buyerExists = true;
-  let canRemove = true;
+  const canRemove = true;
 
   useEffect(() => {
     buyerExists = !!listingData.buyer;

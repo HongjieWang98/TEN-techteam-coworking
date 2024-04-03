@@ -7,7 +7,6 @@ import HowToPage from './pages/Overview/HowTo/HowTo';
 import SchoolNavPage from './pages/Overview/SchoolNav/SchoolNav';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
-import { SellProvider } from './contexts/SellContext';
 import NavigationBar from './components/NavigationBar/ExternalNavigationBar/ExternalNavBar';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';

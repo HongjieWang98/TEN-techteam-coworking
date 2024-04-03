@@ -3,16 +3,15 @@ import './NavigationBar.css';
 import logo from '../../../images/logo2.png';
 import NavigationBarItem from '../NavigationBarDef';
 
-function NavigationBar() {
+function ExternalNavigationBar() {
   return (
-    <div className="NavigationBarContainer">
+    <div className="NavigationBarContainer" style={{ backgroundColor: '#fff' }}>
       <div
         className="NavigationBarItemContainer"
         style={{
           float: 'left',
           padding: '5px 0'
-        }}
-      >
+        }}>
         <Link to="/" className="NavigationBarItemAnchor">
           <img src={logo} className="NavigationBarImage" alt="TEN Logo" />
         </Link>
@@ -41,4 +40,4 @@ function NavigationBar() {
   );
 }
 
-export default NavigationBar;
+export default ExternalNavigationBar;
