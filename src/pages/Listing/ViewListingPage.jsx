@@ -48,11 +48,7 @@ function ViewListingPage() {
     }
   }, [listingId]);
 
-  return (
-    <>
-      <div>{listingComponent}</div>
-    </>
-  );
+  return <div>{listingComponent}</div>;
 }
 
 export default ViewListingPage;

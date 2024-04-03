@@ -78,8 +78,12 @@ function AcceptDenyBuyerPage() {
           options={userPaymentMethods}
           checkedOptions={listingDetails.buyer.acceptedPaymentMethods}
         />
-        <button type="button" onClick={handleAcceptBuyer}>Accept Buyer</button>
-        <button type="button" onClick={handleDenyBuyer}>Deny Buyer</button>
+        <button type="button" onClick={handleAcceptBuyer}>
+          Accept Buyer
+        </button>
+        <button type="button" onClick={handleDenyBuyer}>
+          Deny Buyer
+        </button>
       </>
     )
   );

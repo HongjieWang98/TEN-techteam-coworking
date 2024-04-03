@@ -12,12 +12,12 @@ const innerPageWrapperStyles = {
 };
 
 // Create your Wrapper component
-const PageWrapper = ({ children }) => {
+function PageWrapper({ children }) {
   return (
     <div style={pageWrapperStyles}>
       <div style={innerPageWrapperStyles}>{children}</div>
     </div>
   );
-};
+}
 
 export default PageWrapper;
