@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './NavigationBar.css';
-import logo from '../../../images/logo2.png';
-import NavigationBarItem from '../NavigationBarDef';
+import logo from '../../images/logo2.png';
+import NavigationBarItem from './NavigationBarDef';
 
 function ExternalNavigationBar() {
   return (

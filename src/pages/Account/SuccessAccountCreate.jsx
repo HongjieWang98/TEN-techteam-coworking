@@ -1,4 +1,4 @@
-import InternalNavigationBar from '../../components/NavigationBar/InternalNavigationBar/InternalNavBar';
+import InternalNavigationBar from '../../components/NavigationBar/InternalNavBar';
 
 function SuccessCreateAccount() {
   return (
