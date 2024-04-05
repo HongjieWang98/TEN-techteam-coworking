@@ -1,12 +1,5 @@
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  addDoc,
-  serverTimestamp
-} from 'firebase/firestore/lite';
-import { db } from '../firebase/firebase_config';
+import { collection, query, where, getDocs, addDoc } from 'firebase/firestore/lite';
+import { db } from '../../firebase/firebase_config';
 
 export default async function postCustomer(
   schoolEmail,
