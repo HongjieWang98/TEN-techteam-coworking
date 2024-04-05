@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import FilterDropdown from './common/FilterDropdown';
-import postCustomer from '../api/post_user';
+import postCustomer from '../api/user/post_user';
 import preferredContactEnum from '../db-enums/preferred_contact';
 
 export default function AccountCreation() {
