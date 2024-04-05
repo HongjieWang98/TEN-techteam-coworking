@@ -55,7 +55,6 @@ export default async function postCustomer(
     });
     return newCustomer;
   } catch (e) {
-    console.log(e);
     throw new Error('Account creation failed');
   }
 }
