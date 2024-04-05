@@ -1,18 +1,12 @@
-// import { MDBDataTable } from 'mdbreact';
+import InventoryTable from '../../components/Buy/InventoryTable';
 
 function Inventory() {
-  // const blah = ['Orange', 'APple'];
-  return <h1>Hello</h1>;
+  return (
+    <>
+      <h1>Textbook Inventory</h1>
+      <InventoryTable />
+    </>
+  );
 }
-
-/* <MDBDataTable
-        striped
-        hover
-        entries={20}
-        pagesAmount={5}
-        responsiveSm
-        paginationLabel={['Prev', 'Next']}
-        data={blah}
-      /> */
 
 export default Inventory;
