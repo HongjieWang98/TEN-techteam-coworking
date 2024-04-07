@@ -4,7 +4,7 @@ function Inventory() {
   return (
     <>
       <h1>Textbook Inventory</h1>
-      <InventoryTable />
+      <InventoryTable buyFunctionality />
     </>
   );
 }
