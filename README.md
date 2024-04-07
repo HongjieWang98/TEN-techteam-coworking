@@ -1,10 +1,26 @@
+# Document Accumulation
+## ES Linter
+1. https://docs.google.com/document/d/1tOsL0x2yXYmezNgGicf92E7V5TRr0Ew8u4bBbuAeCO4/edit#heading=h.8kt70r1a43m3
+
+## Optimizing Reads
+1. https://docs.google.com/document/d/125ir7-Z6pNP9iNtUjvaV5K0fvr8OM6ZxBBgZBMJSYi8/edit#heading=h.si74ovm98uee
+
+## Database Schema
+1. https://docs.google.com/spreadsheets/d/1DrkDQKKq-NwyoRg2jD91z3ueMs0bcqsui7W-UMlKnV4/edit#gid=0
+
+
+
+
+
 # For building up the local environment
 
 ## Link VS code to Github: https://github.com/HongjieWang98/TEN-techteam-coworking
+
 1. In Visual Studio Code, open up a bash terminal
 2. "Git Clone Repository" in welcome page
 
 ## Install node.js and npm
+
 1. Go to https://nodejs.org/en, and download Nodejs 20.11.1 LTS
 
 ```
@@ -13,31 +29,36 @@ npm -v  //to make sure they are installed
 ```
 
 ## Install react-scripts
+
 ```
 npm install react-scripts
 ```
 
 ## Run in localhost
+
 ```
 npm start
 //if run into dependency error, rm package-lock.json
 ```
 
-
 ## Module Needed to be Installed in your Local Computer
+
 1. Install React Router:
-If encounter the error: Failed to compile ./src/components/App/App.js Module not found: Can't resolve 'react-router-dom'
-The following command will resolve it: 
+   If encounter the error: Failed to compile ./src/components/App/App.js Module not found: Can't resolve 'react-router-dom'
+   The following command will resolve it:
 
 ```
 npm install react-router-dom --save
 ```
+
 2. Install Bootstrap
+
 ```
 npm install react-bootstrap --save
 ```
 
 ## To push your code to GitHub using Git:
+
 ```
 git init
 git remote add origin https://github.com/yourusername/your-repository.git
@@ -46,9 +67,10 @@ git commit -m "Initial commit"
 git push -u origin your-branch
 
 ```
-  
+
 # Temporarily ignore the rest of the notes
----------------------------------------------------------------------------------------------------------------
+
+---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -120,4 +142,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
