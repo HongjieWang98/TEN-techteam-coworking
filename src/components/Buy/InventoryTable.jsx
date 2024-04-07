@@ -1,98 +1,92 @@
 import { useEffect, useState } from 'react';
-import { collection, getDocs, getDoc } from 'firebase/firestore/lite';
+// import { collection, getDocs, getDoc } from 'firebase/firestore/lite';
+// import { getDoc } from 'firebase/firestore/lite';
 import { MDBDataTable } from 'mdbreact';
-import { db } from '../../firebase/firebase_config';
+// import { db } from '../../firebase/firebase_config';
+import { useBuyContext } from '../../contexts/BuyContext';
+import { buyColumn, noBuyColumns } from './column';
 
-function InventoryTable() {
-  // const [textbooks, setTexbooks] = useState([]);
+function InventoryTable({ buyFunctionality }) {
+  const blah = useBuyContext();
+  console.log(typeof blah.cartData);
+  console.log(blah.cartData, blah.addToCart);
   const [data, setData] = useState({
-    columns: [
-      {
-        label: 'Course Number',
-        field: 'courseNumber',
-        sort: 'asc',
-        width: 150
-      },
-      {
-        label: 'Title',
-        field: 'title',
-        sort: 'asc',
-        width: 270
-      },
-      {
-        label: 'Edition',
-        field: 'edition',
-        sort: 'asc',
-        width: 200
-      },
-      {
-        label: 'Price',
-        field: 'price',
-        sort: 'asc',
-        width: 100
-      },
-      {
-        label: 'Condition',
-        field: 'condition',
-        sort: 'asc',
-        width: 100
-      },
-      {
-        label: 'Payment Methods',
-        field: 'paymentMethods',
-        sort: 'asc',
-        width: 100
-      }
-    ],
+    columns: buyFunctionality ? [...noBuyColumns, buyColumn] : noBuyColumns,
     rows: []
   });
+
+  // const handleAddToCart = (rowInfo, e) => {
+  //   e.stopPropagation();
+  //   console.log(rowInfo);
+  //   // addToCart(rowInfo);
+  // };
 
   // This function builds the data we want to display in the inventory
   // it builds this through book the current textbook information and getting
   // information about the seller (for the payment methods accepted)
 
-  async function tableFormatBook(book) {
-    const bookData = book.data();
-    const {
-      title,
-      department,
-      course_number: courseNumber,
-      edition,
-      price,
-      condition,
-      seller
-    } = bookData;
-    let maybeSellerPaymentMethods = '';
-    // Get the payment methods info
-    try {
-      const maybeSeller = await getDoc(seller);
-      const maybeSellerData = maybeSeller.data();
-      if (maybeSellerData.paymentMethod.venmo) {
-        maybeSellerPaymentMethods += 'Venmo';
-      } else if (maybeSellerData.paymentMethod.cash) {
-        maybeSellerPaymentMethods += 'Cash';
-      }
-    } catch (e) {
-      console.error('Retriving seller information failed');
-    }
-    return {
-      courseNumber: `${department} ${courseNumber}`,
-      title,
-      edition,
-      price,
-      condition,
-      paymentMethods: maybeSellerPaymentMethods
-    };
-  }
+  // async function tableFormatBook(book) {
+  //   const bookData = book.data();
+  //   const { seller } = bookData;
+  //   let maybeSellerPaymentMethods = '';
+  //   // Get the payment methods info
+  //   try {
+  //     const maybeSeller = await getDoc(seller);
+  //     const maybeSellerData = maybeSeller.data();
+  //     if (maybeSellerData.paymentMethod.venmo) {
+  //       maybeSellerPaymentMethods += 'Venmo';
+  //     } else if (maybeSellerData.paymentMethod.cash) {
+  //       maybeSellerPaymentMethods += 'Cash';
+  //     }
+  //   } catch (e) {
+  //     console.error('Retriving seller information failed');
+  //   }
+  //   console.log('The id is', bookData.id);
+  //   const rowInfo = {
+  //     id: bookData.id,
+  //     title: bookData.title,
+  //     courseAndDpmt: `${bookData.department} ${bookData.course_number}`,
+  //     edition: bookData.edition,
+  //     price: bookData.price,
+  //     condition: bookData.condition,
+  //     paymentMethods: maybeSellerPaymentMethods
+  //   };
+  //   // Let a column have a button if we want our table to have add to cart functionality
+  //   if (buyFunctionality) {
+  //     return {
+  //       ...rowInfo
+  //       // addToCart: (
+  //       //   <button type="button" onClick={(e) => handleAddToCart(rowInfo, e)}>
+  //       //     Add to cart
+  //       //   </button>
+  //       // )
+  //     };
+  //   }
+  //   // Otherwise if we just want to display no need for an add to cart functionality
+  //   return rowInfo;
+  // }
   useEffect(() => {
     async function fetchTextbooks() {
       try {
+        const booksTable = [
+          {
+            id: '1',
+            title: '1984',
+            courseAndDpmt: 'English 1',
+            edition: '1',
+            price: '2',
+            condition: 'poor',
+            paymentMethods: 'Cash',
+            addToCart: '999'
+          }
+        ];
         // Get all the textbooks @todo make this so only the textbooks of the
         // current user are gotten
-        const books = await getDocs(collection(db, 'items'));
-        const booksTablePromises = books.docs.map((book) => tableFormatBook(book));
-        // Need to wait for all Promises to resolve before populating array
-        const booksTable = await Promise.all(booksTablePromises);
+        // const books = await getDocs(collection(db, 'items'));
+        // const booksTablePromises = books.docs.map((book) => tableFormatBook(book));
+        // // Need to wait for all Promises to resolve before populating array
+        // const booksTable = await Promise.all(booksTablePromises);
+
         setData((prevState) => ({
           ...prevState,
           rows: booksTable
@@ -101,21 +95,38 @@ function InventoryTable() {
         console.error(e);
       }
     }
+    console.log('context', blah);
+    console.log('data', data.columns);
     fetchTextbooks();
   }, []);
 
-  console.log('data', data);
-
   return (
-    <MDBDataTable
-      striped
-      hover
-      entries={20}
-      pagesAmount={5}
-      responsiveSm
-      paginationLabel={['Prev', 'Next']}
-      data={data}
-    />
+    // <>
+    //   {cartData.map((selectedBook) => {
+    //     return <h1 key={selectedBook.id}>{selectedBook.title}</h1>;
+    //   })}
+    //   <MDBDataTable
+    //     striped
+    //     hover
+    //     entries={20}
+    //     pagesAmount={5}
+    //     responsiveSm
+    //     paginationLabel={['Prev', 'Next']}
+    //     data={data}
+    //   />
+    // </>
+    <>
+      <div>hi</div>
+      <MDBDataTable
+        striped
+        hover
+        entries={20}
+        pagesAmount={5}
+        responsiveSm
+        paginationLabel={['Prev', 'Next']}
+        data={data}
+      />
+    </>
   );
 }
 

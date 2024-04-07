@@ -1,26 +1,29 @@
 import React, { useContext, useState, createContext, useMemo } from 'react';
 
-const BuyContext = createContext({
-  cart: null,
-  setCart: () => {}
-});
+// The cart will store references to all the textbooks in the cart based on the
+// information stored in the rows of the table
+const BuyContext = createContext();
 
 export function BuyProvider({ children }) {
-  const [cartData, setCartData] = useState({
-    cart: null
-  });
+  const [cartData, setCartData] = useState(null);
 
-  const addToCart = (item) => {
-    setCartData([...cartData, item]);
+  const addToCart = (textbook) => {
+    if (cartData == null) {
+      setCartData([textbook]);
+    }
+    const itemExists = cartData.includes(textbook.id);
+    if (!itemExists) {
+      setCartData((currentCartData) => [...currentCartData, textbook]);
+    }
   };
 
-  const removeFromCart = (itemId) => {
-    setCartData(cartData.filter((item) => item.id !== itemId));
+  const removeFromCart = (textbook) => {
+    setCartData((currentCartData) => currentCartData.filter((item) => item.id !== textbook.i));
   };
 
   const value = useMemo(
     () => ({
-      cart: cartData,
+      cartData,
       addToCart,
       removeFromCart
     }),
