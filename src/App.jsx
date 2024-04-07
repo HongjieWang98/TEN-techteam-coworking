@@ -7,7 +7,7 @@ import HowToPage from './pages/Overview/HowTo/HowTo';
 import SchoolNavPage from './pages/Overview/SchoolNav/SchoolNav';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
-import NavigationBar from './components/ExternalNavigationBar/ExternalNavBar';
+import ExternalNavigationBar from './components/NavigationBar/ExternalNavBar';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
 import CreateAccount from './pages/Account/CreateAccount';
@@ -18,7 +18,7 @@ import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 function App() {
   return (
     <Router>
-      <NavigationBar />
+      <ExternalNavigationBar />
       <Routes>
         <Route path="/Home" element={<HomePage />}>
           {' '}

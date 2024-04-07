@@ -17,6 +17,7 @@ function AcceptDenyBuyerPage() {
 
   // TODO for now dont do this check for dev purposes
   // if the current user is not logged in
+  // eslint-disable-next-line no-constant-condition
   if (!currentUser && false) {
     useNavigate()('../..', { relative: 'path' });
   }
@@ -78,8 +79,12 @@ function AcceptDenyBuyerPage() {
           options={userPaymentMethods}
           checkedOptions={listingDetails.buyer.acceptedPaymentMethods}
         />
-        <button type="button" onClick={handleAcceptBuyer}>Accept Buyer</button>
-        <button type="button" onClick={handleDenyBuyer}>Deny Buyer</button>
+        <button type="button" onClick={handleAcceptBuyer}>
+          Accept Buyer
+        </button>
+        <button type="button" onClick={handleDenyBuyer}>
+          Deny Buyer
+        </button>
       </>
     )
   );
