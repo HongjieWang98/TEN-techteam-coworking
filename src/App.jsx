@@ -21,24 +21,12 @@ function App() {
 
       <NavigationBar />
       <Routes>
-        <Route path="/" element={<HomePage />}>
-          {/* {' '} */}
-        </Route>
-        <Route path="/Home" element={<HomePage />}>
-          {/* {' '} */}
-        </Route>
-        <Route path="/Home/howto" element={<HowToPage />}>
-          {/* {' '} */}
-        </Route>
-        <Route path="/Home/schoolnav" element={<SchoolNavPage />}>
-          {' '}
-        </Route>
-        <Route path="/Home/signin" element={<LoginPage />}>
-          {' '}
-        </Route>
+        <Route path="/" element={<HomePage />}/>
+        <Route path="/Home" element={<HomePage />}/>
+        <Route path="/Home/howto" element={<HowToPage />}/>
+        <Route path="/Home/schoolnav" element={<SchoolNavPage />}/>
+        <Route path="/Home/signin" element={<LoginPage />}/>
         <Route path="/Home/signup" element={<CreateAccount />}/>
-          {' '}
-        {/* </Route> */}
       </Routes>
 
       <Providers>
