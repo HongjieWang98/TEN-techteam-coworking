@@ -16,15 +16,9 @@ function App() {
     <Router>
       <NavigationBar />
       <Routes>
-        <Route path="/Home" element={<HomePage />}>
-          {' '}
-        </Route>
-        <Route path="/Home/howto" element={<HowToPage />}>
-          {' '}
-        </Route>
-        <Route path="/Home/schoolnav" element={<SchoolNavPage />}>
-          {' '}
-        </Route>
+        <Route path="/Home" element={<HomePage />}> </Route>
+        <Route path="/Home/howto" element={<HowToPage />}> </Route>
+        <Route path="/Home/schoolnav" element={<SchoolNavPage />}> </Route>
       </Routes>
 
       <SellProvider>
