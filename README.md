@@ -1,3 +1,17 @@
+# Document Accumulation
+## ES Linter
+1. https://docs.google.com/document/d/1tOsL0x2yXYmezNgGicf92E7V5TRr0Ew8u4bBbuAeCO4/edit#heading=h.8kt70r1a43m3
+
+## Optimizing Reads
+1. https://docs.google.com/document/d/125ir7-Z6pNP9iNtUjvaV5K0fvr8OM6ZxBBgZBMJSYi8/edit#heading=h.si74ovm98uee
+
+## Database Schema
+1. https://docs.google.com/spreadsheets/d/1DrkDQKKq-NwyoRg2jD91z3ueMs0bcqsui7W-UMlKnV4/edit#gid=0
+
+
+
+
+
 # For building up the local environment
 
 ## Link VS code to Github: https://github.com/HongjieWang98/TEN-techteam-coworking
