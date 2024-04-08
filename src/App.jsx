@@ -32,8 +32,6 @@ function App() {
       <Providers>
         <PageWrapper>
           <Routes>
-            {/* <Route path="/signin" element={<LoginPage />} />
-            <Route path="/signup" element={<CreateAccount />} /> */}
             <Route path="/applicationform" element={<ApplicationForm />} />
             <Route path="sell">
               <Route path="list" element={<ListingPage />} />
