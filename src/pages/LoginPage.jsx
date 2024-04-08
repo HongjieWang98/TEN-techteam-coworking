@@ -17,7 +17,6 @@ function LoginPage() {
           </div>
         </Container>
       </AuthProvider>
-      {/* <Link to="/applicationform">Click Here to go to CreateListing Component</Link> */}
     </>
   );
 }
