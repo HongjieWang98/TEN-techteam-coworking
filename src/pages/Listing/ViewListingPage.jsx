@@ -4,23 +4,15 @@ import { useAuth } from '../../contexts/AuthContext';
 import BuyerListing from '../../components/Listing/BuyerListing';
 import SellerListing from '../../components/Listing/SellerListing';
 
-const UserRolesInListingTypes = Object.freeze({
-  SELLER: 'seller',
-  BUYER: 'buyer',
-  NOT_INVOLVED: 'not_involved'
-});
-
 function ViewListingPage() {
   const { listingId } = useParams();
   const [listingComponent, setListingComponent] = useState(null);
-  const [currUserRoleInListing, setCurrUserRoleInListing] = useState(
-    UserRolesInListingTypes.NOT_INVOLVED
-  );
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
   // TODO for now dont do this check for dev purposes
   // if the current user is not logged in
+  // eslint-disable-next-line no-constant-condition
   if (!currentUser && false) {
     navigate('../..', { relative: 'path' });
   }
@@ -51,22 +43,13 @@ function ViewListingPage() {
     };
 
     if (dummyListingDetails.buyer.id === userId) {
-      setCurrUserRoleInListing(UserRolesInListingTypes.BUYER);
       setListingComponent(<BuyerListing listingData={dummyListingDetails} />);
     } else if (dummyListingDetails.seller.id === userId) {
-      setCurrUserRoleInListing(UserRolesInListingTypes.SELLER);
       setListingComponent(<SellerListing listingData={dummyListingDetails} />);
-    } else {
-      // TODO we might have to redirect the user or show a non authorized page
-      setCurrUserRoleInListing(UserRolesInListingTypes.NOT_INVOLVED);
     }
   }, [listingId]);
 
-  return (
-    <>
-      <div>{listingComponent}</div>
-    </>
-  );
+  return <div>{listingComponent}</div>;
 }
 
 export default ViewListingPage;

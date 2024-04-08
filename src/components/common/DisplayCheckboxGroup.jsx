@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 
 /**
@@ -14,8 +15,14 @@ function DisplayCheckboxGroup({ label, options, checkedOptions }) {
       <label>{label}</label>
       {Object.entries(options).map(([value, labelText]) => (
         <div key={value}>
-          <input type="checkbox" value={value} checked={checkedOptions.includes(value)} disabled />
-          <label>{labelText}</label>
+          <input
+            name={labelText}
+            type="checkbox"
+            value={value}
+            checked={checkedOptions.includes(value)}
+            disabled
+          />
+          <label htmlFor={labelText}>{labelText}</label>
         </div>
       ))}
     </div>

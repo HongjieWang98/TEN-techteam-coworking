@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import AccountCreation from '../components/AccountCreation';
+import AccountCreation from '../../components/AccountCreation';
 
 function CreateAccount() {
   return (

@@ -7,19 +7,18 @@ import HowToPage from './pages/Overview/HowTo/HowTo';
 import SchoolNavPage from './pages/Overview/SchoolNav/SchoolNav';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
-import { SellProvider } from './contexts/SellContext';
-import NavigationBar from './components/ExternalNavigationBar/ExternalNavBar';
+import ExternalNavigationBar from './components/NavigationBar/ExternalNavBar';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
-import CreateAccount from './pages/CreateAccount';
+import CreateAccount from './pages/Account/CreateAccount';
 import AcceptDenyBuyerPage from './pages/Listing/AceeptDenyBuyerPage';
 import PageWrapper from './components/PageWrapper';
+import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 
 function App() {
   return (
     <Router>
-
-      <NavigationBar />
+      <ExternalNavigationBar />
       <Routes>
         <Route path="/" element={<HomePage />}/>
         <Route path="/Home" element={<HomePage />}/>
@@ -41,6 +40,8 @@ function App() {
               <Route path=":listingId" element={<ViewListingPage />} />
               <Route path=":listingId/accept" element={<AcceptDenyBuyerPage />} />
             </Route>
+            <Route path="/signup" element={<CreateAccount />} />
+            <Route path="/signup/success" element={<SuccessCreateAccount />} />
            
           </Routes>
         </PageWrapper>

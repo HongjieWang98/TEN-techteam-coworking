@@ -3,7 +3,7 @@ import Listing from './Listing';
 
 function SellerListing({ listingData }) {
   let buyerExists = true;
-  let canRemove = true;
+  const canRemove = true;
 
   useEffect(() => {
     buyerExists = !!listingData.buyer;
@@ -28,12 +28,20 @@ function SellerListing({ listingData }) {
 
       {buyerExists && (
         <>
-          <button onClick={handleAcceptBuyer}>Accept Buyer</button>
-          <button onClick={handleDenyBuyer}>Deny Buyer</button>
+          <button type="button" onClick={handleAcceptBuyer}>
+            Accept Buyer
+          </button>
+          <button type="button" onClick={handleDenyBuyer}>
+            Deny Buyer
+          </button>
         </>
       )}
 
-      {canRemove && <button onClick={handleRemoveListing}>Remove Listing</button>}
+      {canRemove && (
+        <button type="button" onClick={handleRemoveListing}>
+          Remove Listing
+        </button>
+      )}
     </>
   );
 }
