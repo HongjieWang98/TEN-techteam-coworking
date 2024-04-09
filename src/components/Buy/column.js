@@ -3,7 +3,7 @@
 export const noBuyColumns = [
   {
     label: 'Course Number',
-    field: 'courseNumber',
+    field: 'courseAndDpmt',
     sort: 'asc',
     width: 150
   },
