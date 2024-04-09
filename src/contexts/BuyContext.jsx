@@ -2,10 +2,14 @@ import React, { useContext, useState, createContext, useMemo } from 'react';
 
 // The cart will store references to all the textbooks in the cart based on the
 // information stored in the rows of the table
-const BuyContext = createContext();
+const BuyContext = createContext({
+  cartData: [],
+  addToCart: () => {},
+  removeFromCart: () => {}
+});
 
 export function BuyProvider({ children }) {
-  const [cartData, setCartData] = useState(null);
+  const [cartData, setCartData] = useState([]);
 
   const addToCart = (textbook) => {
     if (cartData == null) {
