@@ -2,6 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import Input from '../../components/common/Input';
 import { useSellContext } from '../../contexts/SellContext';
+import { push, set } from "firebase/database";
+import { ref as sRef } from 'firebase/storage';
+import { db } from '../../firebase/firebase_config';
+
 
 export default function ListingPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,6 +15,7 @@ export default function ListingPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
+    console.log(db);
 
     if (formRef?.current) {
       const formData = new FormData(formRef.current);
@@ -20,11 +25,26 @@ export default function ListingPage() {
       });
 
       setListing(data);
-      // TODO upload to database
-      navigate('/sell/confirmation/');
-    }
+      // TODO upload to database- worked on by Grace
+      try {
+        // const auth = getAuth();
+        var itemsRef = sRef(db, 'items');
+        const newItemsRef = push(itemsRef);
+        set(newItemsRef, {
+          isbn: data['isbn'],
+          title: data['title'],
+          author : data['author'],
+          course_number: data['courseNumber'],
+          price: data['price']
+        });
+        navigate('/sell/confirmation/');
+      }
+      catch(error) {
+        console.error('Error uploading data to database: ', error);
+      }
 
     setIsLoading(false);
+    }
   }
 
   return (
@@ -85,9 +105,7 @@ export default function ListingPage() {
         type="text"
         isLoading={isLoading}
       />
-      <button type="submit" disabled={isLoading}>
-        Submit
-      </button>
+      <button type="submit" disabled={isLoading}>Submit</button>
     </form>
   );
 }
