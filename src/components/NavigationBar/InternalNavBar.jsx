@@ -3,9 +3,10 @@ import './NavigationBar.css';
 import logo from '../../images/logo2.png';
 import NavigationBarItem from './NavigationBarDef';
 
-function NavigationBar() {
+function InternalNavigationBar() {
+  // **** @todo Fix the linking of the nav bar items ***
   return (
-    <div className="NavigationBarContainer">
+    <div className="NavigationBarContainer" style={{ backgroundColor: '#DBEEFF' }}>
       <div
         className="NavigationBarItemContainer"
         style={{
@@ -18,26 +19,33 @@ function NavigationBar() {
       </div>
       <NavigationBarItem
         float="Left"
-        text="Get started"
-        link="/Home/SchoolNav"
+        text="My account"
+        link="/profile"
         /* id='nav-your-listings' */
       />
       <NavigationBarItem
         float="Left"
-        text="How it works"
-        link="/Home/HowTo"
+        text="Sell"
+        link="/sell"
         /* class='NoDisplayAtPhone600'
-      id='nav-about' */
+        id='nav-about' */
+      />
+      <NavigationBarItem
+        float="Left"
+        text="Buy"
+        link="/buy"
+        /* class='NoDisplayAtPhone480'
+        id='nav-members' */
       />
       <NavigationBarItem
         float="Left"
         text="Home"
-        link="/Home"
+        link="/home"
         /* class='NoDisplayAtPhone480'
-      id='nav-members' */
+        id='nav-members' */
       />
     </div>
   );
 }
 
-export default NavigationBar;
+export default InternalNavigationBar;

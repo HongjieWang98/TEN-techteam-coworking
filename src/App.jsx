@@ -7,7 +7,7 @@ import HowToPage from './pages/Overview/HowTo/HowTo';
 import SchoolNavPage from './pages/Overview/SchoolNav/SchoolNav';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
-import NavigationBar from './components/ExternalNavigationBar/ExternalNavBar';
+import ExternalNavigationBar from './components/NavigationBar/ExternalNavBar';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
 import CreateAccount from './pages/Account/CreateAccount';
@@ -19,23 +19,19 @@ import Profile from './pages/Profile';
 function App() {
   return (
     <Router>
-      <NavigationBar />
+      <ExternalNavigationBar />
       <Routes>
-        <Route path="/Home" element={<HomePage />}>
-          {' '}
-        </Route>
-        <Route path="/Home/howto" element={<HowToPage />}>
-          {' '}
-        </Route>
-        <Route path="/Home/schoolnav" element={<SchoolNavPage />}>
-          {' '}
-        </Route>
+        <Route path="/" element={<HomePage />}/>
+        <Route path="/Home" element={<HomePage />}/>
+        <Route path="/Home/howto" element={<HowToPage />}/>
+        <Route path="/Home/schoolnav" element={<SchoolNavPage />}/>
+        <Route path="/Home/signin" element={<LoginPage />}/>
+        <Route path="/Home/signup" element={<CreateAccount />}/>
       </Routes>
 
       <Providers>
         <PageWrapper>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
             <Route path="/applicationform" element={<ApplicationForm />} />
             <Route path="sell">
               <Route path="list" element={<ListingPage />} />
@@ -48,6 +44,7 @@ function App() {
             <Route path="/signup" element={<CreateAccount />} />
             <Route path="/signup/success" element={<SuccessCreateAccount />} />
             <Route path="/profile" element={<Profile />} />
+           
           </Routes>
         </PageWrapper>
       </Providers>
