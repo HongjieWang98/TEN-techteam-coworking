@@ -14,6 +14,7 @@ import PageWrapper from './components/PageWrapper';
 import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 import Inventory from './pages/Buy/Inventory';
+import { BuyProvider } from './contexts/BuyContext';
 
 function App() {
   return (
@@ -31,19 +32,23 @@ function App() {
 
       <Providers>
         <PageWrapper>
-          <Routes>
-            <Route path="sell">
-              <Route path="list" element={<ListingPage />} />
-              <Route path="confirmation" element={<ConfirmationPage />} />
-            </Route>
-            <Route path="/listing/">
-              <Route path=":listingId" element={<ViewListingPage />} />
-              <Route path=":listingId/accept" element={<AcceptDenyBuyerPage />} />
-            </Route>
-            <Route path="/signup" element={<CreateAccount />} />
-            <Route path="/signup/success" element={<SuccessCreateAccount />} />
-            <Route path="/buy/inventory" element={<Inventory />} />
-          </Routes>
+          <BuyProvider>
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/applicationform" element={<ApplicationForm />} />
+              <Route path="sell">
+                <Route path="list" element={<ListingPage />} />
+                <Route path="confirmation" element={<ConfirmationPage />} />
+              </Route>
+              <Route path="/listing/">
+                <Route path=":listingId" element={<ViewListingPage />} />
+                <Route path=":listingId/accept" element={<AcceptDenyBuyerPage />} />
+              </Route>
+              <Route path="/signup" element={<CreateAccount />} />
+              <Route path="/signup/success" element={<SuccessCreateAccount />} />
+              <Route path="/inventory" element={<Inventory />} />
+            </Routes>
+          </BuyProvider>
         </PageWrapper>
       </Providers>
     </Router>
