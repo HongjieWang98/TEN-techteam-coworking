@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import Input from '../../components/common/Input';
 import { useSellContext } from '../../contexts/SellContext';
 import { push, set } from "firebase/database";
-import { ref as sRef } from 'firebase/storage';
+import { getStorage, ref as storageRef } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 import { db } from '../../firebase/firebase_config';
 
 
@@ -25,12 +25,10 @@ export default function ListingPage() {
       });
 
       setListing(data);
-      // TODO upload to database- worked on by Grace
+
       try {
         // const auth = getAuth();
-        var itemsRef = sRef(db, 'items');
-        const newItemsRef = push(itemsRef);
-        set(newItemsRef, {
+        set(ref(db, 'items'), {
           isbn: data['isbn'],
           title: data['title'],
           author : data['author'],
