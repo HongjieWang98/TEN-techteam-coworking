@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import Input from '../../components/common/Input';
 import { useSellContext } from '../../contexts/SellContext';
-import { push, set } from "firebase/database";
-import { getStorage, ref as storageRef } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+import { set } from "firebase/database";
+import { ref as sRef } from 'firebase/storage';
 import { db } from '../../firebase/firebase_config';
 
 
@@ -28,12 +28,13 @@ export default function ListingPage() {
 
       try {
         // const auth = getAuth();
-        set(ref(db, 'items'), {
+        set(sRef(db, 'items'), {
           isbn: data['isbn'],
           title: data['title'],
           author : data['author'],
           course_number: data['courseNumber'],
-          price: data['price']
+          price: data['price'],
+          notes: ['notes']
         });
         navigate('/sell/confirmation/');
       }
