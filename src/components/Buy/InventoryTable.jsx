@@ -6,7 +6,7 @@ import { useBuyContext } from '../../contexts/BuyContext';
 import { buyColumn, noBuyColumns } from './column';
 
 function InventoryTable({ buyFunctionality }) {
-  const { cartData, addToCart } = useBuyContext();
+  const { addToCart } = useBuyContext();
   const [data, setData] = useState({
     columns: buyFunctionality ? [...noBuyColumns, buyColumn] : noBuyColumns,
     rows: []
@@ -38,7 +38,7 @@ function InventoryTable({ buyFunctionality }) {
       console.error('Retriving seller information failed');
     }
     const rowInfo = {
-      id: bookData.id,
+      id: book.id,
       title: bookData.title,
       courseAndDpmt: `${bookData.department} ${bookData.course_number}`,
       edition: bookData.edition,
@@ -95,32 +95,15 @@ function InventoryTable({ buyFunctionality }) {
 
   // Just trying to test if cartData actually contains the books added to it
   return (
-    <>
-      {cartData.map((selectedBook) => {
-        return <h1 key={selectedBook.id}>{selectedBook.title}</h1>;
-      })}
-      <MDBDataTable
-        striped
-        hover
-        entries={20}
-        pagesAmount={5}
-        responsiveSm
-        paginationLabel={['Prev', 'Next']}
-        data={data}
-      />
-    </>
-    // <>
-    //   <div>hi</div>
-    //   <MDBDataTable
-    //     striped
-    //     hover
-    //     entries={20}
-    //     pagesAmount={5}
-    //     responsiveSm
-    //     paginationLabel={['Prev', 'Next']}
-    //     data={data}
-    //   />
-    // </>
+    <MDBDataTable
+      striped
+      hover
+      entries={20}
+      pagesAmount={5}
+      responsiveSm
+      paginationLabel={['Prev', 'Next']}
+      data={data}
+    />
   );
 }
 
