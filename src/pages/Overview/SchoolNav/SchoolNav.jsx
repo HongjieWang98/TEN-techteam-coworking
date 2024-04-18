@@ -8,10 +8,10 @@ function LoginView(props) {
   const { school } = props; // destructuring prop or else would get linter error
   return (
     <>
-      <h3>{school} is using a virtual textbook exchange!</h3>
-      <h5>To buy or sell textbooks, please login or create an account below.</h5>
-
       <AuthProvider>
+        <h3>{school} is using a virtual textbook exchange!</h3>
+        <h5>To buy or sell textbooks, please login or create an account below.</h5>
+
         <Container
           className="d-flex align-items-center justify-content-center"
           style={{ minHeight: '40vh' }}>
@@ -39,6 +39,7 @@ function ProdOneDesc(props) {
   );
 }
 
+//will pull this from the database in the future
 function SchoolNavPage() {
   const schools = [
     'Tufts University',
@@ -49,15 +50,7 @@ function SchoolNavPage() {
 
   const [selectedSchool, setSelectedSchool] = React.useState('none');
 
-  // Will use this list in future versions
-  /* const schoolList = [
-    ['Tufts University', 'virtual'],
-    ['Wesleyan University', 'in-person'],
-    ['Northeastern University', 'virtual'],
-    ['Tower Hill School', 'in-person']
-  ]; */
-
-  // I will update this function at some point to lookup in the schoolList array to determine
+  // I will update this function at some point to lookup in the schoolList database to determine
   // what each school should route to. Right now it is hard coded
   function navigate() {
     return selectedSchool === 'none' ? (
