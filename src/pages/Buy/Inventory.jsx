@@ -1,12 +1,7 @@
-import InventoryTable from '../../components/Buy/InventoryTable';
+import InventoryPage from '../../components/Buy/InventoryPage';
 
 function Inventory() {
-  return (
-    <>
-      <h1>Textbook Inventory</h1>
-      <InventoryTable buyFunctionality />
-    </>
-  );
+  return <InventoryPage buyFunctionality />;
 }
 
 export default Inventory;
