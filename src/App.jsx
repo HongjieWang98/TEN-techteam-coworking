@@ -7,7 +7,10 @@ import HowToPage from './pages/Overview/HowTo/HowTo';
 import SchoolNavPage from './pages/Overview/SchoolNav/SchoolNav';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
+import { SellProvider } from './contexts/SellContext';
 import NavigationBar from './components/ExternalNavigationBar/ExternalNavBar';
+import CreateAccount from './pages/CreateAccount';
+import ExternalNavigationBar from './components/NavigationBar/ExternalNavBar';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
 import CreateAccount from './pages/Account/CreateAccount';
@@ -20,17 +23,14 @@ import { BuyProvider } from './contexts/BuyContext';
 function App() {
   return (
     <Router>
-      <NavigationBar />
+      <ExternalNavigationBar />
       <Routes>
-        <Route path="/Home" element={<HomePage />}>
-          {' '}
-        </Route>
-        <Route path="/Home/howto" element={<HowToPage />}>
-          {' '}
-        </Route>
-        <Route path="/Home/schoolnav" element={<SchoolNavPage />}>
-          {' '}
-        </Route>
+        <Route path="/" element={<HomePage />}/>
+        <Route path="/Home" element={<HomePage />}/>
+        <Route path="/Home/howto" element={<HowToPage />}/>
+        <Route path="/Home/schoolnav" element={<SchoolNavPage />}/>
+        <Route path="/Home/signin" element={<LoginPage />}/>
+        <Route path="/Home/signup" element={<CreateAccount />}/>
       </Routes>
 
       <Providers>

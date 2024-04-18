@@ -1,5 +1,12 @@
-import { collection, query, where, getDocs, addDoc } from 'firebase/firestore/lite';
-import { db } from '../../firebase/firebase_config';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  serverTimestamp
+} from 'firebase/firestore/lite';
+import { db } from '../firebase/firebase_config';
 
 export default async function postCustomer(
   schoolEmail,
@@ -33,8 +40,7 @@ export default async function postCustomer(
 
   try {
     // Get the current date/time
-    const newDate = new Date();
-    const currTime = newDate.getTime();
+    const currTime = serverTimestamp();
     const newCustomer = await addDoc(collection(db, 'customers'), {
       schoolEmail,
       password,

@@ -27,7 +27,7 @@ export default function Signin() {
           </Form>
         </Card.Body>
       </Card>
-      <Link to="/signup">
+      <Link to="/Home/signup">
         <div className="w-100 text-center mt-2">Do not have an account? Sign up</div>
       </Link>
     </>

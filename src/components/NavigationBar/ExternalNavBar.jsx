@@ -3,9 +3,9 @@ import './NavigationBar.css';
 import logo from '../../images/logo2.png';
 import NavigationBarItem from './NavigationBarDef';
 
-function NavigationBar() {
+function ExternalNavigationBar() {
   return (
-    <div className="NavigationBarContainer">
+    <div className="NavigationBarContainer" style={{ backgroundColor: '#fff' }}>
       <div
         className="NavigationBarItemContainer"
         style={{
@@ -27,17 +27,17 @@ function NavigationBar() {
         text="How it works"
         link="/Home/HowTo"
         /* class='NoDisplayAtPhone600'
-        id='nav-about' */
+      id='nav-about' */
       />
       <NavigationBarItem
         float="Left"
         text="Home"
         link="/Home"
         /* class='NoDisplayAtPhone480'
-        id='nav-members' */
+      id='nav-members' */
       />
     </div>
   );
 }
 
-export default NavigationBar;
+export default ExternalNavigationBar;
