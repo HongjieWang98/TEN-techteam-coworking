@@ -5,5 +5,40 @@
   color: #1a3257;
   position: relative;
   text-align: center;
-  padding: 30px;
+  padding: 40px;
+}
+
+.SectionContent {
+  text-align: center;
+  font-size: 18px;
+  margin: auto;
+  padding: 20px;
+  line-height: 1.5;
+  position: relative;
+  max-width: 1000px;
+  color: #1a3257;
+}
+
+.DropDown {
+  text-align: center;
+  font-size: 16px;
+  margin: auto;
+  padding: 5px;
+  position: relative;
+  max-width: 1000px;
+  color: #1a3257;
+}
+
+.SectionSubtitle {
+  text-align: center;
+  line-height: 1.3;
+  color: #1a3257;
+  font-size: 24px;
+  padding: 30px 0 10px 0;
+}
+
+.SectionWrapper {
+  background-color: #fff;
+  padding: 50px 20px;
+  font-family: 'Archivo', sans-serif;
 }

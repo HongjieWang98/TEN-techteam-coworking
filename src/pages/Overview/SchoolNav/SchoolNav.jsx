@@ -6,19 +6,21 @@ import { AuthProvider } from '../../../contexts/AuthContext';
 
 function LoginView(props) {
   const { school } = props; // destructuring prop or else would get linter error
+
   return (
     <>
       <AuthProvider>
-        <h3>{school} is using a virtual textbook exchange!</h3>
-        <h5>To buy or sell textbooks, please login or create an account below.</h5>
-
-        <Container
-          className="d-flex align-items-center justify-content-center"
-          style={{ minHeight: '40vh' }}>
-          <div className="w-100" style={{ maxWidth: '400px' }}>
-            <Signin />
-          </div>
-        </Container>
+          <div className="SectionSubtitle">{school} is using a virtual textbook exchange!</div>
+          <div className="SectionContent">To buy or sell textbooks, please login or create an account below.</div>
+        <div className="SectionWrapper">
+          <Container
+            className="d-flex align-items-center justify-content-center"
+            style={{ minHeight: '40vh' }}>
+            <div className="w-100" style={{ maxWidth: '400px' }}>
+              <Signin />
+            </div>
+          </Container>
+        </div>
       </AuthProvider>
     </>
   );
@@ -28,13 +30,13 @@ function ProdOneDesc(props) {
   const { school } = props; // destructuring prop or else would get linter error
   return (
     <>
-      <h3>{school} is using an inperson textbook exchange!</h3>
-      <h5>
+      <div className="SectionSubtitle">{school} is using an inperson textbook exchange!</div>
+      <div className="SectionContent">
         To buy or sell textbooks, you must go inperson to the {school} Textbook Exchange. Please
-        reach out to your student government to learn more about the open times for
+        reach out to your student government to learn more about the open times for 
         {school}&apos;s in-person textbook exchange. You may browse the textbooks available in the
         &apos;browse&apos; tab above.
-      </h5>
+      </div>
     </>
   );
 }
@@ -54,7 +56,7 @@ function SchoolNavPage() {
   // what each school should route to. Right now it is hard coded
   function navigate() {
     return selectedSchool === 'none' ? (
-      <h3>please select your school</h3>
+      <div className="SectionContent"> Please select your school</div>
     ) : selectedSchool === 'Tufts University' ? (
       <LoginView school={selectedSchool} />
     ) : (
@@ -64,14 +66,16 @@ function SchoolNavPage() {
 
   return (
     <>
-      <div className="SectionTitleHeader left">What school do you attend?</div>
+      <div className="SectionTitleHeader">What school do you attend?</div>
 
-      <select value={selectedSchool} onChange={(e) => setSelectedSchool(e.target.value)}>
-        <option value="none" key="none"> </option>
-        {schools.map((school) => (
-          <option value={school} key={school}> {school} </option>
-        ))}
-      </select>
+      <div className="DropDown">
+        <select className= "DropDown" value={selectedSchool} onChange={(e) => setSelectedSchool(e.target.value)}>
+          <option value="none" key="none"> </option>
+          {schools.map((school) => (
+            <option value={school} key={school}> {school} </option>
+          ))}
+        </select>
+      </div>
 
       <p> </p>
 

@@ -7,6 +7,10 @@ hr {
     margin: 50px auto;
     padding: 0;
   }
+  .BodyWrapper {
+    max-width: 1170px;
+    margin: 0 auto;
+  }
   .TitleSection {
     margin-top: 70px;
     height: 600px;
@@ -123,7 +127,7 @@ hr {
   .left {
     text-align: left;
     margin-left: 50px;
-  }
+  } 
   .center {
     text-align: center;
   }
@@ -196,6 +200,7 @@ hr {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     line-height: 28px;
+    font-size: 16px;
   }
   .ImageWrap {
     height: 100%;
