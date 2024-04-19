@@ -6,7 +6,6 @@ import { AuthProvider } from '../../../contexts/AuthContext';
 
 function LoginView(props) {
   const { school } = props; // destructuring prop or else would get linter error
-
   return (
     <>
       <AuthProvider>
