@@ -8,7 +8,6 @@ import SchoolNavPage from './pages/Overview/SchoolNav/SchoolNav';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import { SellProvider } from './contexts/SellContext';
-import NavigationBar from './components/ExternalNavigationBar/ExternalNavBar';
 import Profile from './pages/Profile';
 import CreateAccount from './pages/CreateAccount';
 import ExternalNavigationBar from './components/NavigationBar/ExternalNavBar';
