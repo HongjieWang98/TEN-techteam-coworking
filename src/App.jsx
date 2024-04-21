@@ -11,6 +11,7 @@ import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
 import AcceptDenyBuyerPage from './pages/Listing/AceeptDenyBuyerPage';
 import PageWrapper from './components/PageWrapper';
+import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 import Inventory from './pages/Buy/Inventory';
 import { BuyProvider } from './contexts/BuyContext';
@@ -18,15 +19,14 @@ import { BuyProvider } from './contexts/BuyContext';
 function App() {
   return (
     <Router>
-    
       <ExternalNavigationBar />
       <Routes>
-        <Route path="/" element={<HomePage />}/>
-        <Route path="/Home" element={<HomePage />}/>
-        <Route path="/Home/howto" element={<HowToPage />}/>
-        <Route path="/Home/schoolnav" element={<SchoolNavPage />}/>
-        <Route path="/Home/signin" element={<LoginPage />}/>
-        <Route path="/Home/signup" element={<CreateAccount />}/>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/Home" element={<HomePage />} />
+        <Route path="/Home/howto" element={<HowToPage />} />
+        <Route path="/Home/schoolnav" element={<SchoolNavPage />} />
+        <Route path="/Home/signin" element={<LoginPage />} />
+        <Route path="/Home/signup" element={<CreateAccount />} />
       </Routes>
 
       <Providers>
@@ -34,7 +34,6 @@ function App() {
           <BuyProvider>
             <Routes>
               <Route path="/" element={<LoginPage />} />
-              <Route path="/applicationform" element={<ApplicationForm />} />
               <Route path="sell">
                 <Route path="list" element={<ListingPage />} />
                 <Route path="confirmation" element={<ConfirmationPage />} />
