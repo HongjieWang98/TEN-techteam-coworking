@@ -9,7 +9,7 @@ import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import { SellProvider } from './contexts/SellContext';
 import Profile from './pages/Profile';
-import CreateAccount from './pages/CreateAccount';
+import CreateAccount from './pages/Account/CreateAccount';
 import ExternalNavigationBar from './components/NavigationBar/ExternalNavBar';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
