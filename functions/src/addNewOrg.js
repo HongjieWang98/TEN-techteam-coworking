@@ -20,7 +20,7 @@ export const addNewOrg = onRequest(async (req, res) => {
 
   // first validate the object and make sure no extraneous fields are added
   for (const key in newOrgData) {
-    if (!["domains", "exchange_location", "name", "schedule"].includes(key)) {
+    if (!["domains", "exchange_location", "name", "schedule", "dryRun"].includes(key)) {
       return respondWithErrorMessage(`extraneous field defined in body: ${key}`)
     }
   }
@@ -29,7 +29,8 @@ export const addNewOrg = onRequest(async (req, res) => {
     domains,
     exchange_location,
     name,
-    schedule
+    schedule,
+    dryRun = true
   } = newOrgData;
 
   // now validate the fields
@@ -71,13 +72,17 @@ export const addNewOrg = onRequest(async (req, res) => {
 
   // add the fields to the new document
   try {
-    const newOrg = await getFirestore()
+    if (dryRun === false) {
+      const newOrg = await getFirestore()
       .collection("organizations")
       .add({
         ...newOrgData
-      })  
-    
-    res.json({result: `New org with ID: ${newOrg.id} added.`});
+      });
+
+      return res.json({result: `New org with ID: ${newOrg.id} added.`});
+    }
+
+    return res.json({result: "Data passed validation. No data inserted to db as dryRun was enabled. Set 'dryRun: false' if you want to insert data."})
   } catch (e) {
     return respondWithErrorMessage(`Error while adding new org data: ${e.message}`)
   }
