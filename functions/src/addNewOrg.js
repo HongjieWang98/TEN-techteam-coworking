@@ -1,6 +1,6 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { initializeApp } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
+import { getFirestore, Timestamp } from "firebase-admin/firestore";
 
 initializeApp();
 
@@ -76,7 +76,8 @@ export const addNewOrg = onRequest(async (req, res) => {
       const newOrg = await getFirestore()
       .collection("organizations")
       .add({
-        ...newOrgData
+        ...newOrgData,
+        created_at: Timestamp.now()
       });
 
       return res.json({result: `New org with ID: ${newOrg.id} added.`});
