@@ -74,6 +74,7 @@ function SchoolNavPage() {
 
   return (
     <>
+
       <div className="SectionTitleHeaderNav">What school do you attend?</div>
 
       <div className="DropDown">
