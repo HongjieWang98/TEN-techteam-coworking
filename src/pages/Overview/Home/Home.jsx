@@ -128,7 +128,6 @@ function ProblemStatement() {
         affordable alternative. The result is that students are forced to
         tailor their classes and study habits to accommodate textbook access.
       </div>
-      <hr />
       <div className='StatisticCanvasWrapper'>
         <StatisticCanvas
           completion={0.65}

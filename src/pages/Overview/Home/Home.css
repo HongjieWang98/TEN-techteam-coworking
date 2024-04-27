@@ -89,6 +89,8 @@ div > .badge {
   color: #1a3257;
   position: relative;
   z-index: 10;
+  text-align: left;
+  margin-left: 50px;
 }
 .SectionSubtitleHeader {
   line-height: 1.3;

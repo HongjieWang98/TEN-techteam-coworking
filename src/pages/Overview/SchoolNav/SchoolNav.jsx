@@ -3,6 +3,7 @@ import './SchoolNav.css';
 import { Container } from 'react-bootstrap';
 import Signin from '../../../components/Signin';
 import { AuthProvider } from '../../../contexts/AuthContext';
+import logoimage from '../../../images/logo2.png';
 
 function LoginView(props) {
   const { school } = props; // destructuring prop or else would get linter error
@@ -40,6 +41,14 @@ function ProdOneDesc(props) {
   );
 }
 
+function EndingLogo() {
+  return (
+    <div className='EndingWrapper'>
+      <img src={logoimage} width='125px' />
+    </div>
+  );
+}
+
 //will pull this from the database in the future
 function SchoolNavPage() {
   const schools = [
@@ -65,7 +74,7 @@ function SchoolNavPage() {
 
   return (
     <>
-      <div className="SectionTitleHeader">What school do you attend?</div>
+      <div className="SectionTitleHeaderNav">What school do you attend?</div>
 
       <div className="DropDown">
         <select className= "DropDown" value={selectedSchool} onChange={(e) => setSelectedSchool(e.target.value)}>
@@ -79,6 +88,7 @@ function SchoolNavPage() {
       <p> </p>
 
       {navigate()}
+      <EndingLogo />
     </>
   );
 }
