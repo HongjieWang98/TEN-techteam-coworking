@@ -51,3 +51,5 @@ curl -X POST http://127.0.0.1:5001/fir-testjuly8/us-central1/addNewOrg -H 'Conte
 ```
 npm run prod-deploy
 ```
+
+#Todo, add how to use the production version of function 
