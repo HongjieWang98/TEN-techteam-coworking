@@ -44,6 +44,8 @@ curl -X POST http://127.0.0.1:5001/fir-testjuly8/us-central1/addNewOrg -H 'Conte
 }'
 ```
 
+`dryRun` is set to `false` by default. Set to `true` if you actually want to add an org.
+
 ### To deploy the function to prod
 
 ```
