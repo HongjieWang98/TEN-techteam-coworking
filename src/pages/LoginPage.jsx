@@ -17,6 +17,7 @@ function LoginPage() {
           </div>
         </Container>
       </AuthProvider>
+      <Link to="/inventory">Click Here to go to Buy Textbooks</Link>
     </>
   );
 }
