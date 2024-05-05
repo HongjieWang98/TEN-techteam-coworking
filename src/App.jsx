@@ -13,7 +13,6 @@ import AcceptDenyBuyerPage from './pages/Listing/AceeptDenyBuyerPage';
 import PageWrapper from './components/PageWrapper';
 import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
-import CreateAccount from './pages/Account/CreateAccount';
 
 function App() {
   return (
