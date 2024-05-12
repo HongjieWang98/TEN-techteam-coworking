@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const navStyle = {
   backgroundColor: '#DBEEFF',
@@ -93,8 +94,7 @@ function Profile() {
 }
 
 export default Profile;
-import { Link } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+
 
 const navStyle = {
     backgroundColor: '#DBEEFF',
