@@ -159,7 +159,7 @@ export default function ListingPage() {
             <option value="poor">Poor</option>
             <option value="fair">Fair</option>
             <option value="good">Good</option>
-            <option value="very good">Very Good</option>
+            <option value="very_good">Very Good</option>
             <option value="like_new">Like New</option>
           </select>
         </label>
