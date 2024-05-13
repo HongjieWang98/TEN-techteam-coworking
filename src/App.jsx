@@ -13,6 +13,8 @@ import AcceptDenyBuyerPage from './pages/Listing/AceeptDenyBuyerPage';
 import PageWrapper from './components/PageWrapper';
 import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
+import Profile from './pages/Profile';
+import CreateAccount from './pages/Account/CreateAccount';
 
 function App() {
   return (
@@ -41,6 +43,7 @@ function App() {
             </Route>
             <Route path="/signup" element={<CreateAccount />} />
             <Route path="/signup/success" element={<SuccessCreateAccount />} />
+            <Route path="/profile" element={<Profile />} />
            
           </Routes>
         </PageWrapper>
