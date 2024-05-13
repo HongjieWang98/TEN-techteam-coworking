@@ -32,7 +32,6 @@ function App() {
       <Providers>
         <PageWrapper>
           <Routes>
-            {/* <Route path="/applicationform" element={<ApplicationForm />} /> */}
             <Route path="sell">
               <Route path="list" element={<ListingPage />} />
               <Route path="confirmation" element={<ConfirmationPage />} />
