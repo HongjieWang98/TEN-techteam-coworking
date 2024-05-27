@@ -52,15 +52,15 @@ const EventStatus = {
 /**
  * Represents a textbook (only typing the fields necessary for processStatus)
  * @typedef {Object} Textbook
- * @property {TextbookEvent[]} textbook_events
  * @property {string} seller_id
  * @property {string} buyer_id 
+ * @property {EventStatusType} status
  */
 
 /**
  * Processes the textbook events and return a the status of the textbook
  * The param is expected to be the document from the textbook collection before data retrieval
- * @returns {EventStatusType}
+ * @returns {Textbook}
  */
 export async function processStatus(textbookRef, textbook) {
 
@@ -74,17 +74,62 @@ export async function processStatus(textbookRef, textbook) {
     throw new Error(`Could not find 'textbook_events' subcollection reference on textbook id: ${textbook.id}`)
   }
 
-  const textbookEvents = (await getDocs(query(textbookEventsRef, orderBy('timestamp')))).docs;
+  const textbookEvents = (await getDocs(query(textbookEventsRef, orderBy('timestamp', "desc")))).docs;
 
   if (!textbookEvents || textbookEvents.length === 0) {
     throw new Error(`Could not find 'textbook_events' subcollection on textbook id: ${textbook.id}`)
   }
 
-  // now add the logic to map the events to statuses
+  const textbookEventsData = textbookEvents.map(event => event.data());
+  const textbookStatus = evaluateEventStatus(textbookEventsData);
 
   return {
     ...textbook,
-    status: EventStatus.ACTIVE
+    status: textbookStatus
   }
+  
+}
+
+
+const RESERVATION_EXPIRATION = 60 * 60 * 24 * 7 // one week in seconds
+
+/**
+ * 
+ * @param {TextbookEvent[]} textbookEventsData 
+ * @returns {EventStatusType}
+ */
+function evaluateEventStatus(textbookEventsData) {
+  const mostRecentEvent = textbookEventsData[0];
+  if (mostRecentEvent.event_type === EventType.RESERVED) {
+    // compare epoch timestamps
+    if (mostRecentEvent.timestamp.seconds + RESERVATION_EXPIRATION > Date.now() / 1000) {
+      return EventStatus.RESERVED;
+    } else {
+      return EventStatus.ACTIVE;
+    }
+  }
+
+  if (mostRecentEvent.event_type === EventType.LISTED ||
+      mostRecentEvent.event_type === EventType.BUYER_DENIED || 
+      mostRecentEvent.event_type === EventType.RESERVATION_CANCELED
+  ) {
+    return EventStatus.ACTIVE;
+  }
+
+  if (mostRecentEvent.event_type === EventType.LISTING_REMOVED) {
+    return EventStatus.REMOVED;
+  }
+
+  if (mostRecentEvent.event_type === EventType.BUYER_ACCEPTED) {
+    return EventStatus.PENDING_CONFIRMATION;
+  }
+
+  if (mostRecentEvent.event_type === EventType.SELLER_CONFIRMED_TRANSACTION ||
+      mostRecentEvent.event_type === EventType.BUYER_CONFIRMED_TRANSACTION
+  ) {
+    return EventStatus.SOLD;
+  }
+
+  throw new Error(`Could not determine status from event: ${mostRecentEvent.event_type}`)
   
 }

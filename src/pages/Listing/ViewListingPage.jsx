@@ -21,21 +21,20 @@ function ViewListingPage() {
   // TODO for now set a default userId while we figure out auth
   const userId = currentUser?.uid ?? '1234';
   useEffect(() => {
-    async function fetchData() {
-      return await getTextbookById(listingId);
+    async function fetchDataAndSetComponent() {
+      const listingDetails =  await getTextbookById(listingId);
+      if (!listingDetails) {
+        // do something with bad listing id
+      }
+
+      if (listingDetails.buyer_id === userId) {
+        setListingComponent(<BuyerListing listingData={listingDetails} />);
+      } else if (listingDetails.seller_id === userId) {
+        setListingComponent(<SellerListing listingData={listingDetails} />);
+      }
     }
 
-    const listingDetails = fetchData();
-
-    if (!listingDetails) {
-      // do something with bad listing id
-    }
-
-    if (listingDetails.buyer_id === userId) {
-      setListingComponent(<BuyerListing listingData={listingDetails} />);
-    } else if (listingDetails.seller_id === userId) {
-      setListingComponent(<SellerListing listingData={listingDetails} />);
-    }
+    fetchDataAndSetComponent();
   }, [listingId]);
 
   return <div>{listingComponent}</div>;

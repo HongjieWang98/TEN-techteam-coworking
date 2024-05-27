@@ -14,7 +14,6 @@ import PageWrapper from './components/PageWrapper';
 import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 import Profile from './pages/Profile';
-import CreateAccount from './pages/Account/CreateAccount';
 
 function App() {
   return (
