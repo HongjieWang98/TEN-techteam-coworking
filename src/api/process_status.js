@@ -1,8 +1,9 @@
 import {
   collection,
-  getDocs,
   orderBy,
   query,
+  getDocs,
+  limit
 } from 'firebase/firestore/lite';
 
 /**
@@ -74,14 +75,20 @@ export async function processStatus(textbookRef, textbook) {
     throw new Error(`Could not find 'textbook_events' subcollection reference on textbook id: ${textbook.id}`)
   }
 
-  const textbookEvents = (await getDocs(query(textbookEventsRef, orderBy('timestamp', "desc")))).docs;
+  const mostRecentTextbookEvent = (await getDocs(
+      query(
+        textbookEventsRef, 
+        orderBy('timestamp', "desc"), 
+        limit(1)
+      )
+    )
+  ).docs[0].data();
 
-  if (!textbookEvents || textbookEvents.length === 0) {
+  if (!mostRecentTextbookEvent) {
     throw new Error(`Could not find 'textbook_events' subcollection on textbook id: ${textbook.id}`)
   }
 
-  const textbookEventsData = textbookEvents.map(event => event.data());
-  const textbookStatus = evaluateEventStatus(textbookEventsData);
+  const textbookStatus = evaluateEventStatus(mostRecentTextbookEvent);
 
   return {
     ...textbook,
@@ -90,16 +97,15 @@ export async function processStatus(textbookRef, textbook) {
   
 }
 
-
-const RESERVATION_EXPIRATION = 60 * 60 * 24 * 7 // one week in seconds
+const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
+const RESERVATION_EXPIRATION = ONE_WEEK_IN_SECONDS;
 
 /**
  * 
  * @param {TextbookEvent[]} textbookEventsData 
  * @returns {EventStatusType}
  */
-function evaluateEventStatus(textbookEventsData) {
-  const mostRecentEvent = textbookEventsData[0];
+function evaluateEventStatus(mostRecentEvent) {
   if (mostRecentEvent.event_type === EventType.RESERVED) {
     // compare epoch timestamps
     if (mostRecentEvent.timestamp.seconds + RESERVATION_EXPIRATION > Date.now() / 1000) {
