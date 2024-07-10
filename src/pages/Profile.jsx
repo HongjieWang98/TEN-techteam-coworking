@@ -1,4 +1,3 @@
-
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
@@ -29,36 +28,12 @@ const containerStyle = {
 function Profile() {
   return (
     <>
-      <nav style={navStyle}>
-        <ul style={{ listStyleType: 'none', margin: 0, padding: 0 }}>
-          <li>
-            <a href="#home" style={linkStyle}>
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="#about" style={linkStyle}>
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#services" style={linkStyle}>
-              Services
-            </a>
-          </li>
-          <li>
-            <a href="#contact" style={linkStyle}>
-              Contact
-            </a>
-          </li>
-        </ul>
-      </nav>
       <Container style={containerStyle}>
         <Row>
           <Col>
             <Container>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+                {/* <Card.Img variant="top" src="holder.js/100px180?text=Image cap" /> */}
                 <Card.Body>
                   <Card.Title>Student Name</Card.Title>
                 </Card.Body>

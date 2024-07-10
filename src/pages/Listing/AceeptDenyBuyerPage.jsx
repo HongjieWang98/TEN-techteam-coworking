@@ -8,6 +8,7 @@ function AcceptDenyBuyerPage() {
   const { listingId } = useParams();
   const { currentUser } = useAuthContext();
   const [listingDetails, setListingDetails] = useState(null);
+  const navigate = useNavigate();
 
   // TODO find a better way to get this data
   const userPaymentMethods = {
@@ -15,12 +16,12 @@ function AcceptDenyBuyerPage() {
     venmo: 'Venmo'
   };
 
-  // TODO for now dont do this check for dev purposes
   // if the current user is not logged in
-  // eslint-disable-next-line no-constant-condition
-  if (!currentUser && false) {
-    useNavigate()('../..', { relative: 'path' });
-  }
+  useEffect(() => {
+    if (!currentUser) {
+      navigate('../..', { relative: 'path' });
+    }
+  }, [currentUser]);
 
   const handleAcceptBuyer = () => {
     // TODO logic to accept the buyer

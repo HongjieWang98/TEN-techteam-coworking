@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './SchoolNav.css';
 import { Container } from 'react-bootstrap';
 import Signin from '../../../components/Login/Signin';
-import { AuthProvider } from '../../../contexts/AuthContext';
+import { AuthProvider, useAuthContext } from '../../../contexts/AuthContext';
 import logoimage from '../../../images/logo2.png';
+import { useNavigate } from 'react-router-dom';
 
 function LoginView(props) {
   const { school } = props; // destructuring prop or else would get linter error
@@ -48,13 +49,22 @@ function EndingLogo() {
 
 //will pull this from the database in the future
 function SchoolNavPage() {
+  const navigate = useNavigate();
+  const { currentUser } = useAuthContext();
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/listing/buy');
+    }
+  }, [currentUser]);
+
   const schools = ['Tufts University', 'Wesleyan University', 'Northeastern University', 'Tower Hill School'];
 
   const [selectedSchool, setSelectedSchool] = React.useState('none');
 
   // I will update this function at some point to lookup in the schoolList database to determine
   // what each school should route to. Right now it is hard coded
-  function navigate() {
+  function navigateToSchool() {
     return selectedSchool === 'none' ? (
       <div className="SectionContent"> Please select your school</div>
     ) : selectedSchool === 'Tufts University' ? (
@@ -71,12 +81,11 @@ function SchoolNavPage() {
       <div className="DropDown">
         <select className="DropDown" value={selectedSchool} onChange={(e) => setSelectedSchool(e.target.value)}>
           <option value="none" key="none">
-            {' '}
+            {'Select your school'}
           </option>
           {schools.map((school) => (
             <option value={school} key={school}>
-              {' '}
-              {school}{' '}
+              {school}
             </option>
           ))}
         </select>
@@ -84,7 +93,7 @@ function SchoolNavPage() {
 
       <p> </p>
 
-      {navigate()}
+      {navigateToSchool()}
       <EndingLogo />
     </>
   );

@@ -33,6 +33,7 @@ function App() {
               <Route path="confirmation" element={<ConfirmationPage />} />
             </Route>
             <Route path="/listing">
+              <Route path="buy" />
               <Route path=":listingId" element={<ViewListingPage />} />
               <Route path=":listingId/accept" element={<AcceptDenyBuyerPage />} />
             </Route>
