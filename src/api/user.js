@@ -3,42 +3,13 @@ import {
   query,
   where,
   getDocs,
-  addDoc,
+  doc,
+  setDoc,
   serverTimestamp
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 
-export async function validateUser(
-  schoolEmail,
-  school,
-  preferredContact,
-  secondaryEmail,
-  phone,
-  paymentMethod,
-  venmo
-) {
-  if (schoolEmail === '') {
-    throw new Error('School email is required');
-  }
-
-  // TODO need to validate the domain is correct
-
-  if (school === '') {
-    throw new Error('School name is required');
-  }
-  if (preferredContact === '') {
-    throw new Error('Preferred contact is required');
-  }
-  if (phone === '') {
-    throw new Error('Phone number is required');
-  }
-  if (paymentMethod.cash === false && paymentMethod.venmo === false) {
-    throw new Error('Payment method is required');
-  }
-  if (paymentMethod.venmo === true && venmo === '') {
-    throw new Error('Venmo username is required');
-  }
-
+export async function checkDuplicateUserBySchoolEmail(schoolEmail) {
   const userRef = collection(db, 'users');
   const q = query(userRef, where('schoolEmail', '==', schoolEmail));
 
@@ -55,32 +26,31 @@ export async function validateUser(
   }
 }
 
+export async function validateUser(userAccount) {
+  // Check if the user already exists
+  const schoolEmail = userAccount.contact_info.school_email;
+  await checkDuplicateUserBySchoolEmail(schoolEmail);
+
+  // TODO Validate the rest of the fields
+}
+
 /**
  * Expects all fields to be validated before calling this function
+ * The id passed in is the user's Firebase Auth ID
  */
-export async function postUser(
-  schoolEmail,
-  school,
-  preferredContact,
-  secondaryEmail,
-  phone,
-  paymentMethod,
-  venmo
-) {
+export async function postUser(id, user) {
   try {
     // Get the current date/time
     const currTime = serverTimestamp();
-    const newUser = await addDoc(collection(db, 'users'), {
-      schoolEmail,
-      school,
-      preferredContact,
-      secondaryEmail,
-      phone,
-      paymentMethod,
-      venmo,
+    const docRef = doc(db, 'users', id);
+    // Set the document with the provided data
+    const newUser = await setDoc(docRef, {
+      ...user,
       created_at: currTime,
-      updated_at: currTime
+      updated_at: currTime,
+      deleted_at: null
     });
+
     return newUser;
   } catch (e) {
     throw new Error('Account creation failed');

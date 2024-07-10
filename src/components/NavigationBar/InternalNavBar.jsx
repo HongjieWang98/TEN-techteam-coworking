@@ -18,7 +18,7 @@ function InternalNavigationBar() {
         </Link>
       </div>
       <NavigationBarItem float="Left" text="My account" link="/profile" />
-      <NavigationBarItem float="Left" text="Sell" link="/sell" />
+      <NavigationBarItem float="Left" text="Sell" link="/sell/list" />
       <NavigationBarItem float="Left" text="Buy" link="/listing/buy" />
       <NavigationBarItem float="Left" text="Home" link="/" />
     </div>

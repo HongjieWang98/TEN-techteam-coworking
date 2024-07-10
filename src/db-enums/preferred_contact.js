@@ -1,7 +1,7 @@
 const preferredContactEnum = Object.freeze({
-  SCHOOL_EMAIL: 'schoolEmail',
-  SECONDARY_EMAIL: 'secondaryEmail',
-  PHONE: 'phone'
+  SCHOOL_EMAIL: 'school_email',
+  SECONDARY_EMAIL: 'secondary_email',
+  PHONE_NUMBER: 'phone_number'
 });
 
 export default preferredContactEnum;

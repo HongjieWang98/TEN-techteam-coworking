@@ -25,7 +25,6 @@ export default function AccountCreation() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { signup } = useAuthContext();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,29 +46,32 @@ export default function AccountCreation() {
       // so they don't automatically keep clicking the button and create multiple of accounts at the same time
       setLoading(true);
 
-      await validateUser(
-        schoolEmailRef.current.value,
-        selectedSchool,
-        preferredContact,
-        secondaryEmailRef?.current?.value ?? null,
-        phoneRef?.current?.value ?? null,
-        paymentMethod,
-        venmoRef?.current?.value ?? null
-      );
+      const createdUserAccount = {
+        organization_id: selectedSchool.id,
+        contact_info: {
+          school_email: schoolEmailRef.current.value.toLowerCase(),
+          secondary_email: secondaryEmailRef?.current?.value.toLowerCase() ?? null,
+          phone_number: phoneRef?.current?.value ?? null
+        },
+        preferred_contact_info: preferredContact,
+        payment_method: {
+          cash: paymentMethod.cash,
+          venmo: paymentMethod.venmo
+            ? {
+                venmo_handle: venmoRef?.current?.value
+              }
+            : null
+        }
+      };
+
+      await validateUser(createdUserAccount);
 
       // sign up user to firebase auth
-      await signup(schoolEmailRef.current.value, passwordRef.current.value);
+      const newUser = (await signup(schoolEmailRef.current.value, passwordRef.current.value)).user;
 
+      // TODO handle if postUser fails, we should remove the user from firebase auth
       // save user details to our user collection
-      const newUser = await postUser(
-        schoolEmailRef.current.value,
-        selectedSchool,
-        preferredContact,
-        secondaryEmailRef?.current?.value ?? null,
-        phoneRef?.current?.value ?? null,
-        paymentMethod,
-        venmoRef?.current?.value ?? null
-      );
+      await postUser(newUser.uid, createdUserAccount);
 
       if (newUser != null) {
         navigate('/signup/success', { replace: true });
@@ -149,7 +151,7 @@ export default function AccountCreation() {
               type="radio"
               id="prefer-phone-number"
               label="Phone number (text)"
-              value={preferredContactEnum.PHONE}
+              value={preferredContactEnum.PHONE_NUMBER}
               name="preferredContact"
               onChange={handlePreferredContact}
             />
