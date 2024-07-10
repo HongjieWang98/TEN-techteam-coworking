@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './NavigationBar.css';
 import logo from '../../images/logo2.png';
-import NavigationBarItem from './NavigationBarDef';
+import NavigationBarItem from './NavigationBarItem';
 
 function ExternalNavigationBar() {
   return (
@@ -16,26 +16,10 @@ function ExternalNavigationBar() {
           <img src={logo} className="NavigationBarImage" alt="TEN Logo" />
         </Link>
       </div>
-      <NavigationBarItem
-        float="Left"
-        text="Get started"
-        link="/school"
-        /* id='nav-your-listings' */
-      />
-      <NavigationBarItem
-        float="Left"
-        text="How it works"
-        link="/how"
-        /* class='NoDisplayAtPhone600'
-      id='nav-about' */
-      />
-      <NavigationBarItem
-        float="Left"
-        text="Home"
-        link="/"
-        /* class='NoDisplayAtPhone480'
-      id='nav-members' */
-      />
+      <NavigationBarItem float="Left" text="Sign up" link="/signup" />
+      <NavigationBarItem float="Left" text="Get started" link="/school" />
+      <NavigationBarItem float="Left" text="How it works" link="/how" />
+      <NavigationBarItem float="Left" text="Home" link="/" />
     </div>
   );
 }

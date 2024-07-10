@@ -8,10 +8,6 @@ import { auth } from '../firebase/firebase_config';
 
 const AuthContext = React.createContext();
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
 
@@ -41,3 +37,5 @@ export function AuthProvider({ children }) {
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired
 };
+
+export const useAuthContext = () => useContext(AuthContext);

@@ -1,19 +1,15 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
-import FilterDropdown from './common/FilterDropdown';
-import postCustomer from '../api/post_user';
-import preferredContactEnum from '../db-enums/preferred_contact';
+import FilterDropdown from '../common/FilterDropdown';
+import { validateUser, validateUser } from '../../api/post_user';
+import preferredContactEnum from '../../db-enums/preferred_contact';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 export default function AccountCreation() {
   // @TODO Fetch the schools from the database
   // For now mock the data
-  const schools = [
-    'Tufts University',
-    'Ohio State University',
-    'Tower Hill School',
-    'Wesleyan University'
-  ];
+  const schools = ['Tufts University', 'Ohio State University', 'Tower Hill School', 'Wesleyan University'];
   const [school, setSchool] = useState(schools[0]);
   const schoolEmailRef = useRef();
   const schoolEmailConfirmRef = useRef();
@@ -29,41 +25,22 @@ export default function AccountCreation() {
   const venmoRef = useRef(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { signup } = useAuthContext();
 
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     // prevent the form from refreshing
     e.preventDefault();
-    // do the validation checks
-
-    if (passwordRef.current.value.length < 6) {
-      setError('Please have a password of at least 6 characters long');
-      return;
-    }
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      setError('Passwords do not match');
-      return;
-    }
-
-    if (schoolEmailRef.current.value !== schoolEmailConfirmRef.current.value) {
-      setError('Emails do not match');
-      return;
-    }
-
-    if (!(paymentMethod.cash || paymentMethod.venmo)) {
-      setError('No preferred payment method selected');
-      return;
-    }
 
     try {
       setError('');
       // set up a load state, so when signing up the user, we disabled the "Sign Up" botton below,
       // so they don't automatically keep clicking the button and create multiple of accounts at the same time
       setLoading(true);
-      const newUser = await postCustomer(
+
+      await validateUser(
         schoolEmailRef.current.value,
-        passwordRef.current.value,
         school,
         preferredContact,
         secondaryEmailRef?.current?.value ?? null,
@@ -71,6 +48,21 @@ export default function AccountCreation() {
         paymentMethod,
         venmoRef?.current?.value ?? null
       );
+
+      // sign up user to firebase auth
+      await signup(schoolEmailRef.current.value, passwordRef.current.value);
+
+      // save user details to our user collection
+      const newUser = await postUser(
+        schoolEmailRef.current.value,
+        school,
+        preferredContact,
+        secondaryEmailRef?.current?.value ?? null,
+        phoneRef?.current?.value ?? null,
+        paymentMethod,
+        venmoRef?.current?.value ?? null
+      );
+
       if (newUser != null) {
         navigate('/signup/success', { replace: true });
       }
@@ -168,20 +160,8 @@ export default function AccountCreation() {
           )}
           <Form.Group>
             <Form.Label>Payment Methods Accepted</Form.Label>
-            <Form.Check
-              type="checkbox"
-              id="cash"
-              label="Cash"
-              name="cash"
-              onChange={handlePreferredPayment}
-            />
-            <Form.Check
-              type="checkbox"
-              id="venmo"
-              label="Venmo"
-              name="venmo"
-              onChange={handlePreferredPayment}
-            />
+            <Form.Check type="checkbox" id="cash" label="Cash" name="cash" onChange={handlePreferredPayment} />
+            <Form.Check type="checkbox" id="venmo" label="Venmo" name="venmo" onChange={handlePreferredPayment} />
           </Form.Group>
           {paymentMethod.venmo && (
             <Form.Group id="venmo-username">

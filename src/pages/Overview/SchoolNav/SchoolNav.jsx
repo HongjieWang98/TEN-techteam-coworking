@@ -1,7 +1,7 @@
 import React from 'react';
 import './SchoolNav.css';
 import { Container } from 'react-bootstrap';
-import Signin from '../../../components/Signin';
+import Signin from '../../../components/Login/Signin';
 import { AuthProvider } from '../../../contexts/AuthContext';
 import logoimage from '../../../images/logo2.png';
 

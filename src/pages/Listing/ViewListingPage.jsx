@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuthContext } from '../../contexts/AuthContext';
 import BuyerListing from '../../components/Listing/BuyerListing';
 import SellerListing from '../../components/Listing/SellerListing';
 import { getTextbookById } from '../../api/textbook';
@@ -8,7 +8,7 @@ import { getTextbookById } from '../../api/textbook';
 function ViewListingPage() {
   const { listingId } = useParams();
   const [listingComponent, setListingComponent] = useState(null);
-  const { currentUser } = useAuth();
+  const { currentUser } = useAuthContext();
   const navigate = useNavigate();
 
   // TODO for now dont do this check for dev purposes
@@ -22,7 +22,7 @@ function ViewListingPage() {
   const userId = currentUser?.uid ?? '1234';
   useEffect(() => {
     async function fetchDataAndSetComponent() {
-      const listingDetails =  await getTextbookById(listingId);
+      const listingDetails = await getTextbookById(listingId);
       if (!listingDetails) {
         // do something with bad listing id
       }

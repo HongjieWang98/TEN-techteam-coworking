@@ -8,9 +8,8 @@ import {
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 
-export default async function postCustomer(
+export async function validateUser(
   schoolEmail,
-  password,
   school,
   preferredContact,
   secondaryEmail,
@@ -18,32 +17,58 @@ export default async function postCustomer(
   paymentMethod,
   venmo
 ) {
-  // sburchfield33 - think its appropiate for errors to be sent to the caller
-  // for their handling the try and catch is below is only here to prevent
-  // sensitive errors from getting it
+  if (schoolEmail === '') {
+    throw new Error('School email is required');
+  }
+  if (school === '') {
+    throw new Error('School name is required');
+  }
+  if (preferredContact === '') {
+    throw new Error('Preferred contact is required');
+  }
+  if (phone === '') {
+    throw new Error('Phone number is required');
+  }
+  if (paymentMethod.cash === false && paymentMethod.venmo === false) {
+    throw new Error('Payment method is required');
+  }
+  if (paymentMethod.venmo === true && venmo === '') {
+    throw new Error('Venmo username is required');
+  }
 
-  // Duplicate checking for accounts with the same schoolEmail
-  const customersRef = collection(db, 'customers');
-  const q = query(customersRef, where('schoolEmail', '==', schoolEmail));
+  const userRef = collection(db, 'users');
+  const q = query(userRef, where('schoolEmail', '==', schoolEmail));
 
   // Execute the query
-  const duplicateAccounts = await getDocs(q);
-  if (duplicateAccounts == null) {
+  const duplicateUsers = await getDocs(q);
+  if (duplicateUsers == null) {
     throw new Error('Duplicate checking failed');
   }
 
   // Check if any documents are returned
-  if (!duplicateAccounts.empty) {
+  if (!duplicateUsers.empty) {
     // Document with the same email already exists
     throw new Error('An account with this email already exists.');
   }
+}
 
+/**
+ * Expects all fields to be validated before calling this function
+ */
+export async function postUser(
+  schoolEmail,
+  school,
+  preferredContact,
+  secondaryEmail,
+  phone,
+  paymentMethod,
+  venmo
+) {
   try {
     // Get the current date/time
     const currTime = serverTimestamp();
-    const newCustomer = await addDoc(collection(db, 'customers'), {
+    const newUser = await addDoc(collection(db, 'users'), {
       schoolEmail,
-      password,
       school,
       preferredContact,
       secondaryEmail,
@@ -53,7 +78,7 @@ export default async function postCustomer(
       created_at: currTime,
       updated_at: currTime
     });
-    return newCustomer;
+    return newUser;
   } catch (e) {
     throw new Error('Account creation failed');
   }

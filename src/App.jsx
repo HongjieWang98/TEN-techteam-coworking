@@ -6,7 +6,6 @@ import HowToPage from './pages/Overview/HowTo/HowTo';
 import SchoolNavPage from './pages/Overview/SchoolNav/SchoolNav';
 import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
-import ExternalNavigationBar from './components/NavigationBar/ExternalNavBar';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
 import AcceptDenyBuyerPage from './pages/Listing/AceeptDenyBuyerPage';
@@ -14,13 +13,14 @@ import PageWrapper from './components/PageWrapper';
 import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 import Profile from './pages/Profile';
+import NavigationBar from './components/NavigationBar/NavBar';
 
 function App() {
   return (
     <Router>
-      <ExternalNavigationBar />
-      <PageWrapper>
-        <Providers>
+      <Providers>
+        <NavigationBar />
+        <PageWrapper>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/school" element={<SchoolNavPage />} />
@@ -40,8 +40,8 @@ function App() {
             <Route path="/signup/success" element={<SuccessCreateAccount />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
-        </Providers>
-      </PageWrapper>
+        </PageWrapper>
+      </Providers>
     </Router>
   );
 }

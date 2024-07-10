@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuthContext } from '../../contexts/AuthContext';
 import DisplayInput from '../../components/common/DisplayInput';
 import DisplayCheckboxGroup from '../../components/common/DisplayCheckboxGroup';
 
 function AcceptDenyBuyerPage() {
   const { listingId } = useParams();
-  const { currentUser } = useAuth();
+  const { currentUser } = useAuthContext();
   const [listingDetails, setListingDetails] = useState(null);
 
   // TODO find a better way to get this data
@@ -67,12 +67,7 @@ function AcceptDenyBuyerPage() {
   return (
     listingDetails && (
       <>
-        <DisplayInput
-          name="buyerName"
-          type="text"
-          value={listingDetails.buyer.email}
-          label="Buyer:"
-        />
+        <DisplayInput name="buyerName" type="text" value={listingDetails.buyer.email} label="Buyer:" />
         {/* TODO: show buyer's preferred contact info */}
         <DisplayCheckboxGroup
           label="Buyer Accepted Payment Methods:"
