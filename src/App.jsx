@@ -18,35 +18,30 @@ import Profile from './pages/Profile';
 function App() {
   return (
     <Router>
-    
       <ExternalNavigationBar />
-      <Routes>
-        <Route path="/" element={<HomePage />}/>
-        <Route path="/Home" element={<HomePage />}/>
-        <Route path="/Home/howto" element={<HowToPage />}/>
-        <Route path="/Home/schoolnav" element={<SchoolNavPage />}/>
-        <Route path="/Home/signin" element={<LoginPage />}/>
-        <Route path="/Home/signup" element={<CreateAccount />}/>
-      </Routes>
-
-      <Providers>
-        <PageWrapper>
+      <PageWrapper>
+        <Providers>
           <Routes>
-            <Route path="sell">
+            <Route path="/" element={<HomePage />} />
+            <Route path="/home/schoolnav" element={<SchoolNavPage />} />
+            <Route path="/home/signin" element={<LoginPage />} />
+            <Route path="/home/learn" element={<HowToPage />} />
+            <Route path="/home/signup" element={<CreateAccount />} />
+
+            <Route path="/sell">
               <Route path="list" element={<ListingPage />} />
               <Route path="confirmation" element={<ConfirmationPage />} />
             </Route>
-            <Route path="/listing/">
+            <Route path="/listing">
               <Route path=":listingId" element={<ViewListingPage />} />
               <Route path=":listingId/accept" element={<AcceptDenyBuyerPage />} />
             </Route>
             <Route path="/signup" element={<CreateAccount />} />
             <Route path="/signup/success" element={<SuccessCreateAccount />} />
             <Route path="/profile" element={<Profile />} />
-           
           </Routes>
-        </PageWrapper>
-      </Providers>
+        </Providers>
+      </PageWrapper>
     </Router>
   );
 }

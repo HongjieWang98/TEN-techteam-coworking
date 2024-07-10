@@ -19,20 +19,20 @@ function ExternalNavigationBar() {
       <NavigationBarItem
         float="Left"
         text="Get started"
-        link="/Home/SchoolNav"
+        link="/home/schoolnav"
         /* id='nav-your-listings' */
       />
       <NavigationBarItem
         float="Left"
         text="How it works"
-        link="/Home/HowTo"
+        link="/home/learn"
         /* class='NoDisplayAtPhone600'
       id='nav-about' */
       />
       <NavigationBarItem
         float="Left"
         text="Home"
-        link="/Home"
+        link="/"
         /* class='NoDisplayAtPhone480'
       id='nav-members' */
       />
