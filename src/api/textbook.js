@@ -27,7 +27,12 @@ export async function getTextbooksByUserId(userId) {
   const q = query(textbookCollectionRef, or(where('seller_id', '==', userId), where('buyer_id', '==', userId)));
   const textbooks = (await getDocs(q)).docs
 
-  return Promise.all(textbooks.map(textbook => processStatus(textbook.ref, textbook.data())))
+  return Promise.all(textbooks.map(textbook => {
+    return {
+      id: textbook.id,
+      ...processStatus(textbook.ref, textbook.data())
+    }
+  }))
 }
 
 // we should handle any race conditions that comes with textbook events

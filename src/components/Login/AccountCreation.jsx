@@ -1,16 +1,15 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import FilterDropdown from '../common/FilterDropdown';
-import { validateUser } from '../../api/post_user';
+import { validateUser } from '../../api/user';
 import preferredContactEnum from '../../db-enums/preferred_contact';
 import { useAuthContext } from '../../contexts/AuthContext';
+import { getOrganizations } from '../../api/organization';
 
 export default function AccountCreation() {
-  // @TODO Fetch the schools from the database
-  // For now mock the data
-  const schools = ['Tufts University', 'Ohio State University', 'Tower Hill School', 'Wesleyan University'];
-  const [school, setSchool] = useState(schools[0]);
+  const [availableSchools, setAvailableSchools] = useState([]);
+  const [selectedSchool, setSelectedSchool] = useState(null);
   const schoolEmailRef = useRef();
   const schoolEmailConfirmRef = useRef();
   const passwordRef = useRef();
@@ -29,6 +28,15 @@ export default function AccountCreation() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    async function fetchData() {
+      const organizations = await getOrganizations();
+      setAvailableSchools(organizations);
+      setSelectedSchool(organizations[0]);
+    }
+    fetchData();
+  }, []);
+
   async function handleSubmit(e) {
     // prevent the form from refreshing
     e.preventDefault();
@@ -41,7 +49,7 @@ export default function AccountCreation() {
 
       await validateUser(
         schoolEmailRef.current.value,
-        school,
+        selectedSchool,
         preferredContact,
         secondaryEmailRef?.current?.value ?? null,
         phoneRef?.current?.value ?? null,
@@ -55,7 +63,7 @@ export default function AccountCreation() {
       // save user details to our user collection
       const newUser = await postUser(
         schoolEmailRef.current.value,
-        school,
+        selectedSchool,
         preferredContact,
         secondaryEmailRef?.current?.value ?? null,
         phoneRef?.current?.value ?? null,
@@ -100,7 +108,7 @@ export default function AccountCreation() {
           <Form.Group id="school-select">
             <Form.Label>What school do you attend?</Form.Label>
             <Form.Label className="muted">(Note: must match your school email address)</Form.Label>
-            <FilterDropdown currElement={school} data={schools} callbackFunc={setSchool} />
+            <FilterDropdown currElement={selectedSchool} data={availableSchools} callbackFunc={setSelectedSchool} />
           </Form.Group>
           <Form.Group id="email">
             <Form.Label>School Email Address</Form.Label>

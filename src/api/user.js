@@ -20,6 +20,9 @@ export async function validateUser(
   if (schoolEmail === '') {
     throw new Error('School email is required');
   }
+
+  // TODO need to validate the domain is correct
+
   if (school === '') {
     throw new Error('School name is required');
   }
