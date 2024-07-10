@@ -5,27 +5,24 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-
-const navStyle = {
-  backgroundColor: '#DBEEFF',
-  overflow: 'hidden'
-};
-
-const linkStyle = {
-  display: 'block',
-  color: 'white',
-  textAlign: 'center',
-  padding: '14px 16px',
-  textDecoration: 'none',
-  float: 'left'
-};
+import { auth } from '../firebase/firebase_config';
+import { useAuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const containerStyle = {
   padding: '50px'
 };
 
 function Profile() {
+  const { currentUser } = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    if (currentUser) {
+      await auth.signOut();
+    }
+    navigate('/');
+  };
   return (
     <>
       <Container style={containerStyle}>
@@ -62,6 +59,11 @@ function Profile() {
               </Accordion.Item>
             </Accordion>
           </Col>
+        </Row>
+        <Row>
+          <Button variant="outline-danger" onClick={handleLogout}>
+            Logout
+          </Button>
         </Row>
       </Container>
     </>
