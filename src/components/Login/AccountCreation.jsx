@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import FilterDropdown from '../common/FilterDropdown';
-import { validateUser, validateUser } from '../../api/post_user';
+import { validateUser } from '../../api/post_user';
 import preferredContactEnum from '../../db-enums/preferred_contact';
 import { useAuthContext } from '../../contexts/AuthContext';
 
