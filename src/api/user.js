@@ -3,6 +3,7 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
   doc,
   setDoc,
   serverTimestamp
@@ -55,4 +56,18 @@ export async function postUser(id, user) {
   } catch (e) {
     throw new Error('Account creation failed');
   }
+}
+
+export async function getUserById(id) {
+  const userCollectionRef = collection(db, 'users');
+  const userDocRef = doc(userCollectionRef, id);
+  const user = await getDoc(userDocRef);
+  if (!user.exists()) {
+    throw new Error('User not found');
+  }
+
+  return {
+    id: user.id,
+    ...user.data()
+  };
 }
