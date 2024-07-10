@@ -23,10 +23,10 @@ function App() {
         <Providers>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/home/schoolnav" element={<SchoolNavPage />} />
-            <Route path="/home/signin" element={<LoginPage />} />
-            <Route path="/home/learn" element={<HowToPage />} />
-            <Route path="/home/signup" element={<CreateAccount />} />
+            <Route path="/school" element={<SchoolNavPage />} />
+            <Route path="/signin" element={<LoginPage />} />
+            <Route path="/how" element={<HowToPage />} />
+            <Route path="/signup" element={<CreateAccount />} />
 
             <Route path="/sell">
               <Route path="list" element={<ListingPage />} />
