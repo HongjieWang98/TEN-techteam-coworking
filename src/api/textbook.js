@@ -4,8 +4,10 @@ import {
   getDoc,
   or,
   query,
+  addDoc,
   where,
-  getDocs
+  getDocs,
+  serverTimestamp
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 import { processStatus } from './process_status';
@@ -37,3 +39,19 @@ export async function getTextbooksByUserId(userId) {
 
 // we should handle any race conditions that comes with textbook events
 // eg listing removal and reservation cancelled at the same time
+
+export async function listTextbook(textbook) {
+  const currTime = serverTimestamp();
+  const docRef = await addDoc(collection(db, 'textbooks'), {
+    ...textbook,
+    created_at: currTime,
+    updated_at: currTime,
+    deleted_at: null
+  });
+  const subcollectionRef = collection(db, `textbooks/${docRef.id}/textbook_events`);
+  await addDoc(subcollectionRef, {
+    event_type: "listed",
+    user_id: textbook.seller_id,
+    timestamp: currTime
+  });
+}
