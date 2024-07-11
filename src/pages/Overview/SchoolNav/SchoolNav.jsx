@@ -50,7 +50,8 @@ function EndingLogo() {
 //will pull this from the database in the future
 function SchoolNavPage() {
   const navigate = useNavigate();
-  const { currentUser } = useAuthContext();
+  const { getCurrentUser } = useAuthContext();
+  const currentUser = getCurrentUser();
 
   useEffect(() => {
     if (currentUser) {

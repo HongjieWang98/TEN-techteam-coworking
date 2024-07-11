@@ -14,7 +14,8 @@ const containerStyle = {
 };
 
 function Profile() {
-  const { currentUser } = useAuthContext();
+  const { getCurrentUser } = useAuthContext();
+  const currentUser = getCurrentUser();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
