@@ -71,3 +71,8 @@ export async function getUserById(id) {
     ...user.data()
   };
 }
+
+export async function getSchoolEmailByUserId(id) {
+  const user = await getUserById(id);
+  return user.contact_info.school_email;
+}

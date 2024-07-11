@@ -8,19 +8,13 @@ import { getTextbookById } from '../../api/textbook';
 function ViewListingPage() {
   const { listingId } = useParams();
   const [listingComponent, setListingComponent] = useState(null);
-  const { currentUser } = useAuthContext();
+  const { getCurrentUser } = useAuthContext();
   const navigate = useNavigate();
 
-  // TODO for now dont do this check for dev purposes
-  // if the current user is not logged in
-  // eslint-disable-next-line no-constant-condition
-  if (!currentUser && false) {
-    navigate('../..', { relative: 'path' });
-  }
-
-  // TODO for now set a default userId while we figure out auth
-  const userId = currentUser?.uid ?? '1234';
   useEffect(() => {
+    const currentUser = getCurrentUser();
+    const userId = currentUser?.id;
+
     async function fetchDataAndSetComponent() {
       const listingDetails = await getTextbookById(listingId);
       if (!listingDetails) {
@@ -34,8 +28,10 @@ function ViewListingPage() {
       }
     }
 
-    fetchDataAndSetComponent();
-  }, [listingId]);
+    if (userId) {
+      fetchDataAndSetComponent();
+    }
+  }, [listingId, getCurrentUser]);
 
   return <div>{listingComponent}</div>;
 }
