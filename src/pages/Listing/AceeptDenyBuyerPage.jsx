@@ -33,7 +33,7 @@ function AcceptDenyBuyerPage() {
 
   useEffect(() => {
     // TODO for now set a default userId while we figure out auth
-    const userId = currentUser?.uid ?? '1';
+    const userId = currentUser?.id ?? null;
 
     // TODO get the listing details from the db
     // If not found, throw a 404 not found error

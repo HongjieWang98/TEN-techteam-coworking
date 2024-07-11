@@ -17,10 +17,22 @@ export function AuthProvider({ children }) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
+  function getCurrentUser() {
+    return currentUser;
+  }
+
+  function getCurrentAuthUser() {
+    return currentAuthUser;
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
-      setCurrentAuthUser(authUser);
-      const user = await getUserById(authUser.uid);
+      let user = null;
+      if (authUser) {
+        console.log('auth state changed, adding user');
+        setCurrentAuthUser(authUser);
+        user = await getUserById(authUser.uid);
+      }
       setCurrentUser(user);
     });
     return unsubscribe;
@@ -28,8 +40,8 @@ export function AuthProvider({ children }) {
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
-    currentUser,
-    currentAuthUser,
+    getCurrentUser,
+    getCurrentAuthUser,
     signup
   };
 
