@@ -11,6 +11,7 @@ import {
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 import { processStatus } from './process_status';
+import { getSchoolEmailByUserId, getUserById } from './user';
 
 export async function getTextbookById(id) {
   const textbookCollectionRef = collection(db, 'textbooks');
@@ -18,7 +19,17 @@ export async function getTextbookById(id) {
   const textbook = await getDoc(textbookDocRef);
 
   if (textbook.exists()) {
-    return processStatus(textbookDocRef, textbook.data())
+    const [seller, buyer] = await Promise.all([
+      textbook.data().seller_id ? getUserById(textbook.data().seller_id) : null,
+      textbook.data().buyer_id ? getUserById(textbook.data().buyer_id) : null
+    ]);
+    return {
+      id: textbook.id,
+      ...(await processStatus(textbookDocRef, textbook.data())),
+      seller,
+      buyer,
+
+    }
   }
   
   return null
@@ -29,10 +40,10 @@ export async function getTextbooksByUserId(userId) {
   const q = query(textbookCollectionRef, or(where('seller_id', '==', userId), where('buyer_id', '==', userId)));
   const textbooks = (await getDocs(q)).docs
 
-  return Promise.all(textbooks.map(textbook => {
+  return Promise.all(textbooks.map(async textbook => {
     return {
       id: textbook.id,
-      ...processStatus(textbook.ref, textbook.data())
+      ...(await processStatus(textbook.ref, textbook.data()))
     }
   }))
 }
