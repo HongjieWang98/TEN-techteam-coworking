@@ -53,9 +53,9 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
   useEffect(() => {
     async function fetchTextbooks() {
       try {
-        // Get all the textbooks @todo make this so only the textbooks of the
-        // current user are gotten
-        const books = await getDocs(collection(db, 'items'));
+        // Get all the textbooks 
+        // @todo make this so only the textbooks of the specified university are gotten
+        const books = await getDocs(collection(db, 'textbooks'));
         const booksTablePromises = books.docs.map((book) => tableFormatBook(book));
         // Need to wait for all Promises to resolve before populating array
         const booksTable = await Promise.all(booksTablePromises);
