@@ -22,11 +22,16 @@ export function BuyProvider({ children }) {
     setCartData((currentCartData) => currentCartData.filter((item) => item.id !== newTextbook.id));
   };
 
+  const emptyCart = () => {
+    setCartData([]);
+  };
+
   const value = useMemo(
     () => ({
       cartData,
       addToCart,
-      removeFromCart
+      removeFromCart,
+      emptyCart
     }),
     [cartData]
   );
@@ -39,7 +44,8 @@ export function BuyProvider({ children }) {
 export const BuyContext = createContext({
   cartData: [],
   addToCart: () => {},
-  removeFromCart: () => {}
+  removeFromCart: () => {},
+  emptyCart: () => {}
 });
 
 export const useBuyContext = () => useContext(BuyContext);

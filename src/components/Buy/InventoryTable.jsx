@@ -53,7 +53,7 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
   useEffect(() => {
     async function fetchTextbooks() {
       try {
-        // Get all the textbooks 
+        // Get all the textbooks
         // @todo make this so only the textbooks of the specified university are gotten
         const books = await getDocs(collection(db, 'textbooks'));
         const booksTablePromises = books.docs.map((book) => tableFormatBook(book));
