@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { collection, getDocs, getDoc } from 'firebase/firestore/lite';
+import { collection, getDocs, getDoc, doc, query, where } from 'firebase/firestore/lite';
 import { MDBDataTable } from 'mdbreact';
 import { db } from '../../firebase/firebase_config';
-
+// import { useAuth } from '../../contexts/AuthContext';
 import { buyColumn, noBuyColumns } from './column';
 import './InventoryTable.css';
 
@@ -13,15 +13,17 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
 
   async function tableFormatBook(book) {
     const bookData = book.data();
-    const { seller } = bookData;
+    // eslint-disable-next-line camelcase
+    const { seller_id } = bookData;
+
     let maybeSellerPaymentMethods = '';
     // Get the payment methods info
     try {
-      const maybeSeller = await getDoc(seller);
+      const maybeSeller = await getDoc(doc(db, 'users', seller_id));
       const maybeSellerData = maybeSeller.data();
-      if (maybeSellerData.paymentMethod.venmo) {
+      if (maybeSellerData.payment_method.venmo) {
         maybeSellerPaymentMethods += 'Venmo';
-      } else if (maybeSellerData.paymentMethod.cash) {
+      } else if (maybeSellerData.payment_method.cash) {
         maybeSellerPaymentMethods += 'Cash';
       }
     } catch (e) {
@@ -54,7 +56,20 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
     async function fetchTextbooks() {
       try {
         // Get all the textbooks
-        // @todo make this so only the textbooks of the specified university are gotten
+
+        // Note that this code is written once I can actually sign in as a user and filters by specified univeristy
+
+        // if (buyFunctionality) {
+        //   const { currentUser } = useAuth();
+        //   const textbooksQuery = query(
+        //     collection(db, 'textbooks'),
+        //     where('orgazation_id', '==', currentUser.orgazation_id)
+        //   );
+        //   const books = await getDocs(textbooksQuery);
+        // } else {
+        //   const books = await getDocs(collection(db, 'textbooks'));
+        // }
+
         const books = await getDocs(collection(db, 'textbooks'));
         const booksTablePromises = books.docs.map((book) => tableFormatBook(book));
         // Need to wait for all Promises to resolve before populating array
