@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { collection, getDocs, getDoc, doc, query, where } from 'firebase/firestore/lite';
 import { MDBDataTable } from 'mdbreact';
 import { db } from '../../firebase/firebase_config';

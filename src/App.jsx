@@ -15,6 +15,7 @@ import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 import Inventory from './pages/Buy/Inventory';
 import { BuyProvider } from './contexts/BuyContext';
+import BuyConfirm from './pages/Buy/BuyConfirm';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="/signup" element={<CreateAccount />} />
               <Route path="/signup/success" element={<SuccessCreateAccount />} />
               <Route path="/inventory" element={<Inventory />} />
+              <Route path="/buyconfirm" element={<BuyConfirm />} />
             </Routes>
           </BuyProvider>
         </PageWrapper>

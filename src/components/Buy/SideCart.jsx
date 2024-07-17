@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useBuyContext } from '../../contexts/BuyContext';
 import './SideCart.css';
 
@@ -85,9 +86,9 @@ export default function SideCart({ setTableData, handleAddToCart }) {
               })
             )}
           </div>
-          <button className="SideCartContinueButton btn btn-primary" type="button">
+          <Link to="/buyconfirm" className="SideCartContinueButton btn btn-primary" type="button">
             Continue
-          </button>
+          </Link>
         </div>
       </div>
     </div>
