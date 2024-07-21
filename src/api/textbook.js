@@ -1,14 +1,4 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  or,
-  query,
-  addDoc,
-  where,
-  getDocs,
-  serverTimestamp
-} from 'firebase/firestore/lite';
+import { collection, doc, getDoc, or, query, addDoc, where, getDocs, serverTimestamp } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 import { processStatus } from './process_status';
 import { getSchoolEmailByUserId, getUserById } from './user';
@@ -36,10 +26,22 @@ export async function getTextbookById(id) {
 
 export async function getTextbooksByUserId(userId) {
   const textbookCollectionRef = collection(db, 'textbooks');
-  const q = query(
-    textbookCollectionRef,
-    or(where('seller_id', '==', userId), where('buyer_id', '==', userId))
+  const q = query(textbookCollectionRef, or(where('seller_id', '==', userId), where('buyer_id', '==', userId)));
+  const textbooks = (await getDocs(q)).docs;
+
+  return Promise.all(
+    textbooks.map(async (textbook) => {
+      return {
+        id: textbook.id,
+        ...(await processStatus(textbook.ref, textbook.data()))
+      };
+    })
   );
+}
+
+export async function getTextbooksByOrganizationId(organizationId) {
+  const textbookCollectionRef = collection(db, 'textbooks');
+  const q = query(textbookCollectionRef, where('orgazation_id', '==', organizationId));
   const textbooks = (await getDocs(q)).docs;
 
   return Promise.all(

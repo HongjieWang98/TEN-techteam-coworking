@@ -3,20 +3,22 @@ import { useEffect } from 'react';
 import { collection, getDocs, getDoc, doc, query, where } from 'firebase/firestore/lite';
 import { MDBDataTable } from 'mdbreact';
 import { db } from '../../firebase/firebase_config';
-// import { useAuth } from '../../contexts/AuthContext';
+import { useAuthContext } from '../../contexts/AuthContext';
 import { buyColumn, noBuyColumns } from './column';
 import './InventoryTable.css';
 import { useBuyContext } from '../../contexts/BuyContext';
+import { getTextbooksByOrganizationId } from '../../api/textbook';
 
 function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddToCart }) {
   const { cartData } = useBuyContext();
+  const { getCurrentUser } = useAuthContext();
+  const currentUser = getCurrentUser();
 
   // This function builds the data we want to display in the inventory
   // it builds this through book the current textbook information and getting
   // information about the seller (for the payment methods accepted)
 
-  async function tableFormatBook(book) {
-    const bookData = book.data();
+  async function tableFormatBook(bookData) {
     // eslint-disable-next-line camelcase
     const { seller_id } = bookData;
 
@@ -34,7 +36,7 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
       console.error('Retriving seller information failed');
     }
     const rowInfo = {
-      id: book.id,
+      id: bookData.id,
       title: bookData.title,
       courseAndDpmt: `${bookData.department} ${bookData.course_number}`,
       edition: bookData.edition,
@@ -45,7 +47,7 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
     // Let a column have a button if we want our table to have add to cart functionality
     if (buyFunctionality) {
       // Checks if the textbook is already in the cart (happens when we come back to the inventory page from the cart page)
-      const inCart = cartData.find((textbook) => textbook.id === book.id);
+      const inCart = cartData.find((textbook) => textbook.id === bookData.id);
       if (inCart) {
         return {
           ...rowInfo,
@@ -68,37 +70,36 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
   useEffect(() => {
     async function fetchTextbooks() {
       try {
-        // Get all the textbooks
-
-        // Note that this code is written once I can actually sign in as a user and filters by specified univeristy
-
-        // if (buyFunctionality) {
-        //   const { currentUser } = useAuth();
-        //   const textbooksQuery = query(
-        //     collection(db, 'textbooks'),
-        //     where('orgazation_id', '==', currentUser.orgazation_id)
-        //   );
-        //   const books = await getDocs(textbooksQuery);
-        // } else {
-        //   const books = await getDocs(collection(db, 'textbooks'));
-        // }
-
-        const books = await getDocs(collection(db, 'textbooks'));
-        const booksTablePromises = books.docs.map((book) => tableFormatBook(book));
-        // Need to wait for all Promises to resolve before populating array
-        const booksTable = await Promise.all(booksTablePromises);
-
-        // Initalize the datatable
-        setTableData({
-          columns: buyFunctionality ? [...noBuyColumns, buyColumn] : noBuyColumns,
-          rows: booksTable
-        });
+        // If we have buyFunctionality and the currentUser (of the session) has been loaded
+        if (buyFunctionality && currentUser) {
+          const books = await getTextbooksByOrganizationId(currentUser.organization_id);
+          const booksTablePromises = books.map((book) => tableFormatBook(book));
+          // Need to Promise.all here because we have calls to get the seller info in tableFormatBook
+          const booksTable = await Promise.all(booksTablePromises);
+          // Initalize the datatable
+          setTableData({
+            columns: [...noBuyColumns, buyColumn],
+            rows: booksTable
+          });
+        } else {
+          const booksDatabase = await getDocs(collection(db, 'textbooks'));
+          const booksTablePromises = booksDatabase.docs.map((book) =>
+            tableFormatBook({ ...book.data(), id: book.id })
+          );
+          // Need to Promise.all here because we have calls to get the seller info in tableFormatBook
+          const booksTable = await Promise.all(booksTablePromises);
+          // Initalize the datatable
+          setTableData({
+            columns: noBuyColumns,
+            rows: booksTable
+          });
+        }
       } catch (e) {
         console.error(e);
       }
     }
     fetchTextbooks();
-  }, []);
+  }, [currentUser]);
 
   // Just trying to test if cartData actually contains the books added to it
   return (
