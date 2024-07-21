@@ -47,17 +47,17 @@ function Listing({ listingData }) {
       <DisplayInput name="courseNumber" type="text" value={courseNumber} label="Course Number:" />
       <DisplayInput name="price" type="text" value={price} label="Price:" />
       {/* TODO need to show user preferred contact info */}
-      <DisplayInput name="buyerEmail" type="text" value={buyer.email} label="Buyer:" />
-      <DisplayInput name="sellerEmail" type="text" value={seller.email} label="Seller:" />
+      <DisplayInput name="buyerEmail" type="text" value={buyer?.contact_info.school_email ?? 'N/A'} label="Buyer:" />
+      <DisplayInput name="sellerEmail" type="text" value={seller.contact_info.school_email} label="Seller:" />
       <DisplayCheckboxGroup
         label="Buyer Accepted Payment Methods:"
         options={userPaymentMethods}
-        checkedOptions={buyer.acceptedPaymentMethods}
+        checkedOptions={buyer?.payment_method ?? []}
       />
       <DisplayCheckboxGroup
         label="Seller Accepted Payment Methods:"
         options={userPaymentMethods}
-        checkedOptions={seller.acceptedPaymentMethods}
+        checkedOptions={seller.payment_method ?? []}
       />
     </div>
   );
