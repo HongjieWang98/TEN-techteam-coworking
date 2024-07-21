@@ -86,9 +86,12 @@ export default function SideCart({ setTableData, handleAddToCart }) {
               })
             )}
           </div>
-          <Link to="/buyconfirm" className="SideCartContinueButton btn btn-primary" type="button">
-            Continue
-          </Link>
+
+          {cartData.length > 0 && (
+            <Link to="/buyconfirm" className="SideCartContinueButton btn btn-primary" type="button">
+              Continue
+            </Link>
+          )}
         </div>
       </div>
     </div>
