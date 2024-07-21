@@ -41,8 +41,7 @@ function BuyConfirmPage() {
       </Link>
 
       <button type="button" onClick={reserveBooks}>
-        {' '}
-        Reserve Books{' '}
+        Reserve Books
       </button>
       {/* <Link to="/inventory" className="btn btn-primary" type="button">
         Confirm Your Reservation

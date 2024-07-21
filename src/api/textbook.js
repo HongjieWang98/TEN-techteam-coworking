@@ -27,25 +27,29 @@ export async function getTextbookById(id) {
       id: textbook.id,
       ...(await processStatus(textbookDocRef, textbook.data())),
       seller,
-      buyer,
-
-    }
+      buyer
+    };
   }
-  
-  return null
+
+  return null;
 }
 
 export async function getTextbooksByUserId(userId) {
   const textbookCollectionRef = collection(db, 'textbooks');
-  const q = query(textbookCollectionRef, or(where('seller_id', '==', userId), where('buyer_id', '==', userId)));
-  const textbooks = (await getDocs(q)).docs
+  const q = query(
+    textbookCollectionRef,
+    or(where('seller_id', '==', userId), where('buyer_id', '==', userId))
+  );
+  const textbooks = (await getDocs(q)).docs;
 
-  return Promise.all(textbooks.map(async textbook => {
-    return {
-      id: textbook.id,
-      ...(await processStatus(textbook.ref, textbook.data()))
-    }
-  }))
+  return Promise.all(
+    textbooks.map(async (textbook) => {
+      return {
+        id: textbook.id,
+        ...(await processStatus(textbook.ref, textbook.data()))
+      };
+    })
+  );
 }
 
 // we should handle any race conditions that comes with textbook events
@@ -61,7 +65,7 @@ export async function listTextbook(textbook) {
   });
   const subcollectionRef = collection(db, `textbooks/${docRef.id}/textbook_events`);
   await addDoc(subcollectionRef, {
-    event_type: "listed",
+    event_type: 'listed',
     user_id: textbook.seller_id,
     timestamp: currTime
   });
