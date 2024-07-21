@@ -1,4 +1,3 @@
-
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
@@ -6,59 +5,33 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-
-const navStyle = {
-  backgroundColor: '#DBEEFF',
-  overflow: 'hidden'
-};
-
-const linkStyle = {
-  display: 'block',
-  color: 'white',
-  textAlign: 'center',
-  padding: '14px 16px',
-  textDecoration: 'none',
-  float: 'left'
-};
+import { auth } from '../firebase/firebase_config';
+import { useAuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const containerStyle = {
   padding: '50px'
 };
 
 function Profile() {
+  const { getCurrentUser } = useAuthContext();
+  const currentUser = getCurrentUser();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    if (currentUser) {
+      await auth.signOut();
+    }
+    navigate('/');
+  };
   return (
     <>
-      <nav style={navStyle}>
-        <ul style={{ listStyleType: 'none', margin: 0, padding: 0 }}>
-          <li>
-            <a href="#home" style={linkStyle}>
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="#about" style={linkStyle}>
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#services" style={linkStyle}>
-              Services
-            </a>
-          </li>
-          <li>
-            <a href="#contact" style={linkStyle}>
-              Contact
-            </a>
-          </li>
-        </ul>
-      </nav>
       <Container style={containerStyle}>
         <Row>
           <Col>
             <Container>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+                {/* <Card.Img variant="top" src="holder.js/100px180?text=Image cap" /> */}
                 <Card.Body>
                   <Card.Title>Student Name</Card.Title>
                 </Card.Body>
@@ -87,6 +60,11 @@ function Profile() {
               </Accordion.Item>
             </Accordion>
           </Col>
+        </Row>
+        <Row>
+          <Button variant="outline-danger" onClick={handleLogout}>
+            Logout
+          </Button>
         </Row>
       </Container>
     </>

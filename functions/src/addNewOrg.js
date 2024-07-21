@@ -77,7 +77,8 @@ export const addNewOrg = onRequest(async (req, res) => {
       .collection("organizations")
       .add({
         ...newOrgData,
-        created_at: Timestamp.now()
+        created_at: Timestamp.now(),
+        deleted_at: null
       });
 
       return res.json({result: `New org with ID: ${newOrg.id} added.`});
