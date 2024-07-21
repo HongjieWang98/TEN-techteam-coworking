@@ -110,7 +110,11 @@ export default function AccountCreation() {
           <Form.Group id="school-select">
             <Form.Label>What school do you attend?</Form.Label>
             <Form.Label className="muted">(Note: must match your school email address)</Form.Label>
-            <FilterDropdown currElement={selectedSchool} data={availableSchools} callbackFunc={setSelectedSchool} />
+            <FilterDropdown
+              currElement={selectedSchool}
+              data={availableSchools}
+              callbackFunc={setSelectedSchool}
+            />
           </Form.Group>
           <Form.Group id="email">
             <Form.Label>School Email Address</Form.Label>
@@ -170,8 +174,20 @@ export default function AccountCreation() {
           )}
           <Form.Group>
             <Form.Label>Payment Methods Accepted</Form.Label>
-            <Form.Check type="checkbox" id="cash" label="Cash" name="cash" onChange={handlePreferredPayment} />
-            <Form.Check type="checkbox" id="venmo" label="Venmo" name="venmo" onChange={handlePreferredPayment} />
+            <Form.Check
+              type="checkbox"
+              id="cash"
+              label="Cash"
+              name="cash"
+              onChange={handlePreferredPayment}
+            />
+            <Form.Check
+              type="checkbox"
+              id="venmo"
+              label="Venmo"
+              name="venmo"
+              onChange={handlePreferredPayment}
+            />
           </Form.Group>
           {paymentMethod.venmo && (
             <Form.Group id="venmo-username">

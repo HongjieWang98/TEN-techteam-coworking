@@ -6,8 +6,11 @@ import { db } from '../../firebase/firebase_config';
 // import { useAuth } from '../../contexts/AuthContext';
 import { buyColumn, noBuyColumns } from './column';
 import './InventoryTable.css';
+import { useBuyContext } from '../../contexts/BuyContext';
 
 function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddToCart }) {
+  const { cartData } = useBuyContext();
+
   // This function builds the data we want to display in the inventory
   // it builds this through book the current textbook information and getting
   // information about the seller (for the payment methods accepted)
@@ -41,6 +44,15 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
     };
     // Let a column have a button if we want our table to have add to cart functionality
     if (buyFunctionality) {
+      // Checks if the textbook is already in the cart (happens when we come back to the inventory page from the cart page)
+      const inCart = cartData.find((textbook) => textbook.id === book.id);
+      if (inCart) {
+        return {
+          ...rowInfo,
+          addToCart: 'In Cart'
+        };
+      }
+      // If not in the cart we need the add to cart button
       return {
         ...rowInfo,
         addToCart: (

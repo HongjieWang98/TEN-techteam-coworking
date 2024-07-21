@@ -14,7 +14,6 @@ import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 import Profile from './pages/Profile';
 import Inventory from './pages/Buy/Inventory';
-import { BuyProvider } from './contexts/BuyContext';
 import BuyConfirm from './pages/Buy/BuyConfirm';
 import NavigationBar from './components/NavigationBar/NavBar';
 
