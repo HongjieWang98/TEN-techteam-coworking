@@ -10,18 +10,15 @@ import React from 'react';
  * @returns {JSX.Element} JSX element representing the read-only checkbox group.
  */
 function DisplayCheckboxGroup({ label, options, checkedOptions }) {
+  const checkOptionsArray = Object.entries(checkedOptions).flatMap(([key, value]) => {
+    return value ? [key] : [];
+  });
   return (
     <div>
       <label>{label}</label>
       {Object.entries(options).map(([value, labelText]) => (
         <div key={value}>
-          <input
-            name={labelText}
-            type="checkbox"
-            value={value}
-            checked={checkedOptions.includes(value)}
-            disabled
-          />
+          <input name={labelText} type="checkbox" value={value} checked={checkOptionsArray.includes(value)} disabled />
           <label htmlFor={labelText}>{labelText}</label>
         </div>
       ))}

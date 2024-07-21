@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuthContext } from '../../contexts/AuthContext';
 import DisplayInput from '../../components/common/DisplayInput';
 import DisplayCheckboxGroup from '../../components/common/DisplayCheckboxGroup';
 
 function AcceptDenyBuyerPage() {
   const { listingId } = useParams();
-  const { currentUser } = useAuth();
+  const { getCurrentUser } = useAuthContext();
+  const currentUser = getCurrentUser();
   const [listingDetails, setListingDetails] = useState(null);
+  const navigate = useNavigate();
 
   // TODO find a better way to get this data
   const userPaymentMethods = {
@@ -15,12 +17,12 @@ function AcceptDenyBuyerPage() {
     venmo: 'Venmo'
   };
 
-  // TODO for now dont do this check for dev purposes
   // if the current user is not logged in
-  // eslint-disable-next-line no-constant-condition
-  if (!currentUser && false) {
-    useNavigate()('../..', { relative: 'path' });
-  }
+  useEffect(() => {
+    if (!currentUser) {
+      navigate('../..', { relative: 'path' });
+    }
+  }, [currentUser]);
 
   const handleAcceptBuyer = () => {
     // TODO logic to accept the buyer
@@ -32,7 +34,7 @@ function AcceptDenyBuyerPage() {
 
   useEffect(() => {
     // TODO for now set a default userId while we figure out auth
-    const userId = currentUser?.uid ?? '1';
+    const userId = currentUser?.id ?? null;
 
     // TODO get the listing details from the db
     // If not found, throw a 404 not found error
@@ -67,12 +69,7 @@ function AcceptDenyBuyerPage() {
   return (
     listingDetails && (
       <>
-        <DisplayInput
-          name="buyerName"
-          type="text"
-          value={listingDetails.buyer.email}
-          label="Buyer:"
-        />
+        <DisplayInput name="buyerName" type="text" value={listingDetails.buyer.email} label="Buyer:" />
         {/* TODO: show buyer's preferred contact info */}
         <DisplayCheckboxGroup
           label="Buyer Accepted Payment Methods:"

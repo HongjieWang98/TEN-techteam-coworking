@@ -5,22 +5,34 @@ import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { auth } from '../firebase/firebase_config';
+import { getUserById } from '../api/user';
 
 const AuthContext = React.createContext();
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [currentAuthUser, setCurrentAuthUser] = useState();
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
+  function getCurrentUser() {
+    return currentUser;
+  }
+
+  function getCurrentAuthUser() {
+    return currentAuthUser;
+  }
+
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
+      let user = null;
+      if (authUser) {
+        console.log('auth state changed, adding user');
+        setCurrentAuthUser(authUser);
+        user = await getUserById(authUser.uid);
+      }
       setCurrentUser(user);
     });
     return unsubscribe;
@@ -28,7 +40,8 @@ export function AuthProvider({ children }) {
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
-    currentUser,
+    getCurrentUser,
+    getCurrentAuthUser,
     signup
   };
 
@@ -41,3 +54,5 @@ export function AuthProvider({ children }) {
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired
 };
+
+export const useAuthContext = () => useContext(AuthContext);

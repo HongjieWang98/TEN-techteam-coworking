@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './NavigationBar.css';
 import logo from '../../images/logo2.png';
-import NavigationBarItem from './NavigationBarDef';
+import NavigationBarItem from './NavigationBarItem';
 
 function InternalNavigationBar() {
   // **** @todo Fix the linking of the nav bar items ***
@@ -17,33 +17,10 @@ function InternalNavigationBar() {
           <img src={logo} className="NavigationBarImage" alt="TEN Logo" />
         </Link>
       </div>
-      <NavigationBarItem
-        float="Left"
-        text="My account"
-        link="/profile"
-        /* id='nav-your-listings' */
-      />
-      <NavigationBarItem
-        float="Left"
-        text="Sell"
-        link="/sell"
-        /* class='NoDisplayAtPhone600'
-        id='nav-about' */
-      />
-      <NavigationBarItem
-        float="Left"
-        text="Buy"
-        link="/buy"
-        /* class='NoDisplayAtPhone480'
-        id='nav-members' */
-      />
-      <NavigationBarItem
-        float="Left"
-        text="Home"
-        link="/home"
-        /* class='NoDisplayAtPhone480'
-        id='nav-members' */
-      />
+      <NavigationBarItem float="Left" text="My account" link="/profile" />
+      <NavigationBarItem float="Left" text="Sell" link="/sell/list" />
+      <NavigationBarItem float="Left" text="Buy" link="/listing/buy" />
+      <NavigationBarItem float="Left" text="Home" link="/" />
     </div>
   );
 }
