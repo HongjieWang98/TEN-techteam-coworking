@@ -1,0 +1,246 @@
+Merge branch 'main' of https://github.com/HongjieWang98/TEN-techteam-coworking into public_navigation
+
+# Conflicts:
+#	src/App.jsx
+#	src/pages/Overview/Home/Home.jsx
+#	src/pages/Overview/HowTo/HowTo.jsx
+#	src/pages/Overview/SchoolNav/SchoolNav.jsx
+#	src/pages/Profile.jsx
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please run
+#	git update-ref -d MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: philmillr <philipmiller@Philips-MacBook-Pro.local>
+#
+# On branch public_navigation
+# Your branch is up to date with 'origin/public_navigation'.
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	deleted:    .history/src/App_20230719151015.js
+#	deleted:    .history/src/App_20230719160725.js
+#	deleted:    .history/src/App_20230719160733.js
+#	deleted:    .history/src/App_20230719205150.js
+#	deleted:    .history/src/CreateListing_20230719160813.js
+#	deleted:    .history/src/CreateListing_20230719160836.js
+#	deleted:    .history/src/CreateListing_20230719193027.js
+#	deleted:    .history/src/CreateListing_20230719193035.js
+#	deleted:    .history/src/CreateListing_20230719193040.js
+#	deleted:    .history/src/CreateListing_20230719195212.js
+#	deleted:    .history/src/CreateListing_20230719195219.js
+#	deleted:    .history/src/CreateListing_20230719200003.js
+#	deleted:    .history/src/CreateListing_20230719201948.js
+#	deleted:    .history/src/CreateListing_20230719201952.js
+#	deleted:    .history/src/CreateListing_20230719202701.js
+#	deleted:    .history/src/CreateListing_20230719202730.js
+#	deleted:    .history/src/CreateListing_20230719205105.js
+#	deleted:    .history/src/components/CreateListing_20230719205104.js
+#	deleted:    .history/src/components/CreateListing_20230719205150.js
+#	deleted:    .history/src/components/CreateListing_20230719212608.js
+#	deleted:    .history/src/components/CreateListing_20230719212612.js
+#	deleted:    .history/src/components/CreateListing_20230719212942.js
+#	deleted:    .history/src/components/CreateListing_20230719212948.js
+#	deleted:    .history/src/components/CreateListing_20230719213043.js
+#	deleted:    .history/src/components/CreateListing_20230719213111.js
+#	deleted:    .history/src/components/CreateListing_20230719213113.js
+#	deleted:    .history/src/components/CreateListing_20230719213123.js
+#	deleted:    .history/src/components/CreateListing_20230719213125.js
+#	deleted:    .history/src/components/CreateListing_20230719213129.js
+#	deleted:    .history/src/components/CreateListing_20230719213130.js
+#	deleted:    .history/src/components/CreateListing_20230720093604.js
+#	deleted:    .history/src/components/CreateListing_20230720093617.js
+#	deleted:    .history/src/components/CreateListing_20230720093624.js
+#	deleted:    .history/src/components/CreateListing_20230720093628.js
+#	deleted:    .history/src/components/CreateListing_20230720093634.js
+#	deleted:    .history/src/components/CreateListing_20230720093637.js
+#	deleted:    .history/src/components/CreateListing_20230720093638.js
+#	deleted:    .history/src/components/CreateListing_20230720093647.js
+#	deleted:    .history/src/components/CreateListing_20230720093652.js
+#	deleted:    .history/src/components/CreateListing_20230720093700.js
+#	deleted:    .history/src/components/CreateListing_20230720093702.js
+#	deleted:    .history/src/components/CreateListing_20230720093707.js
+#	deleted:    .history/src/components/CreateListing_20230720093715.js
+#	deleted:    .history/src/components/CreateListing_20230720093718.js
+#	deleted:    .history/src/components/CreateListing_20230720093747.js
+#	deleted:    .history/src/components/CreateListing_20230720093749.js
+#	deleted:    .history/src/components/CreateListing_20230720093750.js
+#	deleted:    .history/src/components/CreateListing_20230720093754.js
+#	deleted:    .history/src/components/CreateListing_20230720093759.js
+#	deleted:    .history/src/components/CreateListing_20230720093801.js
+#	deleted:    .history/src/components/CreateListing_20230720093810.js
+#	deleted:    .history/src/components/CreateListing_20230720093815.js
+#	deleted:    .history/src/components/CreateListing_20230720093817.js
+#	deleted:    .history/src/components/CreateListing_20230720093819.js
+#	deleted:    .history/src/components/CreateListing_20230720093823.js
+#	deleted:    .history/src/components/CreateListing_20230720093826.js
+#	deleted:    .history/src/components/CreateListing_20230720093829.js
+#	deleted:    .history/src/components/CreateListing_20230720093833.js
+#	deleted:    .history/src/components/CreateListing_20230720093855.js
+#	deleted:    .history/src/components/CreateListing_20230720093856.js
+#	deleted:    .history/src/components/CreateListing_20230720093859.js
+#	deleted:    .history/src/components/CreateListing_20230720093901.js
+#	deleted:    .history/src/components/CreateListing_20230720093903.js
+#	deleted:    .history/src/components/CreateListing_20230720094006.js
+#	deleted:    .history/src/components/CreateListing_20230720094008.js
+#	deleted:    .history/src/components/CreateListing_20230720094010.js
+#	deleted:    .history/src/components/CreateListing_20230720094011.js
+#	deleted:    .history/src/components/CreateListing_20230720094016.js
+#	deleted:    .history/src/components/CreateListing_20230720094018.js
+#	deleted:    .history/src/components/CreateListing_20230720094019.js
+#	deleted:    .history/src/components/CreateListing_20230720094021.js
+#	deleted:    .history/src/components/CreateListing_20230720094022.js
+#	deleted:    .history/src/components/CreateListing_20230720094025.js
+#	deleted:    .history/src/components/CreateListing_20230720094027.js
+#	deleted:    .history/src/components/CreateListing_20230720094028.js
+#	deleted:    .history/src/components/CreateListing_20230720094030.js
+#	deleted:    .history/src/components/CreateListing_20230720094330.js
+#	deleted:    .history/src/components/CreateListing_20230720094332.js
+#	deleted:    .history/src/components/CreateListing_20230720094333.js
+#	deleted:    .history/src/components/CreateListing_20230720094924.js
+#	deleted:    .history/src/components/CreateListing_20230720094941.js
+#	deleted:    .history/src/components/CreateListing_20230720094944.js
+#	deleted:    .history/src/components/CreateListing_20230720095458.js
+#	deleted:    .history/src/components/CreateListing_20230720095518.js
+#	deleted:    .history/src/components/CreateListing_20230720095519.js
+#	deleted:    .history/src/components/CreateListing_20230720095551.js
+#	deleted:    .history/src/components/CreateListing_20230720095553.js
+#	deleted:    .history/src/components/CreateListing_20230720095602.js
+#	deleted:    .history/src/components/CreateListing_20230720095603.js
+#	deleted:    .history/src/components/CreateListing_20230720095610.js
+#	deleted:    .history/src/components/CreateListing_20230720095629.js
+#	deleted:    .history/src/components/CreateListing_20230720095630.js
+#	deleted:    .history/src/components/CreateListing_20230720095650.js
+#	deleted:    .history/src/components/CreateListing_20230720095846.js
+#	deleted:    .history/src/components/CreateListing_20230720095917.js
+#	deleted:    .history/src/components/CreateListing_20230720100103.js
+#	deleted:    .history/src/components/CreateListing_20230720100141.js
+#	deleted:    .history/src/components/CreateListing_20230720100143.js
+#	deleted:    .history/src/components/CreateListing_20230720100150.js
+#	deleted:    .history/src/components/CreateListing_20230720100152.js
+#	deleted:    .history/src/components/CreateListing_20230720100206.js
+#	deleted:    .history/src/components/CreateListing_20230720100207.js
+#	deleted:    .history/src/components/CreateListing_20230720100209.js
+#	deleted:    .history/src/components/CreateListing_20230720100210.js
+#	deleted:    .history/src/components/CreateListing_20230720100216.js
+#	deleted:    .history/src/components/CreateListing_20230720100218.js
+#	deleted:    .history/src/components/CreateListing_20230720100236.js
+#	deleted:    .history/src/components/CreateListing_20230720100237.js
+#	deleted:    .history/src/components/CreateListing_20230720100239.js
+#	deleted:    .history/src/components/CreateListing_20230720100459.js
+#	deleted:    .history/src/components/CreateListing_20230720100549.js
+#	deleted:    .history/src/components/CreateListing_20230720100550.js
+#	deleted:    .history/src/config/firebase_config_20230719151015.js
+#	deleted:    .history/src/config/firebase_config_20230719194301.js
+#	deleted:    .history/src/config/firebase_config_20230719194306.js
+#	deleted:    .history/src/config/firebase_config_20230719194308.js
+#	deleted:    .history/src/config/firebase_config_20230719194311.js
+#	deleted:    .history/src/config/firebase_config_20230719194329.js
+#	deleted:    .history/src/config/firebase_config_20230719194341.js
+#	deleted:    .history/src/config/firebase_config_20230719194345.js
+#	deleted:    .history/src/config/firebase_config_20230719194347.js
+#	deleted:    .history/src/config/firebase_config_20230719194351.js
+#	deleted:    .history/src/config/firebase_config_20230719194352.js
+#	deleted:    .history/src/config/firebase_config_20230719195728.js
+#	deleted:    .history/src/config/firebase_config_20230719195737.js
+#	deleted:    .history/src/config/firebase_config_20230719195741.js
+#	deleted:    .history/src/config/firebase_config_20230719195748.js
+#	deleted:    .history/src/config/firebase_config_20230719195750.js
+#	deleted:    .history/src/config/firebase_config_20230719195845.js
+#	deleted:    .history/src/config/firebase_config_20230719195851.js
+#	deleted:    .history/src/config/firebase_config_20230719195944.js
+#	deleted:    .history/src/config/firebase_config_20230719200110.js
+#	deleted:    .history/src/config/firebase_config_20230719200112.js
+#	deleted:    .history/src/config/firebase_config_20230719200132.js
+#	deleted:    .history/src/config/firebase_config_20230719200142.js
+#	deleted:    .history/src/config/firebase_config_20230719200146.js
+#	deleted:    .history/src/config/firebase_config_20230719200148.js
+#	deleted:    .history/src/config/firebase_config_20230719200157.js
+#	deleted:    .history/src/config/firebase_config_20230719200205.js
+#	deleted:    .history/src/config/firebase_config_20230719200208.js
+#	deleted:    .history/src/config/firebase_config_20230719200209.js
+#	deleted:    .history/src/config/firebase_config_20230719200223.js
+#	deleted:    .history/src/config/firebase_config_20230719201539.js
+#	deleted:    .history/src/config/firebase_config_20230719201540.js
+#	deleted:    .history/src/config/firebase_config_20230719201542.js
+#	deleted:    .history/src/config/firebase_config_20230719201547.js
+#	deleted:    .history/src/config/firebase_config_20230719202036.js
+#	deleted:    .history/src/config/firebase_config_20230719202623.js
+#	deleted:    .history/src/config/firebase_config_20230719202629.js
+#	deleted:    .history/src/config/firebase_config_20230719202747.js
+#	deleted:    .history/src/config/firebase_config_20230719202822.js
+#	deleted:    .history/src/config/firebase_config_20230719202826.js
+#	deleted:    .history/src/config/firebase_config_20230719202829.js
+#	deleted:    .history/src/config/firebase_config_20230719203026.js
+#	deleted:    .history/src/config/firebase_config_20230719203028.js
+#	deleted:    .history/src/config/firebase_config_20230719204600.js
+#	deleted:    .history/src/config/firebase_config_20230719204609.js
+#	deleted:    .history/src/config/firebase_config_20230719204612.js
+#	deleted:    .history/src/config/firebase_config_20230719204615.js
+#	deleted:    .history/src/config/firebase_config_20230719204723.js
+#	deleted:    .history/src/firebase/firebase_config_20230719204722.js
+#	deleted:    .history/src/firebase/firebase_config_20230719205335.js
+#	deleted:    .history/src/firebase/firebase_config_20230719205339.js
+#	deleted:    .history/src/firebase/firebase_config_20230719205648.js
+#	deleted:    .history/src/firebase/firebase_config_20230719205700.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210123.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210126.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210136.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210138.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210140.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210150.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210156.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210429.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210437.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210444.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210848.js
+#	deleted:    .history/src/firebase/firebase_config_20230719210903.js
+#	modified:   .prettierrc
+#	modified:   firebase.json
+#	new file:   functions/.eslintrc.js
+#	new file:   functions/.gitignore
+#	new file:   functions/README.md
+#	new file:   functions/index.js
+#	new file:   functions/package-lock.json
+#	new file:   functions/package.json
+#	new file:   functions/src/addNewOrg.js
+#	modified:   package-lock.json
+#	modified:   package.json
+#	modified:   src/App.jsx
+#	new file:   src/api/organization.js
+#	deleted:    src/api/post_user.js
+#	new file:   src/api/process_status.js
+#	new file:   src/api/textbook.js
+#	new file:   src/api/user.js
+#	modified:   src/components/Listing/Listing.jsx
+#	renamed:    src/components/AccountCreation.jsx -> src/components/Login/AccountCreation.jsx
+#	renamed:    src/components/Signin.jsx -> src/components/Login/Signin.jsx
+#	modified:   src/components/NavigationBar/ExternalNavBar.jsx
+#	modified:   src/components/NavigationBar/InternalNavBar.jsx
+#	new file:   src/components/NavigationBar/NavBar.jsx
+#	renamed:    src/components/NavigationBar/NavigationBarDef.jsx -> src/components/NavigationBar/NavigationBarItem.jsx
+#	deleted:    src/components/Signup.jsx
+#	modified:   src/components/common/DisplayCheckboxGroup.jsx
+#	modified:   src/components/common/FilterDropdown.jsx
+#	modified:   src/contexts/AuthContext.jsx
+#	modified:   src/db-enums/preferred_contact.js
+#	modified:   src/pages/Account/CreateAccount.jsx
+#	modified:   src/pages/Account/SuccessAccountCreate.jsx
+#	modified:   src/pages/Listing/AceeptDenyBuyerPage.jsx
+#	modified:   src/pages/Listing/ViewListingPage.jsx
+#	modified:   src/pages/LoginPage.jsx
+#	modified:   src/pages/Overview/Home/Home.jsx
+#	modified:   src/pages/Overview/HowTo/HowTo.jsx
+#	modified:   src/pages/Overview/SchoolNav/SchoolNav.jsx
+#	modified:   src/pages/Profile.jsx
+#	modified:   src/pages/Sell/ListingPage.jsx
+#
+# Untracked files:
+#	updating merge conflict
+#
