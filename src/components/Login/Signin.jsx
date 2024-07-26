@@ -1,18 +1,23 @@
 import React, { useRef } from 'react';
 // import {Form, Button, Card} from 'react-bootstrap'
 import { Form, Button, Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase/firebase_config';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { getUserById } from '../../api/user';
 
 export default function Signin() {
   const emailRef = useRef();
   const passwordRef = useRef();
+  const { signIn } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      await auth.signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
+      await signIn(emailRef.current.value, passwordRef.current.value);
+      navigate('/listing/buy');
     } catch (e) {
       alert('Failed to sign in');
     }

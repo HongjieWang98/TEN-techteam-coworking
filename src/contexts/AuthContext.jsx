@@ -5,17 +5,13 @@ import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { auth } from '../firebase/firebase_config';
-import { getUserById } from '../api/user';
+import { getUserById, postUser } from '../api/user';
 
 const AuthContext = React.createContext();
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [currentAuthUser, setCurrentAuthUser] = useState();
-
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password);
-  }
 
   function getCurrentUser() {
     return currentUser;
@@ -25,15 +21,31 @@ export function AuthProvider({ children }) {
     return currentAuthUser;
   }
 
+  async function signUp(email, password, createdUserAccount) {
+    const newUser = (await auth.createUserWithEmailAndPassword(email, password)).user;
+
+    // TODO handle if postUser fails, we should remove the user from firebase auth
+    // save user details to our user collection
+    await postUser(newUser.uid, createdUserAccount);
+
+    setCurrentUser(await getUserById(auth.currentUser.uid));
+  }
+
+  async function signIn(email, password) {
+    await auth.signInWithEmailAndPassword(email, password);
+    setCurrentUser(await getUserById(auth.currentUser.uid));
+  }
+
+  async function signOut() {
+    await auth.signOut();
+    setCurrentUser(null);
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
-      let user = null;
       if (authUser) {
-        console.log('auth state changed, adding user');
         setCurrentAuthUser(authUser);
-        user = await getUserById(authUser.uid);
       }
-      setCurrentUser(user);
     });
     return unsubscribe;
   }, []);
@@ -42,7 +54,9 @@ export function AuthProvider({ children }) {
   const value = {
     getCurrentUser,
     getCurrentAuthUser,
-    signup
+    signIn,
+    signUp,
+    signOut
   };
 
   return (

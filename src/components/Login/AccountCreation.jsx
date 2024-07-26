@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import FilterDropdown from '../common/FilterDropdown';
-import { validateUser, postUser } from '../../api/user';
+import { validateUser, postUser, getUserById } from '../../api/user';
 import preferredContactEnum from '../../db-enums/preferred_contact';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { getOrganizations } from '../../api/organization';
@@ -24,7 +24,7 @@ export default function AccountCreation() {
   const venmoRef = useRef(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signup } = useAuthContext();
+  const { signUp, getCurrentUser } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,15 +65,9 @@ export default function AccountCreation() {
       };
 
       await validateUser(createdUserAccount);
+      await signUp(schoolEmailRef.current.value, passwordRef.current.value, createdUserAccount);
 
-      // sign up user to firebase auth
-      const newUser = (await signup(schoolEmailRef.current.value, passwordRef.current.value)).user;
-
-      // TODO handle if postUser fails, we should remove the user from firebase auth
-      // save user details to our user collection
-      await postUser(newUser.uid, createdUserAccount);
-
-      if (newUser != null) {
+      if (getCurrentUser()) {
         navigate('/signup/success', { replace: true });
       }
     } catch (backendError) {
