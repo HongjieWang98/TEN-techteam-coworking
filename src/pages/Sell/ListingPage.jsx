@@ -110,7 +110,7 @@ export default function ListingPage() {
     </Card>
 
     <div className="w-100 text-center mt-2">
-    By continuing, you accept our <a href="/Privacy">privacy policy</a> and <a href="/Terms">terms and conditions</a>.
+    By continuing, you accept our <a href="/privacy">privacy policy</a> and <a href="/terms">terms and conditions</a>.
     </div>
 
 
