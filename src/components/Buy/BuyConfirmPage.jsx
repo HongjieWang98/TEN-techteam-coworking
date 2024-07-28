@@ -1,33 +1,20 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useBuyContext } from '../../contexts/BuyContext';
-import { collection, getDoc, doc, query, where } from 'firebase/firestore/lite';
-
-import { db } from '../../firebase/firebase_config';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { reserveTextbooks } from '../../api/textbook';
 
 function BuyConfirmPage() {
   const { cartData } = useBuyContext();
-
-  //   const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  const { getCurrentUser } = useAuthContext();
+  const currentUser = getCurrentUser();
 
   async function reserveBooks() {
-    // Checks if the textbooks can be reserved and that they actually exist and that someone else didn't buy them first
+    // Only reserve textbooks if the current user has been loaded
 
-    const checkTextbookPromises = cartData.map(async (textbook) => {
-      const docRef = doc(db, 'textbooks', textbook.id);
-      const docTextbook = await getDoc(docRef);
+    const bookReserve = await reserveTextbooks(cartData, currentUser.id);
 
-      if (!docTextbook.exists() || docTextbook.data().buyer_id != null) {
-        return { textbook, canBuy: false };
-      }
-      return { textbook, canBuy: true };
-    });
-
-    const results = await Promise.all(checkTextbookPromises);
-
-    // Two arrays one of textbooks that can be reserved and the other of the textbooks that cannot be reserved
-    const canBuy = results.filter((result) => result.canBuy).map((result) => result.textbook);
-    const cannotBuy = results.filter((result) => !result.canBuy).map((result) => result.textbook);
+    navigate('/buysuccess', { state: { bookReserve } });
   }
 
   return (
@@ -40,9 +27,14 @@ function BuyConfirmPage() {
         Add Another Item
       </Link>
 
-      <button type="button" onClick={reserveBooks}>
-        Reserve Books
-      </button>
+      {currentUser ? (
+        <button type="button" onClick={reserveBooks}>
+          Reserve Books
+        </button>
+      ) : (
+        <h1>Loading...</h1>
+      )}
+
       {/* <Link to="/inventory" className="btn btn-primary" type="button">
         Confirm Your Reservation
       </Link> */}

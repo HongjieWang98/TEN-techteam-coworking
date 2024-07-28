@@ -16,6 +16,7 @@ import Profile from './pages/Profile';
 import Inventory from './pages/Buy/Inventory';
 import BuyConfirm from './pages/Buy/BuyConfirm';
 import NavigationBar from './components/NavigationBar/NavBar';
+import BuySuccess from './pages/Buy/BuySuccess';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/buyconfirm" element={<BuyConfirm />} />
+            <Route path="/buysuccess" element={<BuySuccess />} />
           </Routes>
         </PageWrapper>
       </Providers>

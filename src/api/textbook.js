@@ -1,4 +1,15 @@
-import { collection, doc, getDoc, or, query, addDoc, where, getDocs, serverTimestamp } from 'firebase/firestore/lite';
+import {
+  collection,
+  doc,
+  getDoc,
+  or,
+  query,
+  addDoc,
+  where,
+  getDocs,
+  updateDoc,
+  serverTimestamp
+} from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 import { processStatus } from './process_status';
 import { getSchoolEmailByUserId, getUserById } from './user';
@@ -71,4 +82,34 @@ export async function listTextbook(textbook) {
     user_id: textbook.seller_id,
     timestamp: currTime
   });
+}
+
+// Takes in an array of textbook, returns a list of true or false (relating to whether or not the textbook was bought)
+// Additionally takes in a userId for the user that wants to reserve these textbooks
+export async function reserveTextbooks(textbooks, userId) {
+  const boughtStatus = await Promise.all(
+    textbooks.map(async (textbook) => {
+      try {
+        const textbookCollectionRef = collection(db, 'textbooks');
+        const textbookDocRef = doc(textbookCollectionRef, textbook.id);
+        const currTextbook = await getDoc(textbookDocRef);
+        if (currTextbook.exists() && currTextbook.data().buyer_id == null) {
+          await updateDoc(textbookDocRef, { buyer_id: userId });
+          const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
+          const currTime = serverTimestamp();
+          await addDoc(subcollectionRef, {
+            event_type: 'reserved',
+            user_id: userId,
+            timestamp: currTime
+          });
+          return { ...textbook, bought: true };
+        }
+      } catch {
+        return { ...textbook, bought: false };
+      }
+      return { ...textbook, bought: false };
+    })
+  );
+  // Note that bought status is a list where each element is a textbook object and a bool relating to whether or not the textbook was bought
+  return boughtStatus;
 }

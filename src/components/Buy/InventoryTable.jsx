@@ -9,6 +9,9 @@ import './InventoryTable.css';
 import { useBuyContext } from '../../contexts/BuyContext';
 import { getTextbooksByOrganizationId } from '../../api/textbook';
 
+// **** CHECK OUT WHY THE TABLE SHOWS ALL THE TEXTBOOKS ON QUICK LOAD AND THEN CORRECTS ITSELF
+// **** MAKE SURE THAT THE TABLE DOES NOT DISPLAY RESERVED TEXTBOOKS
+
 function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddToCart }) {
   const { cartData } = useBuyContext();
   const { getCurrentUser } = useAuthContext();
@@ -83,9 +86,7 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
           });
         } else {
           const booksDatabase = await getDocs(collection(db, 'textbooks'));
-          const booksTablePromises = booksDatabase.docs.map((book) =>
-            tableFormatBook({ ...book.data(), id: book.id })
-          );
+          const booksTablePromises = booksDatabase.docs.map((book) => tableFormatBook({ ...book.data(), id: book.id }));
           // Need to Promise.all here because we have calls to get the seller info in tableFormatBook
           const booksTable = await Promise.all(booksTablePromises);
           // Initalize the datatable
@@ -103,17 +104,24 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
 
   // Just trying to test if cartData actually contains the books added to it
   return (
-    <div className="BrowseContainer">
-      <MDBDataTable
-        striped
-        hover
-        entries={20}
-        pagesAmount={5}
-        responsiveSm
-        paginationLabel={['Prev', 'Next']}
-        data={tableData}
-      />
-    </div>
+    <>
+      <h1>Inventory Table</h1>
+      {currentUser ? (
+        <div className="BrowseContainer">
+          <MDBDataTable
+            striped
+            hover
+            entries={20}
+            pagesAmount={5}
+            responsiveSm
+            paginationLabel={['Prev', 'Next']}
+            data={tableData}
+          />
+        </div>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </>
   );
 }
 

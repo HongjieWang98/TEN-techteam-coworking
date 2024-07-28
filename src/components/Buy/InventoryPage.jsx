@@ -38,13 +38,7 @@ export default function InventoryPage({ buyFunctionality }) {
 
   return (
     <>
-      <h1>Textbook Inventory</h1>
-      <InventoryTable
-        buyFunctionality
-        tableData={data}
-        setTableData={setData}
-        handleAddToCart={handleAddToCart}
-      />
+      <InventoryTable buyFunctionality tableData={data} setTableData={setData} handleAddToCart={handleAddToCart} />
       {buyFunctionality && <SideCart setTableData={setData} handleAddToCart={handleAddToCart} />}
     </>
   );
