@@ -1,33 +1,11 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
-
-//import NavigationBar from '../NavigationBar/NavigationBar'
-//import { stickyFooter } from '../Footer/Footer'
 import './Privacy.css'
 
-class PrivacyItem extends Component {
-  render() {
-    return (
-      <div className='PrivacyItem' style={{ float: this.props.float }}>
-        {this.props.text}
-      </div>
-    )
-  }
-}
-
 class Privacy extends Component {
-/*
-  componentDidMount() {
-    document.title = 'Privacy Policy - TEN'
-    footerDelay()
-  }
-  componentDidUpdate() {
-    footerDelay()
-  }
-*/
   render() {
     return (
-      <div className='everything'>
+      <div className='privacycontent'>
         <div className='titleTC'>
           <br />
           Privacy Policy
@@ -467,7 +445,7 @@ class Privacy extends Component {
               <br />
             </div>
           </li>
-          <li className='bold'>
+          <li className='subtitle'>
             HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?
             <div className='text2'>
               <br />
@@ -484,12 +462,6 @@ class Privacy extends Component {
       </div>
     )
   }
-}
-
-function footerDelay() {
-  setTimeout(() => {
-    stickyFooter(0)
-  }, 1)
 }
 
 export default Privacy

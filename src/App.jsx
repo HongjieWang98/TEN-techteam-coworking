@@ -17,6 +17,8 @@ import NavigationBar from './components/NavigationBar/NavBar';
 import PrivacyPage from './pages/Overview/Privacy/Privacy';
 import TermsPage from './pages/Overview/Terms/Terms';
 
+import ReactDOM from 'react-dom';
+
 function App() {
   return (
     <Router>

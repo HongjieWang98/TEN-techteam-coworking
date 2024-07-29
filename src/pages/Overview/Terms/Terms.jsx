@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
-
-//import NavigationBar from '../NavigationBar/NavigationBar'
-//import { stickyFooter } from '../Footer/Footer'
 import './Terms.css'
 
 class TermsItem extends Component {
@@ -16,16 +13,6 @@ class TermsItem extends Component {
 }
 
 class Terms extends Component {
-/*
-  componentDidMount() {
-    document.title = 'Terms and Conditions - TEN'
-    footerDelay()
-  }
-
-  componentDidUpdate() {
-    footerDelay()
-  }
-*/
   render() {
     return (
       <div className='terms'>
@@ -82,28 +69,10 @@ class Terms extends Component {
             dispose of the item in any manner it would like.
           </li>
         </ol>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
     )
   }
 }
-
-/*
-function footerDelay() {
-  setTimeout(() => {
-    stickyFooter(0)
-  }, 1)
-}
-*/
 
 
 export default Terms
