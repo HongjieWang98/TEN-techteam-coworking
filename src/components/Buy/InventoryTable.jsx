@@ -76,7 +76,9 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
         // If we have buyFunctionality and the currentUser (of the session) has been loaded
         if (buyFunctionality && currentUser) {
           const books = await getTextbooksByOrganizationId(currentUser.organization_id);
-          const booksTablePromises = books.map((book) => tableFormatBook(book));
+          // Filter out all the books that have been reserved
+          const unreservedBooks = books.filter((book) => book.buyer_id == null);
+          const booksTablePromises = unreservedBooks.map((book) => tableFormatBook(book));
           // Need to Promise.all here because we have calls to get the seller info in tableFormatBook
           const booksTable = await Promise.all(booksTablePromises);
           // Initalize the datatable
@@ -86,7 +88,11 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
           });
         } else {
           const booksDatabase = await getDocs(collection(db, 'textbooks'));
-          const booksTablePromises = booksDatabase.docs.map((book) => tableFormatBook({ ...book.data(), id: book.id }));
+          const books = booksDatabase.docs;
+          // Filter out all the books that have been reserved
+          const unreservedBooks = books.filter((book) => book.data().buyer_id == null);
+          // Format the books as necessary
+          const booksTablePromises = unreservedBooks.map((book) => tableFormatBook({ ...book.data(), id: book.id }));
           // Need to Promise.all here because we have calls to get the seller info in tableFormatBook
           const booksTable = await Promise.all(booksTablePromises);
           // Initalize the datatable
