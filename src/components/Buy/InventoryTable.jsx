@@ -9,9 +9,6 @@ import './InventoryTable.css';
 import { useBuyContext } from '../../contexts/BuyContext';
 import { getTextbooksByOrganizationId } from '../../api/textbook';
 
-// **** CHECK OUT WHY THE TABLE SHOWS ALL THE TEXTBOOKS ON QUICK LOAD AND THEN CORRECTS ITSELF
-// **** MAKE SURE THAT THE TABLE DOES NOT DISPLAY RESERVED TEXTBOOKS
-
 function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddToCart }) {
   const { cartData } = useBuyContext();
   const { getCurrentUser } = useAuthContext();
@@ -86,9 +83,9 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
             columns: [...noBuyColumns, buyColumn],
             rows: booksTable
           });
-        } 
-        // Sort of a janky fix (before there was a bug involving where the current user had not been 
-        // loaded yet and thus all the textbooks from all the universities were quickly displayed (before the current user had been loaded)) 
+        }
+        // Sort of a janky fix (before there was a bug involving where the current user had not been
+        // loaded yet and thus all the textbooks from all the universities were quickly displayed (before the current user had been loaded))
         // Therefore this else if is necessary to prevent this from happening
         else if (!buyFunctionality) {
           const booksDatabase = await getDocs(collection(db, 'textbooks'));
@@ -110,7 +107,7 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
       }
     }
     fetchTextbooks();
-  });
+  }, [currentUser]);
 
   // Just trying to test if cartData actually contains the books added to it
   return (

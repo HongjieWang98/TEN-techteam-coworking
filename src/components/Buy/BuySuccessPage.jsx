@@ -4,8 +4,7 @@ function BuySuccessPage() {
   const location = useLocation();
   const { state } = location;
   const { bookReserve } = state || {}; // Extract bookReserve from state
-
-  // **** IMPORTANT NEED TO STILL CLEAR THE CART DATA ****
+  console.log('bookReserve', bookReserve);
   return (
     <>
       <h1>Textbook Reserve Report</h1>
@@ -13,11 +12,8 @@ function BuySuccessPage() {
         <>
           <h1>Textbooks Bought {bookReserve.length}</h1>
           {bookReserve.map((textbook) => {
-            return (
-              <h1 key={textbook.id}>
-                {textbook.title} and successfully bought {textbook.bought}
-              </h1>
-            );
+            console.log(textbook.title, textbook.bought);
+            return <h1 key={textbook.id}>{textbook.title}</h1>;
           })}
         </>
       ) : (
