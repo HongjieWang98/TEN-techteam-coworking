@@ -86,7 +86,11 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
             columns: [...noBuyColumns, buyColumn],
             rows: booksTable
           });
-        } else {
+        } 
+        // Sort of a janky fix (before there was a bug involving where the current user had not been 
+        // loaded yet and thus all the textbooks from all the universities were quickly displayed (before the current user had been loaded)) 
+        // Therefore this else if is necessary to prevent this from happening
+        else if (!buyFunctionality) {
           const booksDatabase = await getDocs(collection(db, 'textbooks'));
           const books = booksDatabase.docs;
           // Filter out all the books that have been reserved
@@ -106,7 +110,7 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
       }
     }
     fetchTextbooks();
-  }, [currentUser]);
+  });
 
   // Just trying to test if cartData actually contains the books added to it
   return (
