@@ -1,26 +1,24 @@
 import React, { useEffect } from 'react';
 import './SchoolNav.css';
 import { Container } from 'react-bootstrap';
-import Signin from '../../../components/Login/Signin';
-import { AuthProvider, useAuthContext } from '../../../contexts/AuthContext';
+import { useAuthContext } from '../../../contexts/AuthContext';
 import logoimage from '../../../images/logo2.png';
 import { useNavigate } from 'react-router-dom';
+import SignIn from '../../../components/Login/SignIn';
 
 function LoginView(props) {
   const { school } = props; // destructuring prop or else would get linter error
   return (
     <>
-      <AuthProvider>
-        <div className="SectionSubtitle">{school} is using a virtual textbook exchange!</div>
-        <div className="SectionContent">To buy or sell textbooks, please login or create an account below.</div>
-        <div className="SectionWrapper">
-          <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '40vh' }}>
-            <div className="w-100" style={{ maxWidth: '400px' }}>
-              <Signin />
-            </div>
-          </Container>
-        </div>
-      </AuthProvider>
+      <div className="SectionSubtitle">{school} is using a virtual textbook exchange!</div>
+      <div className="SectionContent">To buy or sell textbooks, please login or create an account below.</div>
+      <div className="SectionWrapper">
+        <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '40vh' }}>
+          <div className="w-100" style={{ maxWidth: '400px' }}>
+            <SignIn />
+          </div>
+        </Container>
+      </div>
     </>
   );
 }
@@ -50,8 +48,7 @@ function EndingLogo() {
 //will pull this from the database in the future
 function SchoolNavPage() {
   const navigate = useNavigate();
-  const { getCurrentUser } = useAuthContext();
-  const currentUser = getCurrentUser();
+  const { currentUser } = useAuthContext();
 
   useEffect(() => {
     if (currentUser) {

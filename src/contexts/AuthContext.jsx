@@ -10,50 +10,36 @@ import { getUserById, postUser } from '../api/user';
 const AuthContext = React.createContext();
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
-  const [currentAuthUser, setCurrentAuthUser] = useState();
-
-  function getCurrentUser() {
-    return currentUser;
-  }
-
-  function getCurrentAuthUser() {
-    return currentAuthUser;
-  }
+  const [currentUser, setCurrentUser] = useState(null);
+  const [currentAuthUser, setCurrentAuthUser] = useState(null);
 
   async function signUp(email, password, createdUserAccount) {
-    const newUser = (await auth.createUserWithEmailAndPassword(email, password)).user;
-
+    const authUser = (await auth.createUserWithEmailAndPassword(email, password)).user;
     // TODO handle if postUser fails, we should remove the user from firebase auth
     // save user details to our user collection
-    await postUser(newUser.uid, createdUserAccount);
-
-    setCurrentUser(await getUserById(auth.currentUser.uid));
+    await postUser(authUser.uid, createdUserAccount);
+    const user = await getUserById(authUser.uid);
+    setCurrentAuthUser(authUser);
+    setCurrentUser(user);
   }
 
   async function signIn(email, password) {
-    await auth.signInWithEmailAndPassword(email, password);
-    setCurrentUser(await getUserById(auth.currentUser.uid));
+    const authUser = (await auth.signInWithEmailAndPassword(email, password)).user;
+    const user = await getUserById(authUser.uid);
+    setCurrentUser(user);
+    setCurrentAuthUser(authUser);
   }
 
   async function signOut() {
     await auth.signOut();
+    setCurrentAuthUser(null);
     setCurrentUser(null);
   }
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
-      if (authUser) {
-        setCurrentAuthUser(authUser);
-      }
-    });
-    return unsubscribe;
-  }, []);
-
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
-    getCurrentUser,
-    getCurrentAuthUser,
+    currentUser,
+    currentAuthUser,
     signIn,
     signUp,
     signOut

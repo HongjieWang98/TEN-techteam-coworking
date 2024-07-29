@@ -24,15 +24,15 @@ export default function AccountCreation() {
   const venmoRef = useRef(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signUp, getCurrentUser } = useAuthContext();
+  const { signUp } = useAuthContext();
   const navigate = useNavigate();
 
+  async function fetchData() {
+    const organizations = await getOrganizations();
+    setAvailableSchools(organizations);
+    setSelectedSchool(organizations[0]);
+  }
   useEffect(() => {
-    async function fetchData() {
-      const organizations = await getOrganizations();
-      setAvailableSchools(organizations);
-      setSelectedSchool(organizations[0]);
-    }
     fetchData();
   }, []);
 
@@ -66,10 +66,7 @@ export default function AccountCreation() {
 
       await validateUser(createdUserAccount);
       await signUp(schoolEmailRef.current.value, passwordRef.current.value, createdUserAccount);
-
-      if (getCurrentUser()) {
-        navigate('/signup/success', { replace: true });
-      }
+      navigate('/signup/success', { replace: true });
     } catch (backendError) {
       setError(backendError.message);
     } finally {
