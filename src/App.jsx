@@ -14,6 +14,10 @@ import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 import Profile from './pages/Profile';
 import NavigationBar from './components/NavigationBar/NavBar';
+import PrivacyPage from './pages/Overview/Privacy/Privacy';
+import TermsPage from './pages/Overview/Terms/Terms';
+
+import ReactDOM from 'react-dom';
 
 function App() {
   return (
@@ -27,6 +31,10 @@ function App() {
             <Route path="/signin" element={<LoginPage />} />
             <Route path="/how" element={<HowToPage />} />
             <Route path="/signup" element={<CreateAccount />} />
+
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+
             <Route path="/sell">
               <Route path="list" element={<ListingPage />} />
               <Route path="confirmation" element={<ConfirmationPage />} />

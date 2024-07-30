@@ -100,7 +100,7 @@ export default function AccountCreation() {
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Form.Group id="school-select">
             <Form.Label>What school do you attend?</Form.Label>
-            <Form.Label className="muted">(Note: must match your school email address)</Form.Label>
+            <Form.Label className="muted"> (Note: must match your school email address)</Form.Label>
             <FilterDropdown currElement={selectedSchool} data={availableSchools} callbackFunc={setSelectedSchool} />
           </Form.Group>
           <Form.Group id="email">
