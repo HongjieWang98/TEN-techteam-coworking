@@ -14,8 +14,7 @@ export default function ListingPage() {
   const { setListing } = useSellContext();
   const formRef = useRef(null);
   const navigate = useNavigate();
-  const { getCurrentUser } = useAuthContext();
-  const currentUser = getCurrentUser();
+  const { currentUser } = useAuthContext();
 
   //handle form submission to upload to database
   async function handleSubmit(e) {

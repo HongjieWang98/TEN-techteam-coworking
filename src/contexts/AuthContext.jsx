@@ -5,44 +5,44 @@ import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { auth } from '../firebase/firebase_config';
-import { getUserById } from '../api/user';
+import { getUserById, postUser } from '../api/user';
 
 const AuthContext = React.createContext();
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
-  const [currentAuthUser, setCurrentAuthUser] = useState();
+  const [currentUser, setCurrentUser] = useState(null);
+  const [currentAuthUser, setCurrentAuthUser] = useState(null);
 
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password);
+  async function signUp(email, password, createdUserAccount) {
+    const authUser = (await auth.createUserWithEmailAndPassword(email, password)).user;
+    // TODO handle if postUser fails, we should remove the user from firebase auth
+    // save user details to our user collection
+    await postUser(authUser.uid, createdUserAccount);
+    const user = await getUserById(authUser.uid);
+    setCurrentAuthUser(authUser);
+    setCurrentUser(user);
   }
 
-  function getCurrentUser() {
-    return currentUser;
+  async function signIn(email, password) {
+    const authUser = (await auth.signInWithEmailAndPassword(email, password)).user;
+    const user = await getUserById(authUser.uid);
+    setCurrentUser(user);
+    setCurrentAuthUser(authUser);
   }
 
-  function getCurrentAuthUser() {
-    return currentAuthUser;
+  async function signOut() {
+    await auth.signOut();
+    setCurrentAuthUser(null);
+    setCurrentUser(null);
   }
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
-      let user = null;
-      if (authUser) {
-        console.log('auth state changed, adding user');
-        setCurrentAuthUser(authUser);
-        user = await getUserById(authUser.uid);
-      }
-      setCurrentUser(user);
-    });
-    return unsubscribe;
-  }, []);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
-    getCurrentUser,
-    getCurrentAuthUser,
-    signup
+    currentUser,
+    currentAuthUser,
+    signIn,
+    signUp,
+    signOut
   };
 
   return (

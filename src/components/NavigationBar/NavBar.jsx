@@ -4,9 +4,9 @@ import ExternalNavigationBar from './ExternalNavBar';
 
 // based on the Auth Context, lets show the external or internal nav bar
 function NavigationBar() {
-  const { getCurrentUser } = useAuthContext();
+  const { currentUser } = useAuthContext();
 
-  return getCurrentUser() ? <InternalNavigationBar /> : <ExternalNavigationBar />;
+  return currentUser ? <InternalNavigationBar /> : <ExternalNavigationBar />;
 }
 
 export default NavigationBar;
