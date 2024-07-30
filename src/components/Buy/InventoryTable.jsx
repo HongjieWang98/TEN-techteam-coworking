@@ -20,21 +20,17 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
 
   async function tableFormatBook(bookData) {
     // eslint-disable-next-line camelcase
-    const { seller_id } = bookData;
+    const { seller } = bookData;
 
     let maybeSellerPaymentMethods = '';
     // Get the payment methods info
-    try {
-      const maybeSeller = await getDoc(doc(db, 'users', seller_id));
-      const maybeSellerData = maybeSeller.data();
-      if (maybeSellerData.payment_method.venmo) {
-        maybeSellerPaymentMethods += 'Venmo';
-      } else if (maybeSellerData.payment_method.cash) {
-        maybeSellerPaymentMethods += 'Cash';
-      }
-    } catch (e) {
-      console.error('Retriving seller information failed');
+
+    if (seller.payment_method.venmo) {
+      maybeSellerPaymentMethods += 'Venmo';
+    } else if (seller.payment_method.cash) {
+      maybeSellerPaymentMethods += 'Cash';
     }
+
     const rowInfo = {
       id: bookData.id,
       title: bookData.title,
@@ -67,47 +63,51 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
     // Otherwise if we just want to display no need for an add to cart functionality
     return rowInfo;
   }
-  useEffect(() => {
-    async function fetchTextbooks() {
-      try {
-        // If we have buyFunctionality and the currentUser (of the session) has been loaded
-        if (buyFunctionality && currentUser) {
-          const books = await getTextbooksByOrganizationId(currentUser.organization_id);
-          // Filter out all the books that have been reserved
-          const unreservedBooks = books.filter((book) => book.buyer_id == null);
-          const booksTablePromises = unreservedBooks.map((book) => tableFormatBook(book));
-          // Need to Promise.all here because we have calls to get the seller info in tableFormatBook
-          const booksTable = await Promise.all(booksTablePromises);
-          // Initalize the datatable
-          setTableData({
-            columns: [...noBuyColumns, buyColumn],
-            rows: booksTable
-          });
+  useEffect(
+    () => {
+      async function fetchTextbooks() {
+        try {
+          // If we have buyFunctionality and the currentUser (of the session) has been loaded
+          if (buyFunctionality && currentUser) {
+            const booksDB = await getTextbooksByOrganizationId(currentUser.organization_id);
+            // Filter out all the books that have been reserved (NOTE THAT WE ARE NOT CHECKING IF THE BUYER_ID IS NULL)
+            const unreservedBooks = booksDB.filter((book) => book.status === 'active');
+            const booksTable = unreservedBooks.map((book) => tableFormatBook(book));
+            // Initalize the datatable
+            setTableData({
+              columns: [...noBuyColumns, buyColumn],
+              rows: booksTable
+            });
+          }
+          // Sort of a janky fix (before there was a bug involving where the current user had not been
+          // loaded yet and thus all the textbooks from all the universities were quickly displayed (before the current user had been loaded))
+          // Therefore this else if is necessary to prevent this from happening
+
+          // *** @todo move this code into the textbook api and update so that it uses the textbook events****
+          else if (!buyFunctionality) {
+            const booksDatabase = await getDocs(collection(db, 'textbooks'));
+            const books = booksDatabase.docs;
+            // Filter out all the books that have been reserved
+            const unreservedBooks = books.filter((book) => book.data().buyer_id == null);
+            // Format the books as necessary
+            const booksTablePromises = unreservedBooks.map((book) => tableFormatBook({ ...book.data(), id: book.id }));
+            // Need to Promise.all here because we have calls to get the seller info in tableFormatBook
+            const booksTable = await Promise.all(booksTablePromises);
+            // Initalize the datatable
+            setTableData({
+              columns: noBuyColumns,
+              rows: booksTable
+            });
+          }
+        } catch (e) {
+          console.error(e);
         }
-        // Sort of a janky fix (before there was a bug involving where the current user had not been
-        // loaded yet and thus all the textbooks from all the universities were quickly displayed (before the current user had been loaded))
-        // Therefore this else if is necessary to prevent this from happening
-        else if (!buyFunctionality) {
-          const booksDatabase = await getDocs(collection(db, 'textbooks'));
-          const books = booksDatabase.docs;
-          // Filter out all the books that have been reserved
-          const unreservedBooks = books.filter((book) => book.data().buyer_id == null);
-          // Format the books as necessary
-          const booksTablePromises = unreservedBooks.map((book) => tableFormatBook({ ...book.data(), id: book.id }));
-          // Need to Promise.all here because we have calls to get the seller info in tableFormatBook
-          const booksTable = await Promise.all(booksTablePromises);
-          // Initalize the datatable
-          setTableData({
-            columns: noBuyColumns,
-            rows: booksTable
-          });
-        }
-      } catch (e) {
-        console.error(e);
       }
-    }
-    fetchTextbooks();
-  }, [currentUser]);
+      fetchTextbooks();
+    },
+    // Have to reload the table once the user data is fetched
+    [currentUser]
+  );
 
   // Just trying to test if cartData actually contains the books added to it
   return (

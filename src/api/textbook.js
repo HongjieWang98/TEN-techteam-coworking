@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 import { processStatus } from './process_status';
-import { getSchoolEmailByUserId, getUserById } from './user';
+import { getUserById } from './user';
 
 export async function getTextbookById(id) {
   const textbookCollectionRef = collection(db, 'textbooks');
@@ -55,14 +55,7 @@ export async function getTextbooksByOrganizationId(organizationId) {
   const q = query(textbookCollectionRef, where('orgazation_id', '==', organizationId));
   const textbooks = (await getDocs(q)).docs;
 
-  return Promise.all(
-    textbooks.map(async (textbook) => {
-      return {
-        id: textbook.id,
-        ...(await processStatus(textbook.ref, textbook.data()))
-      };
-    })
-  );
+  return Promise.all(textbooks.map(async (textbook) => getTextbookById(textbook.id)));
 }
 
 // we should handle any race conditions that comes with textbook events
@@ -90,11 +83,10 @@ export async function reserveTextbooks(textbooks, userId) {
   const boughtStatus = await Promise.all(
     textbooks.map(async (textbook) => {
       try {
-        const textbookCollectionRef = collection(db, 'textbooks');
-        const textbookDocRef = doc(textbookCollectionRef, textbook.id);
-        const currTextbook = await getDoc(textbookDocRef);
-        if (currTextbook.exists() && currTextbook.data().buyer_id == null) {
-          await updateDoc(textbookDocRef, { buyer_id: userId });
+        const currTextbook = await getTextbookById(textbook.id);
+        if (currTextbook != null && currTextbook.status === 'active') {
+          const textbookCollectionRef = collection(db, 'textbooks');
+          await updateDoc(doc(textbookCollectionRef, textbook.id), { buyer_id: userId });
           const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
           const currTime = serverTimestamp();
           await addDoc(subcollectionRef, {
@@ -104,7 +96,7 @@ export async function reserveTextbooks(textbooks, userId) {
           });
           return { ...textbook, bought: true };
         }
-      } catch {
+      } catch (e) {
         return { ...textbook, bought: false };
       }
       return { ...textbook, bought: false };
