@@ -1,6 +1,6 @@
 // File to specify the columns in the datatable
 
-export const noBuyColumns = [
+export const listingDetailColumns = [
   {
     label: 'Course Number',
     field: 'courseAndDpmt',

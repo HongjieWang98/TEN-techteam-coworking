@@ -5,7 +5,7 @@ import './SideCart.css';
 function SideCartEntry({ textbook, setTableData, handleAddToCart }) {
   const { removeFromCart } = useBuyContext();
   /* Show buttons if their corresponding functions are defined */
-  function handleFunc() {
+  function handleDelete() {
     return (
       <button
         onClick={() => {
@@ -49,7 +49,7 @@ function SideCartEntry({ textbook, setTableData, handleAddToCart }) {
         <div className="col-md-3">
           <div className="EntrySubInfo">{textbook.courseAndDpmt}</div>
           <div className="EntrySubInfo">{textbook.price}</div>
-          {handleFunc()}
+          {handleDelete()}
         </div>
       </div>
       <div className="row">

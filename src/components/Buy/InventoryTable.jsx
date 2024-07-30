@@ -70,8 +70,8 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
           // If we have buyFunctionality and the currentUser (of the session) has been loaded
           if (buyFunctionality && currentUser) {
             const booksDB = await getTextbooksByOrganizationId(currentUser.organization_id);
-            // Filter out all the books that have been reserved (NOTE THAT WE ARE NOT CHECKING IF THE BUYER_ID IS NULL)
-            const unreservedBooks = booksDB.filter((book) => book.status === 'active');
+            // Filter out all the books that have been reserved or do not have a seller for some reason (NOTE THAT WE ARE NOT CHECKING IF THE BUYER_ID IS NULL)
+            const unreservedBooks = booksDB.filter((book) => book.status === 'active' && book.seller != null);
             const booksTable = unreservedBooks.map((book) => tableFormatBook(book));
             // Initalize the datatable
             setTableData({
