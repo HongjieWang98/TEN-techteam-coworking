@@ -14,13 +14,12 @@ const containerStyle = {
 };
 
 function Profile() {
-  const { getCurrentUser } = useAuthContext();
-  const currentUser = getCurrentUser();
+  const { currentUser, signOut } = useAuthContext();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     if (currentUser) {
-      await auth.signOut();
+      await signOut();
     }
     navigate('/');
   };

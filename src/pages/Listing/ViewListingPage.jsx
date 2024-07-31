@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
 import BuyerListing from '../../components/Listing/BuyerListing';
 import SellerListing from '../../components/Listing/SellerListing';
@@ -8,11 +8,9 @@ import { getTextbookById } from '../../api/textbook';
 function ViewListingPage() {
   const { listingId } = useParams();
   const [listingComponent, setListingComponent] = useState(null);
-  const { getCurrentUser } = useAuthContext();
-  const navigate = useNavigate();
+  const { currentUser } = useAuthContext();
 
   useEffect(() => {
-    const currentUser = getCurrentUser();
     const userId = currentUser?.id;
 
     async function fetchDataAndSetComponent() {
@@ -31,7 +29,7 @@ function ViewListingPage() {
     if (userId) {
       fetchDataAndSetComponent();
     }
-  }, [listingId, getCurrentUser]);
+  }, [listingId, currentUser]);
 
   return <div>{listingComponent}</div>;
 }

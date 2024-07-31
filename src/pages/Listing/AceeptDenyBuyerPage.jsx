@@ -6,8 +6,7 @@ import DisplayCheckboxGroup from '../../components/common/DisplayCheckboxGroup';
 
 function AcceptDenyBuyerPage() {
   const { listingId } = useParams();
-  const { getCurrentUser } = useAuthContext();
-  const currentUser = getCurrentUser();
+  const { currentUser } = useAuthContext();
   const [listingDetails, setListingDetails] = useState(null);
   const navigate = useNavigate();
 
