@@ -161,8 +161,20 @@ export default function AccountCreation() {
           )}
           <Form.Group>
             <Form.Label>Payment Methods Accepted</Form.Label>
-            <Form.Check type="checkbox" id="cash" label="Cash" name="cash" onChange={handlePreferredPayment} />
-            <Form.Check type="checkbox" id="venmo" label="Venmo" name="venmo" onChange={handlePreferredPayment} />
+            <Form.Check
+              type="checkbox"
+              id="cash"
+              label="Cash"
+              name="cash"
+              onChange={handlePreferredPayment}
+            />
+            <Form.Check
+              type="checkbox"
+              id="venmo"
+              label="Venmo"
+              name="venmo"
+              onChange={handlePreferredPayment}
+            />
           </Form.Group>
           {paymentMethod.venmo && (
             <Form.Group id="venmo-username">
