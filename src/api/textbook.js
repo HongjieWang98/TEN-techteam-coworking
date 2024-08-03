@@ -46,7 +46,7 @@ export async function getTextbooksByUserId(userId) {
 export async function getTextbooksByOrganizationId(organizationId) {
   // TODO put some caching here
   const textbookCollectionRef = collection(db, 'textbooks');
-  const q = query(textbookCollectionRef, where('orgazation_id', '==', organizationId));
+  const q = query(textbookCollectionRef, where('organization_id', '==', organizationId));
   const textbooks = (await getDocs(q)).docs;
 
   return Promise.all(textbooks.map(async (textbook) => getTextbookById(textbook.id)));
