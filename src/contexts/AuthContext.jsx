@@ -36,6 +36,17 @@ export function AuthProvider({ children }) {
     setCurrentUser(null);
   }
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        setCurrentUser(await getUserById(user.uid));
+        setCurrentAuthUser(user);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
     currentUser,
