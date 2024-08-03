@@ -32,20 +32,21 @@ export default function ListingPage() {
 
       try {
         // server side validation needed
-        await listTextbook({
-          isbn: data['isbn'],
-          title: data['title'],
-          author: data['author'],
-          edition: data['edition'],
-          department: data['department'],
-          course_number: data['courseNumber'],
-          price: data['price'],
-          notes: data['notes'],
-          condition: condition,
-          seller_id: currentUser.id,
-          buyer_id: null,
-          orgazation_id: currentUser.organization_id
-       });
+        await listTextbook(
+          {
+            isbn: data['isbn'],
+            title: data['title'],
+            author: data['author'],
+            edition: data['edition'],
+            department: data['department'],
+            course_number: data['courseNumber'],
+            price: data['price'],
+            notes: data['notes'],
+            condition: condition,
+            organization_id: currentUser.organization_id
+          },
+          currentUser.id
+        );
         navigate('/sell/confirmation/');
       } catch (error) {
         console.error('Error uploading data to database: ', error);

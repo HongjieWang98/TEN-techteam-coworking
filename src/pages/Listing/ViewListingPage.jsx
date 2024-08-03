@@ -19,9 +19,9 @@ function ViewListingPage() {
         // do something with bad listing id
       }
 
-      if (listingDetails.buyer_id === userId) {
+      if (listingDetails.buyer?.id === userId) {
         setListingComponent(<BuyerListing listingData={listingDetails} />);
-      } else if (listingDetails.seller_id === userId) {
+      } else if (listingDetails.seller.id === userId) {
         setListingComponent(<SellerListing listingData={listingDetails} />);
       }
     }

@@ -11,8 +11,7 @@ import {
   serverTimestamp
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
-import { processStatus } from './process_status';
-import { getUserById } from './user';
+import { processTextbook } from './process_textbook';
 
 export async function getTextbookById(id) {
   const textbookCollectionRef = collection(db, 'textbooks');
@@ -20,15 +19,9 @@ export async function getTextbookById(id) {
   const textbook = await getDoc(textbookDocRef);
 
   if (textbook.exists()) {
-    const [seller, buyer] = await Promise.all([
-      textbook.data().seller_id ? getUserById(textbook.data().seller_id) : null,
-      textbook.data().buyer_id ? getUserById(textbook.data().buyer_id) : null
-    ]);
     return {
       id: textbook.id,
-      ...(await processStatus(textbookDocRef, textbook.data())),
-      seller,
-      buyer
+      ...(await processTextbook(textbookDocRef, textbook.data()))
     };
   }
 
@@ -44,13 +37,14 @@ export async function getTextbooksByUserId(userId) {
     textbooks.map(async (textbook) => {
       return {
         id: textbook.id,
-        ...(await processStatus(textbook.ref, textbook.data()))
+        ...(await processTextbook(textbook.ref, textbook.data()))
       };
     })
   );
 }
 
 export async function getTextbooksByOrganizationId(organizationId) {
+  // TODO put some caching here
   const textbookCollectionRef = collection(db, 'textbooks');
   const q = query(textbookCollectionRef, where('orgazation_id', '==', organizationId));
   const textbooks = (await getDocs(q)).docs;
@@ -61,7 +55,7 @@ export async function getTextbooksByOrganizationId(organizationId) {
 // we should handle any race conditions that comes with textbook events
 // eg listing removal and reservation cancelled at the same time
 
-export async function listTextbook(textbook) {
+export async function listTextbook(textbook, userId) {
   const currTime = serverTimestamp();
   const docRef = await addDoc(collection(db, 'textbooks'), {
     ...textbook,
@@ -72,7 +66,7 @@ export async function listTextbook(textbook) {
   const subcollectionRef = collection(db, `textbooks/${docRef.id}/textbook_events`);
   await addDoc(subcollectionRef, {
     event_type: 'listed',
-    user_id: textbook.seller_id,
+    user_id: userId,
     timestamp: currTime
   });
 }

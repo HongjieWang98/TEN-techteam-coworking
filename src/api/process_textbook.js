@@ -1,4 +1,5 @@
 import { collection, orderBy, query, getDocs, limit } from 'firebase/firestore/lite';
+import { getUserById } from './user';
 
 /**
  * @enum {string}
@@ -44,19 +45,28 @@ const EventStatus = {
  */
 
 /**
- * Represents a textbook (only typing the fields necessary for processStatus)
+ * Represents a User
+ * @typedef {Object} User
+ * @property {string} id
+ */
+
+/**
+ * Represents a textbook (only typing the fields necessary for processTextbook)
  * @typedef {Object} Textbook
- * @property {string} seller_id
- * @property {string} buyer_id
+ * @property {User} seller
+ * @property {User} buyer
  * @property {EventStatusType} status
  */
+
+const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
+const RESERVATION_EXPIRATION = ONE_WEEK_IN_SECONDS;
 
 /**
  * Processes the textbook events and return a the status of the textbook
  * The param is expected to be the document from the textbook collection before data retrieval
- * @returns {Textbook}
+ * @returns {Promise<Textbook>}
  */
-export async function processStatus(textbookRef, textbook) {
+export async function processTextbook(textbookRef, textbook, includeSellerBuyerSubmodel = false) {
   if (!textbook) {
     throw new Error(`Could not find textbook`);
   }
@@ -67,24 +77,33 @@ export async function processStatus(textbookRef, textbook) {
     throw new Error(`Could not find 'textbook_events' subcollection reference on textbook id: ${textbook.id}`);
   }
 
-  const mostRecentTextbookEvent = (
-    await getDocs(query(textbookEventsRef, orderBy('timestamp', 'desc'), limit(1)))
-  ).docs[0].data();
+  const textbookEvents = (
+    await getDocs(query(textbookEventsRef, orderBy('timestamp', 'desc')))
+  ).docs.map((doc) => doc.data());
 
-  if (!mostRecentTextbookEvent) {
+  if (!textbookEvents) {
     throw new Error(`Could not find 'textbook_events' subcollection on textbook id: ${textbook.id}`);
   }
 
+  const mostRecentTextbookEvent = textbookEvents[0];
   const textbookStatus = evaluateEventStatus(mostRecentTextbookEvent);
+  const [seller_id, buyer_id] = await evaluateSellerIdAndBuyerId(textbookEvents);
+  let [seller, buyer] = [{ id: seller_id }, buyer_id ? { id: buyer_id } : null];
+  
+  if (includeSellerBuyerSubmodel) {
+    [seller, buyer] = await Promise.all([
+      seller_id ? getUserById(seller_id) : null,
+      buyer_id ? getUserById(buyer_id) : buyer_id
+    ])
+  }
 
   return {
     ...textbook,
-    status: textbookStatus
+    status: textbookStatus,
+    buyer,
+    seller
   };
 }
-
-const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
-const RESERVATION_EXPIRATION = ONE_WEEK_IN_SECONDS;
 
 /**
  *
@@ -125,4 +144,36 @@ function evaluateEventStatus(mostRecentEvent) {
   }
 
   throw new Error(`Could not determine status from event: ${mostRecentEvent.event_type}`);
+}
+
+async function evaluateSellerIdAndBuyerId(textbookEvents) {
+  const seller_id = textbookEvents.find((event) => event.event_type === EventType.LISTED)?.user_id;
+  let buyer_id = null
+
+  const status = evaluateEventStatus(textbookEvents[0]);
+
+  switch(status) {
+    case EventStatus.RESERVED:
+      // .find() looks for the first element that satisfies the condition and the order is in descending
+      //  we should be finding the buyer_id of the most recent reservation
+      buyer_id = textbookEvents.find((event) => 
+        event.event_type === EventType.RESERVED && 
+        event.timestamp.seconds + RESERVATION_EXPIRATION > Date.now() / 1000
+      )?.user_id;
+      break;
+    case EventStatus.PENDING_CONFIRMATION || EventStatus.SOLD:
+      buyer_id = textbookEvents.find((event) => 
+        event.event_type === EventType.RESERVED
+      )?.user_id;
+      break;
+    default:
+      buyer_id = null
+  }
+
+  if (!seller_id) {
+    throw new Error(`Could not find seller_id for textbook id: ${textbook.id}`);
+  }
+
+
+  return [seller_id, buyer_id]
 }
