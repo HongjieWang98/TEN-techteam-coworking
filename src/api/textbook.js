@@ -11,7 +11,7 @@ import {
   serverTimestamp
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
-import { processTextbook } from './process_textbook';
+import { EventStatus, processTextbook } from './process_textbook';
 
 export async function getTextbookById(id) {
   const textbookCollectionRef = collection(db, 'textbooks');
@@ -78,9 +78,7 @@ export async function reserveTextbooks(textbooks, userId) {
     textbooks.map(async (textbook) => {
       try {
         const currTextbook = await getTextbookById(textbook.id);
-        if (currTextbook != null && currTextbook.status === 'active') {
-          const textbookCollectionRef = collection(db, 'textbooks');
-          await updateDoc(doc(textbookCollectionRef, textbook.id), { buyer_id: userId });
+        if (currTextbook != null && currTextbook.status === EventStatus.ACTIVE) {
           const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
           const currTime = serverTimestamp();
           await addDoc(subcollectionRef, {

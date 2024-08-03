@@ -23,7 +23,7 @@ const EventType = {
 /**
  * @enum {string}
  */
-const EventStatus = {
+export const EventStatus = {
   ACTIVE: 'active',
   REMOVED: 'removed',
   RESERVED: 'reserved',
