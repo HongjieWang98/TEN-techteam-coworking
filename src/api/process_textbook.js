@@ -91,13 +91,13 @@ export async function processTextbook(textbookRef, textbook, includeSellerBuyerS
   const mostRecentTextbookEvent = textbookEvents[0];
   const textbookStatus = evaluateEventStatus(mostRecentTextbookEvent);
   const seller_id = textbook.seller_id;
-  const buyer_id = textbook.buyer_id;
+  let buyer_id = textbook.buyer_id;
   const nullifyBuyerForTextbookIds = [];
 
   // Since the buyer can be removed from the textbook in the case their reservation 
   // expires or the listing is removed, we need to nullify the buyer
-  if (textbookStatus === EventStatus.REMOVED || 
-    textbookStatus === EventStatus.ACTIVE
+  if ((textbookStatus === EventStatus.REMOVED || 
+    textbookStatus === EventStatus.ACTIVE) && buyer_id
   ) {
     buyer_id = null;
     nullifyBuyerForTextbookIds.push(textbookRef.id);
