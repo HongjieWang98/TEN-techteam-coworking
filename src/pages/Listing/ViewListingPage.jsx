@@ -14,7 +14,7 @@ function ViewListingPage() {
     const userId = currentUser?.id;
 
     async function fetchDataAndSetComponent() {
-      const listingDetails = await getTextbookById(listingId);
+      const listingDetails = await getTextbookById(listingId, true);
       if (!listingDetails) {
         // do something with bad listing id
       }

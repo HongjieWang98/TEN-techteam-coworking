@@ -6,7 +6,7 @@ import React from 'react';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { listTextbook } from '../../api/textbook';
 import { Form, Button, Card, Alert, Container, Row, Col } from 'react-bootstrap';
-import './ListingPage.css'
+import './ListingPage.css';
 
 export default function ListingPage() {
   const [condition, setCondition] = useState('');
@@ -32,20 +32,21 @@ export default function ListingPage() {
 
       try {
         // server side validation needed
-        await listTextbook({
-          isbn: data['isbn'],
-          title: data['title'],
-          author: data['author'],
-          edition: data['edition'],
-          department: data['department'],
-          course_number: data['courseNumber'],
-          price: data['price'],
-          notes: data['notes'],
-          condition: condition,
-          seller_id: currentUser.id,
-          buyer_id: null,
-          orgazation_id: currentUser.organization_id
-       });
+        await listTextbook(
+          {
+            isbn: data['isbn'],
+            title: data['title'],
+            author: data['author'],
+            edition: data['edition'],
+            department: data['department'],
+            course_number: data['courseNumber'],
+            price: data['price'],
+            notes: data['notes'],
+            condition: condition,
+            organization_id: currentUser.organization_id
+          },
+          currentUser.id
+        );
         navigate('/sell/confirmation/');
       } catch (error) {
         console.error('Error uploading data to database: ', error);
@@ -73,7 +74,14 @@ export default function ListingPage() {
           <Col md={8}>
             <Row className="form-row">
               <Col md={12}>
-                <Input name="isbn" label="ISBN" placeholder="978123345488777" type="number" isLoading={isLoading} required />
+                <Input
+                  name="isbn"
+                  label="ISBN"
+                  placeholder="978123345488777"
+                  type="number"
+                  isLoading={isLoading}
+                  required
+                />
               </Col>
             </Row>
             <Row className="form-row">
@@ -96,10 +104,24 @@ export default function ListingPage() {
             </Row>
             <Row className="form-row">
               <Col md={4}>
-                <Input name="department" label="Department" placeholder="BIO" type="text" isLoading={isLoading} required />
+                <Input
+                  name="department"
+                  label="Department"
+                  placeholder="BIO"
+                  type="text"
+                  isLoading={isLoading}
+                  required
+                />
               </Col>
               <Col md={4}>
-                <Input name="courseNumber" label="Course Number" placeholder="1" type="text" isLoading={isLoading} required />
+                <Input
+                  name="courseNumber"
+                  label="Course Number"
+                  placeholder="1"
+                  type="text"
+                  isLoading={isLoading}
+                  required
+                />
               </Col>
               <Col md={4}>
                 <Input name="price" label="Price" placeholder="10" type="number" isLoading={isLoading} required />
@@ -130,12 +152,13 @@ export default function ListingPage() {
                 />
               </Col>
             </Row>
-            <Row className="justify-content-center"> 
+            <Row className="justify-content-center">
               <Button type="submit" disabled={isLoading} className="btn btn-primary w-100 mt-2 mx-auto">
-              Submit Listing
+                Submit Listing
               </Button>
               <div className="w-100 text-center mt-2">
-                By continuing, you accept our <a href="/privacy">privacy policy</a> and <a href="/terms">terms and conditions</a>.
+                By continuing, you accept our <a href="/privacy">privacy policy</a> and{' '}
+                <a href="/terms">terms and conditions</a>.
               </div>
             </Row>
           </Col>
