@@ -13,10 +13,12 @@ import PageWrapper from './components/PageWrapper';
 import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
 import Profile from './pages/Profile';
+import Inventory from './pages/Buy/Inventory';
+import BuyConfirm from './pages/Buy/BuyConfirm';
 import NavigationBar from './components/NavigationBar/NavBar';
+import BuySuccess from './pages/Buy/BuySuccess';
 import PrivacyPage from './pages/Overview/Privacy/Privacy';
 import TermsPage from './pages/Overview/Terms/Terms';
-
 import ReactDOM from 'react-dom';
 
 function App() {
@@ -47,6 +49,9 @@ function App() {
             <Route path="/signup" element={<CreateAccount />} />
             <Route path="/signup/success" element={<SuccessCreateAccount />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/buyconfirm" element={<BuyConfirm />} />
+            <Route path="/buysuccess" element={<BuySuccess />} />
           </Routes>
         </PageWrapper>
       </Providers>

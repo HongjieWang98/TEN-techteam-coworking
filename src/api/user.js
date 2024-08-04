@@ -1,13 +1,4 @@
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  getDoc,
-  doc,
-  setDoc,
-  serverTimestamp
-} from 'firebase/firestore/lite';
+import { collection, query, where, getDocs, getDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 
 export async function checkDuplicateUserBySchoolEmail(schoolEmail) {
