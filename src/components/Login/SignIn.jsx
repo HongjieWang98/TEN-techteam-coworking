@@ -11,7 +11,7 @@ export default function SignIn() {
 
   useEffect(() => {
     if (currentUser) {
-      navigate('/listing/buy', { replace: true });
+      navigate('/profile', { replace: true });
     }
   }, [currentUser]);
 
