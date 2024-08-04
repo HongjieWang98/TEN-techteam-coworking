@@ -1,6 +1,7 @@
 import React from 'react';
 import './HowTo.css';
 import logoimage from '../../../images/logo2.png';
+import Accordion from 'react-bootstrap/Accordion';
 
 import { Tab, Tabs, Row, Col } from 'react-bootstrap';
 
@@ -172,71 +173,25 @@ function FAQVirtual() {
   return (
     <div className="SectionWrapper">
       <div className="SectionTitleHeaderNav">FAQ</div>
-      <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-            <button
-              class="accordion-button"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseOne"
-              aria-expanded="true"
-              aria-controls="collapseOne">
-              What happens if my textbook is not sold?
-            </button>
-          </h2>
-          <div
-            id="collapseOne"
-            class="accordion-collapse collapse show"
-            aria-labelledby="headingOne"
-            data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <strong>Placeholder</strong> Placeholder text
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingTwo">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseTwo"
-              aria-expanded="false"
-              aria-controls="collapseTwo">
-              What happens if the seller does not accept or reject me? What if they do but never
-              reach out?
-            </button>
-          </h2>
-          <div
-            id="collapseTwo"
-            class="accordion-collapse collapse"
-            aria-labelledby="headingTwo"
-            data-bs-parent="#accordionExample">
-            <div class="accordion-body">Placeholder text</div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingThree">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseThree"
-              aria-expanded="false"
-              aria-controls="collapseThree">
-              Question 3
-            </button>
-          </h2>
-          <div
-            id="collapseThree"
-            class="accordion-collapse collapse"
-            aria-labelledby="headingThree"
-            data-bs-parent="#accordionExample">
-            <div class="accordion-body">Placeholder text</div>
-          </div>
-        </div>
-      </div>
+      <Accordion defaultActiveKey={['0']} alwaysOpen>
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>What happens if my textbook is not sold?</Accordion.Header>
+          <Accordion.Body className="left-align">
+            Your textbook will remain listed until you remove it. If the textbook is not sold and you do not remove the listing, it will remain indefinetly.
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>What happens if the seller does not approve me? What if the seller approves me, but they never reach out?</Accordion.Header>
+          <Accordion.Body className="left-align">
+            <p>To purchase a textbook, buyers must request approval from the seller. Once a buyer reserves a textbook, the seller will receive an email to either approve or deny the request. If the seller does not respond within one week, the reservation will be canceled and the textbook will be re-listed. The buyer will need to reserve a different textbook if this occurs. </p>
+            <p>If the seller approves your request, they will contact you to arrange a time and location for the exchange. For safety reasons, exchanges must occur at a designated location and time set by your university. If the seller does not reach out within one week, the reservation will be canceled and the textbook will be re-listed. In this case, you should attempt to reserve another textbook. Alternatively, if the seller has approved your request, you can view their contact information on your profile page and reach out to them directly.</p>
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="2">
+          <Accordion.Header>What do I do if I no longer want to sell my textbook?</Accordion.Header>
+          <Accordion.Body className="left-align">You can easily cancel listings at any time from our website! Please note that this must occur before any purchase is made - all purchases are final.</Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
     </div>
   );
 }
@@ -245,70 +200,25 @@ function FAQInPerson() {
   return (
     <div className="SectionWrapper">
       <div className="SectionTitleHeaderNav">FAQ</div>
-      <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-            <button
-              class="accordion-button"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseOne"
-              aria-expanded="true"
-              aria-controls="collapseOne">
-              What happens if my textbook is not sold?
-            </button>
-          </h2>
-          <div
-            id="collapseOne"
-            class="accordion-collapse collapse show"
-            aria-labelledby="headingOne"
-            data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <strong>Placeholder</strong> Placeholder text
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingTwo">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseTwo"
-              aria-expanded="false"
-              aria-controls="collapseTwo">
-              Can I return a textbook once I've boughten it?
-            </button>
-          </h2>
-          <div
-            id="collapseTwo"
-            class="accordion-collapse collapse"
-            aria-labelledby="headingTwo"
-            data-bs-parent="#accordionExample">
-            <div class="accordion-body">Placeholder text</div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingThree">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseThree"
-              aria-expanded="false"
-              aria-controls="collapseThree">
-              What do I do if I no longer want to sell my textbook?
-            </button>
-          </h2>
-          <div
-            id="collapseThree"
-            class="accordion-collapse collapse"
-            aria-labelledby="headingThree"
-            data-bs-parent="#accordionExample">
-            <div class="accordion-body">Placeholder text</div>
-          </div>
-        </div>
-      </div>
+      <Accordion defaultActiveKey={['0']} alwaysOpen>
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>What happens if my textbook is not sold?</Accordion.Header>
+          <Accordion.Body className="left-align">
+          If your textbook is not sold, you may pick it up at any time during open hours. After 2 years, if your textbook remains unsold, you will be required to pick it up. If you do not retrieve your textbook, TEN may donate it or dispose of it in another manner.
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>Can I return a textbook once I've boughten it?</Accordion.Header>
+          <Accordion.Body className="left-align">
+            Once a textbook has been purchased and payment has been made to the seller, returns are not permitted. For privacy reasons, we cannot provide the contact information of the seller. However, you may re-list the textbook for sale on TEN.
+            Similarly, if you have sold a textbook and received payment, the textbook cannot be retrieved. 
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="2">
+          <Accordion.Header>What do I do if I no longer want to sell my textbook?</Accordion.Header>
+          <Accordion.Body className="left-align">Come into the textbook exchange during open hours and ask a volunteer for it back! It's that easy! Please note that this must occur before any purchase is made - all purchases are final.</Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
     </div>
   );
 }
