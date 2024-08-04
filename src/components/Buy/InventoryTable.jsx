@@ -4,15 +4,14 @@ import { collection, getDocs, getDoc, doc, query, where } from 'firebase/firesto
 import { MDBDataTable } from 'mdbreact';
 import { db } from '../../firebase/firebase_config';
 import { useAuthContext } from '../../contexts/AuthContext';
-import { buyColumn, noBuyColumns } from './column';
+import { buyColumn, listingDetailColumns } from './column';
 import './InventoryTable.css';
 import { useBuyContext } from '../../contexts/BuyContext';
 import { getTextbooksByOrganizationId } from '../../api/textbook';
 
 function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddToCart }) {
   const { cartData } = useBuyContext();
-  const { getCurrentUser } = useAuthContext();
-  const currentUser = getCurrentUser();
+  const { currentUser } = useAuthContext();
 
   // This function builds the data we want to display in the inventory
   // it builds this through book the current textbook information and getting
@@ -75,7 +74,7 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
             const booksTable = unreservedBooks.map((book) => tableFormatBook(book));
             // Initalize the datatable
             setTableData({
-              columns: [...noBuyColumns, buyColumn],
+              columns: [...listingDetailColumns, buyColumn],
               rows: booksTable
             });
           }
@@ -95,7 +94,7 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
             const booksTable = await Promise.all(booksTablePromises);
             // Initalize the datatable
             setTableData({
-              columns: noBuyColumns,
+              columns: listingDetailColumns,
               rows: booksTable
             });
           }
