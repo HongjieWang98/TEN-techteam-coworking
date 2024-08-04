@@ -208,7 +208,7 @@ function FAQInPerson() {
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="1">
-          <Accordion.Header>Can I return a textbook once I've boughten it?</Accordion.Header>
+          <Accordion.Header>Can I return a textbook once I've bought it?</Accordion.Header>
           <Accordion.Body className="left-align">
             Once a textbook has been purchased and payment has been made to the seller, returns are not permitted. For privacy reasons, we cannot provide the contact information of the seller. However, you may re-list the textbook for sale on TEN.
             Similarly, if you have sold a textbook and received payment, the textbook cannot be retrieved. 
