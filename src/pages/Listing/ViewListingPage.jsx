@@ -14,14 +14,14 @@ function ViewListingPage() {
     const userId = currentUser?.id;
 
     async function fetchDataAndSetComponent() {
-      const listingDetails = await getTextbookById(listingId);
+      const listingDetails = await getTextbookById(listingId, true);
       if (!listingDetails) {
         // do something with bad listing id
       }
 
-      if (listingDetails.buyer?.id === userId) {
+      if (listingDetails.buyer_id === userId) {
         setListingComponent(<BuyerListing listingData={listingDetails} />);
-      } else if (listingDetails.seller.id === userId) {
+      } else if (listingDetails.seller_id === userId) {
         setListingComponent(<SellerListing listingData={listingDetails} />);
       }
     }
