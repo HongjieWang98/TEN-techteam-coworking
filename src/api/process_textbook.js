@@ -1,4 +1,4 @@
-import { collection, orderBy, query, getDocs, limit } from 'firebase/firestore/lite';
+import { collection, orderBy, query, getDocs } from 'firebase/firestore/lite';
 import { getUserById } from './user';
 
 /**
@@ -62,13 +62,13 @@ const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
 const RESERVATION_EXPIRATION = ONE_WEEK_IN_SECONDS;
 
 /**
- * Processes the textbook events and return a the status of the textbook
+ * Processes the textbook events and return the status of the textbook
  * The param is expected to be the document from the textbook collection before data retrieval
  * @returns {Promise<Textbook>}
  */
 export async function processTextbook(textbookRef, textbook, includeSellerBuyerSubmodel = false) {
   if (!textbook) {
-    throw new Error(`Could not find textbook`);
+    throw new Error('Could not find textbook');
   }
 
   const textbookEventsRef = collection(textbookRef, 'textbook_events');
@@ -88,13 +88,14 @@ export async function processTextbook(textbookRef, textbook, includeSellerBuyerS
   const mostRecentTextbookEvent = textbookEvents[0];
   const textbookStatus = evaluateEventStatus(mostRecentTextbookEvent);
   const [seller_id, buyer_id] = await evaluateSellerIdAndBuyerId(textbookEvents);
-  let [seller, buyer] = [{ id: seller_id }, buyer_id ? { id: buyer_id } : null];
-  
+  let seller = seller_id ? { id: seller_id } : null;
+  let buyer = buyer_id ? { id: buyer_id } : null;
+
   if (includeSellerBuyerSubmodel) {
     [seller, buyer] = await Promise.all([
       seller_id ? getUserById(seller_id) : null,
-      buyer_id ? getUserById(buyer_id) : buyer_id
-    ])
+      buyer_id ? getUserById(buyer_id) : null
+    ]);
   }
 
   return {
@@ -107,73 +108,62 @@ export async function processTextbook(textbookRef, textbook, includeSellerBuyerS
 
 /**
  *
- * @param {TextbookEvent[]} textbookEventsData
- * @returns {EventStatusType}
+ * @param {TextbookEvent} mostRecentEvent
+ * @returns {EventStatus}
  */
 function evaluateEventStatus(mostRecentEvent) {
   if (mostRecentEvent.event_type === EventType.RESERVED) {
-    // compare epoch timestamps
     if (mostRecentEvent.timestamp.seconds + RESERVATION_EXPIRATION > Date.now() / 1000) {
       return EventStatus.RESERVED;
-    } else {
-      return EventStatus.ACTIVE;
     }
-  }
-
-  if (
-    mostRecentEvent.event_type === EventType.LISTED ||
-    mostRecentEvent.event_type === EventType.BUYER_DENIED ||
-    mostRecentEvent.event_type === EventType.RESERVATION_CANCELED
-  ) {
     return EventStatus.ACTIVE;
   }
 
-  if (mostRecentEvent.event_type === EventType.LISTING_REMOVED) {
-    return EventStatus.REMOVED;
+  switch (mostRecentEvent.event_type) {
+    case EventType.LISTED:
+    case EventType.BUYER_DENIED:
+    case EventType.RESERVATION_CANCELED:
+      return EventStatus.ACTIVE;
+    case EventType.LISTING_REMOVED:
+      return EventStatus.REMOVED;
+    case EventType.BUYER_ACCEPTED:
+      return EventStatus.PENDING_CONFIRMATION;
+    case EventType.SELLER_CONFIRMED_TRANSACTION:
+    case EventType.BUYER_CONFIRMED_TRANSACTION:
+      return EventStatus.SOLD;
+    default:
+      throw new Error(`Could not determine status from event: ${mostRecentEvent.event_type}`);
   }
-
-  if (mostRecentEvent.event_type === EventType.BUYER_ACCEPTED) {
-    return EventStatus.PENDING_CONFIRMATION;
-  }
-
-  if (
-    mostRecentEvent.event_type === EventType.SELLER_CONFIRMED_TRANSACTION ||
-    mostRecentEvent.event_type === EventType.BUYER_CONFIRMED_TRANSACTION
-  ) {
-    return EventStatus.SOLD;
-  }
-
-  throw new Error(`Could not determine status from event: ${mostRecentEvent.event_type}`);
 }
 
 async function evaluateSellerIdAndBuyerId(textbookEvents) {
-  const seller_id = textbookEvents.find((event) => event.event_type === EventType.LISTED)?.user_id;
-  let buyer_id = null
+  const seller_id = textbookEvents.find(event => event.event_type === EventType.LISTED)?.user_id;
+  let buyer_id = null;
 
   const status = evaluateEventStatus(textbookEvents[0]);
 
-  switch(status) {
+  switch (status) {
     case EventStatus.RESERVED:
       // .find() looks for the first element that satisfies the condition and the order is in descending
       //  we should be finding the buyer_id of the most recent reservation
-      buyer_id = textbookEvents.find((event) => 
+      buyer_id = textbookEvents.find(event => 
         event.event_type === EventType.RESERVED && 
         event.timestamp.seconds + RESERVATION_EXPIRATION > Date.now() / 1000
       )?.user_id;
       break;
-    case EventStatus.PENDING_CONFIRMATION || EventStatus.SOLD:
-      buyer_id = textbookEvents.find((event) => 
+    case EventStatus.PENDING_CONFIRMATION:
+    case EventStatus.SOLD:
+      buyer_id = textbookEvents.find(event => 
         event.event_type === EventType.RESERVED
       )?.user_id;
       break;
     default:
-      buyer_id = null
+      buyer_id = null;
   }
 
   if (!seller_id) {
-    throw new Error(`Could not find seller_id for textbook id: ${textbook.id}`);
+    throw new Error('Could not find seller_id');
   }
 
-
-  return [seller_id, buyer_id]
+  return [seller_id, buyer_id];
 }
