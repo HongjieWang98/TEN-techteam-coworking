@@ -6,8 +6,7 @@ import { reserveTextbooks } from '../../api/textbook';
 function BuyConfirmPage() {
   const { cartData, emptyCart } = useBuyContext();
   const navigate = useNavigate();
-  const { getCurrentUser } = useAuthContext();
-  const currentUser = getCurrentUser();
+  const { currentUser } = useAuthContext();
 
   async function reserveBooks() {
     // Reserve the textbooks returns a list of the textbook object with an
