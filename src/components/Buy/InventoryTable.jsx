@@ -17,7 +17,7 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
   // it builds this through book the current textbook information and getting
   // information about the seller (for the payment methods accepted)
 
-  async function tableFormatBook(bookData) {
+  function tableFormatBook(bookData) {
     // eslint-disable-next-line camelcase
     const { seller } = bookData;
 
