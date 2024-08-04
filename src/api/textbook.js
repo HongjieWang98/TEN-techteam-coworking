@@ -19,10 +19,7 @@ export async function getTextbookById(id) {
   const textbook = await getDoc(textbookDocRef);
 
   if (textbook.exists()) {
-    return {
-      id: textbook.id,
-      ...(await processTextbook(textbookDocRef, textbook.data()))
-    };
+    return await processTextbook(textbook.ref, textbook.data(), includeSellerBuyerSubmodel)
   }
 
   return null;
@@ -33,14 +30,11 @@ export async function getTextbooksByUserId(userId) {
   const q = query(textbookCollectionRef, or(where('seller_id', '==', userId), where('buyer_id', '==', userId)));
   const textbooks = (await getDocs(q)).docs;
 
-  return Promise.all(
+  return (await Promise.all(
     textbooks.map(async (textbook) => {
-      return {
-        id: textbook.id,
-        ...(await processTextbook(textbook.ref, textbook.data()))
-      };
+      return await processTextbook(textbook.ref, textbook.data())
     })
-  );
+  )).filter((textbook) => textbook.seller_id === userId || textbook.buyer_id === userId);
 }
 
 export async function getTextbooksByOrganizationId(organizationId) {
@@ -49,7 +43,9 @@ export async function getTextbooksByOrganizationId(organizationId) {
   const q = query(textbookCollectionRef, where('organization_id', '==', organizationId));
   const textbooks = (await getDocs(q)).docs;
 
-  return Promise.all(textbooks.map(async (textbook) => getTextbookById(textbook.id)));
+  return Promise.all(textbooks.map(async (textbook) => {
+    return await processTextbook(textbook.ref, textbook.data())
+  }));
 }
 
 // we should handle any race conditions that comes with textbook events

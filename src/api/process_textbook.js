@@ -53,8 +53,11 @@ export const EventStatus = {
 /**
  * Represents a textbook (only typing the fields necessary for processTextbook)
  * @typedef {Object} Textbook
+ * @property {string} id
  * @property {User} seller
  * @property {User} buyer
+ * @property {string} seller_id
+ * @property {string} buyer_id
  * @property {EventStatusType} status
  */
 
