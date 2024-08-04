@@ -13,7 +13,7 @@ import {
 import { db } from '../firebase/firebase_config';
 import { EventStatus, processTextbook } from './process_textbook';
 
-export async function getTextbookById(id) {
+export async function getTextbookById(id, includeSellerBuyerSubmodel = false) {
   const textbookCollectionRef = collection(db, 'textbooks');
   const textbookDocRef = doc(textbookCollectionRef, id);
   const textbook = await getDoc(textbookDocRef);
@@ -26,6 +26,7 @@ export async function getTextbookById(id) {
 }
 
 export async function getTextbooksByUserId(userId) {
+  // TODO put some caching here
   const textbookCollectionRef = collection(db, 'textbooks');
   const q = query(textbookCollectionRef, or(where('seller_id', '==', userId), where('buyer_id', '==', userId)));
   const textbooks = (await getDocs(q)).docs;
@@ -55,6 +56,8 @@ export async function listTextbook(textbook, userId) {
   const currTime = serverTimestamp();
   const docRef = await addDoc(collection(db, 'textbooks'), {
     ...textbook,
+    seller_id: userId,
+    buyer_id: null,
     created_at: currTime,
     updated_at: currTime,
     deleted_at: null
@@ -77,6 +80,10 @@ export async function reserveTextbooks(textbooks, userId) {
         if (currTextbook != null && currTextbook.status === EventStatus.ACTIVE) {
           const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
           const currTime = serverTimestamp();
+          await updateDoc(doc(db, 'textbooks', textbook.id), {
+            buyer_id: userId,
+            updated_at: currTime
+          });
           await addDoc(subcollectionRef, {
             event_type: 'reserved',
             user_id: userId,

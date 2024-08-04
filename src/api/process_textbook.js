@@ -1,4 +1,4 @@
-import { collection, orderBy, query, getDocs } from 'firebase/firestore/lite';
+import { collection, orderBy, query, getDocs, getDoc, updateDoc } from 'firebase/firestore/lite';
 import { getUserById } from './user';
 
 /**
@@ -90,25 +90,58 @@ export async function processTextbook(textbookRef, textbook, includeSellerBuyerS
 
   const mostRecentTextbookEvent = textbookEvents[0];
   const textbookStatus = evaluateEventStatus(mostRecentTextbookEvent);
-  const [seller_id, buyer_id] = await evaluateSellerIdAndBuyerId(textbookEvents);
-  let seller = seller_id ? { id: seller_id } : null;
-  let buyer = buyer_id ? { id: buyer_id } : null;
+  const seller_id = textbook.seller_id;
+  const buyer_id = textbook.buyer_id;
+  const nullifyBuyerForTextbookIds = [];
 
-  if (includeSellerBuyerSubmodel) {
-    [seller, buyer] = await Promise.all([
-      seller_id ? getUserById(seller_id) : null,
-      buyer_id ? getUserById(buyer_id) : null
-    ]);
+  // Since the buyer can be removed from the textbook in the case their reservation 
+  // expires or the listing is removed, we need to nullify the buyer
+  if (textbookStatus === EventStatus.REMOVED || 
+    textbookStatus === EventStatus.ACTIVE
+  ) {
+    buyer_id = null;
+    nullifyBuyerForTextbookIds.push(textbookRef.id);
   }
 
-  return {
+  const result = {
     ...textbook,
-    status: textbookStatus,
-    buyer,
-    seller
+    id: textbookRef.id,
+    seller_id,
+    buyer_id,
+    status: textbookStatus
   };
+
+  if (includeSellerBuyerSubmodel) {
+    try {
+      const [seller, buyer] = await Promise.all([
+        seller_id ? getUserById(seller_id) : null,
+        buyer_id ? getUserById(buyer_id) : null
+      ]);
+
+      result.buyer = buyer;
+      result.seller = seller;
+    } catch (error) {
+      console.error('Failed to get user details:', error);
+    }
+  }
+
+  await nullifyBuyerForTextbooks(nullifyBuyerForTextbookIds);
+
+  return result;
 }
 
+async function nullifyBuyerForTextbooks(textbookIds) {
+  const nullifyBuyerPromises = textbookIds.map(async (id) => {
+    const textbookRef = doc(db, 'textbooks', id);
+    const textbookSnapshot = await getDoc(textbookRef);
+    
+    if (textbookSnapshot.exists() && textbookSnapshot.data().buyer_id) {
+      return updateDoc(textbookRef, { buyer_id: null });
+    }
+  });
+
+  await Promise.all(nullifyBuyerPromises);
+}
 /**
  *
  * @param {TextbookEvent} mostRecentEvent
