@@ -52,7 +52,7 @@ function SchoolNavPage() {
 
   useEffect(() => {
     if (currentUser) {
-      navigate('/listing/buy');
+      navigate('/profile');
     }
   }, [currentUser]);
 

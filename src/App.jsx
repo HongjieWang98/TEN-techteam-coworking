@@ -8,7 +8,7 @@ import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
-import AcceptDenyBuyerPage from './pages/Listing/AceeptDenyBuyerPage';
+import AcceptDenyBuyerPage from './pages/Listing/AcceptDenyBuyerPage';
 import PageWrapper from './components/PageWrapper';
 import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
