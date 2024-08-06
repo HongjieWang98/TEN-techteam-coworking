@@ -1,6 +1,7 @@
 import './HowTo.css';
 import logoimage from '../../../images/logo2.png';
 import Accordion from 'react-bootstrap/Accordion';
+import Accordion from 'react-bootstrap/Accordion';
 
 import { Tab, Tabs, Row, Col } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
