@@ -36,6 +36,7 @@ export default function AccountCreation() {
     fetchData();
   }, []);
 
+
   async function handleSubmit(e) {
     // prevent the form from refreshing
     e.preventDefault();
