@@ -18,12 +18,12 @@ function TitleSection() {
         <div className="SectionTitleHeader left">Textbook Exchange Network</div>
         <div className="SectionSubtitleHeader left">Changing the textbook game.</div>
         <Link to="/school">
-          <button type="button" className="btn btn-outline-primary btn-rounded left center padded">
+          <button type="button" className="btn btn-primary btn-rounded left center padded">
             Get Started!
           </button>
         </Link>
         <Link to="/how">
-          <button type="button" className="btn btn-outline-primary btn-rounded left center padded">
+          <button type="button" className="btn btn-primary btn-rounded left center padded">
             Learn more
           </button>
         </Link>
@@ -44,11 +44,10 @@ function MissionStatement() {
   return (
     <div className="SectionWrapper">
       <div className="SectionContent">
-        The Textbook Exchange Network is a 501(c)(3) nonprofit that was founded at Tufts University
-        in 2017. The mission of the Textbook Exchange Network (TEN) is to increase access to
-        affordable learning materials. To achieve this, TEN provides software to run
-        student-to-student exchanges that facilitates the communication between buyers and sellers.
-        TEN now saves students across the United States $100,000+ annually.
+        The Textbook Exchange Network is a 501(c)(3) nonprofit that was founded at Tufts University in 2017. The mission
+        of the Textbook Exchange Network (TEN) is to increase access to affordable learning materials. To achieve this,
+        TEN provides software to run student-to-student exchanges that facilitates the communication between buyers and
+        sellers. TEN now saves students across the United States $100,000+ annually.
       </div>
     </div>
   );
@@ -111,12 +110,11 @@ function ProblemStatement() {
       <div className="SectionTitle">The Problem</div>
       <div className="SectionSubtitle">Textbooks are expensive.</div>
       <div className="SectionContent">
-        Rising textbook prices undermine a university’s ability to educate its students. In the US,
-        textbooks have assumed a new role. Rather than acting as key learning tools, textbooks have
-        become prohibitive barriers for students’ academic careers. A market imbalance exists
-        wherein there is no consumer control. Professors choose expensive, well-renowned textbooks
-        and students are left scrambling to find an affordable alternative. The result is that
-        students are forced to tailor their classes and study habits to accommodate textbook access.
+        Rising textbook prices undermine a university’s ability to educate its students. In the US, textbooks have
+        assumed a new role. Rather than acting as key learning tools, textbooks have become prohibitive barriers for
+        students’ academic careers. A market imbalance exists wherein there is no consumer control. Professors choose
+        expensive, well-renowned textbooks and students are left scrambling to find an affordable alternative. The
+        result is that students are forced to tailor their classes and study habits to accommodate textbook access.
       </div>
       <div className="StatisticCanvasWrapper">
         <StatisticCanvas
@@ -151,18 +149,17 @@ function Solution() {
       <div className="SectionTitle">Our Solution</div>
       <div className="SectionSubtitle">We&#8217;re making textbooks more affordable.</div>
       <div className="SectionContent">
-        Expensive textbooks are daunting, but we have a solution. We help students to buy and sell
-        their textbooks, in an effort to offset the high costs of college. We were founded in 2017
-        at Tufts University, but have since spread to a number of new campuses. We offer a
-        student-run alternative that brings classmates together to make education materials more
-        accessible.
+        Expensive textbooks are daunting, but we have a solution. We help students to buy and sell their textbooks, in
+        an effort to offset the high costs of college. We were founded in 2017 at Tufts University, but have since
+        spread to a number of new campuses. We offer a student-run alternative that brings classmates together to make
+        education materials more accessible.
       </div>
       <div className="row DescriptionRow">
         <div className="col-md-6 DescriptionTextWrap align-self-center">
           <div className="SideSubtitle">More Efficient</div>
           <div className="SideDescription">
-            Our business model reduces inefficiencies in on-campus textbook exchange markets. Better
-            yet: we do not charge students for transactions.
+            Our business model reduces inefficiencies in on-campus textbook exchange markets. Better yet: we do not
+            charge students for transactions.
           </div>
         </div>
         <div className="col-md-2"></div>
@@ -178,8 +175,8 @@ function Solution() {
         <div className="col-md-6 DescriptionTextWrap align-self-center order-sm-first order-first order-md-last">
           <div className="SideSubtitle">Proven Model</div>
           <div className="SideDescription">
-            Our software and process facilitates the exchange of over $100,000 worth of textbooks
-            each year, and has spread to a number of universities since opening at Tufts.
+            Our software and process facilitates the exchange of over $100,000 worth of textbooks each year, and has
+            spread to a number of universities since opening at Tufts.
           </div>
         </div>
       </div>
@@ -187,8 +184,8 @@ function Solution() {
         <div className="col-md-6 DescriptionTextWrap align-self-center">
           <div className="SideSubtitle">Volunteer Run</div>
           <div className="SideDescription">
-            TEN is entirely volunteer run. Many of our volunteers are also students, who have the
-            opportunity to gain real world experience developing commercial software.
+            TEN is entirely volunteer run. Many of our volunteers are also students, who have the opportunity to gain
+            real world experience developing commercial software.
           </div>
         </div>
         <div className="col-md-2"></div>

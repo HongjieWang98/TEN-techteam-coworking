@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SchoolNav.css';
 import { Container } from 'react-bootstrap';
 import { useAuthContext } from '../../../contexts/AuthContext';
 import logoimage from '../../../images/logo2.png';
 import { useNavigate } from 'react-router-dom';
 import SignIn from '../../../components/Login/SignIn';
+import { getOrganizations } from '../../../api/organization';
 
 function LoginView(props) {
   const { school } = props; // destructuring prop or else would get linter error
@@ -49,6 +50,16 @@ function EndingLogo() {
 function SchoolNavPage() {
   const navigate = useNavigate();
   const { currentUser } = useAuthContext();
+  const [availableSchools, setAvailableSchools] = useState([]);
+  const [selectedSchool, setSelectedSchool] = useState(null);
+
+  async function fetchData() {
+    const organizations = await getOrganizations();
+    setAvailableSchools(organizations);
+  }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (currentUser) {
@@ -56,20 +67,26 @@ function SchoolNavPage() {
     }
   }, [currentUser]);
 
-  const schools = ['Tufts University', 'Wesleyan University', 'Northeastern University', 'Tower Hill School'];
-
-  const [selectedSchool, setSelectedSchool] = React.useState('none');
-
-  // I will update this function at some point to lookup in the schoolList database to determine
-  // what each school should route to. Right now it is hard coded
-  function navigateToSchool() {
-    return selectedSchool === 'none' ? (
-      <div className="SectionContent"> Please select your school</div>
-    ) : selectedSchool === 'Tufts University' ? (
-      <LoginView school={selectedSchool} />
-    ) : (
-      <ProdOneDesc school={selectedSchool} />
+  function renderExchangeInfoOrLogin() {
+    return (
+      <>
+        {selectedSchool ? (
+          selectedSchool.isVirtual ? (
+            <LoginView school={selectedSchool.name} />
+          ) : (
+            <ProdOneDesc school={selectedSchool.name} />
+          )
+        ) : (
+          <p>Please select a school from the dropdown.</p>
+        )}
+      </>
     );
+  }
+
+  function handleSelectChange(e) {
+    const schoolName = e.target.value;
+    const school = availableSchools.find((school) => school.name === schoolName);
+    setSelectedSchool(school);
   }
 
   return (
@@ -77,21 +94,19 @@ function SchoolNavPage() {
       <div className="SectionTitleHeaderNav">What school do you attend?</div>
 
       <div className="DropDown">
-        <select className="DropDown" value={selectedSchool} onChange={(e) => setSelectedSchool(e.target.value)}>
-          <option value="none" key="none">
-            {'Select your school'}
+        <select className="DropDown" value={selectedSchool?.name || ''} onChange={handleSelectChange}>
+          <option value="" disabled>
+            Select your school
           </option>
-          {schools.map((school) => (
-            <option value={school} key={school}>
-              {school}
+          {availableSchools.map((school) => (
+            <option value={school.name} key={school.id}>
+              {school.name}
             </option>
           ))}
         </select>
       </div>
 
-      <p> </p>
-
-      {navigateToSchool()}
+      {selectedSchool && renderExchangeInfoOrLogin()}
       <EndingLogo />
     </>
   );
