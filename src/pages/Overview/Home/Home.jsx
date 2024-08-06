@@ -18,12 +18,12 @@ function TitleSection() {
         <div className="SectionTitleHeader left">Textbook Exchange Network</div>
         <div className="SectionSubtitleHeader left">Changing the textbook game.</div>
         <Link to="/school">
-          <button type="button" className="btn btn-outline-primary btn-rounded left center padded">
+          <button type="button" className="btn btn-primary btn-rounded left center padded">
             Get Started!
           </button>
         </Link>
         <Link to="/how">
-          <button type="button" className="btn btn-outline-primary btn-rounded left center padded">
+          <button type="button" className="btn btn-primary btn-rounded left center padded">
             Learn more
           </button>
         </Link>
