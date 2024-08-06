@@ -10,7 +10,8 @@ export async function getOrganizations() {
     organizations.map((org) => {
       return {
         id: org.id,
-        ...org.data()
+        isVirtual: org.data().schedule?.some((day) => day !== null) ?? false,
+        ...org.data(),
       };
     })
   );
