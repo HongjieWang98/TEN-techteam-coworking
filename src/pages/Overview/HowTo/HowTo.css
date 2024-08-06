@@ -256,7 +256,9 @@ hr {
     color: #fff !important;
     background-color: #4f8fcc !important;
   }
-
+  .left-align {
+    text-align: left;
+}
   .BigNumberYellow,
   .BigNumberGreen {
     position: relative;

@@ -16,7 +16,6 @@ function ExternalNavigationBar() {
           <img src={logo} className="NavigationBarImage" alt="TEN Logo" />
         </Link>
       </div>
-      <NavigationBarItem float="Left" text="Sign up" link="/signup" />
       <NavigationBarItem float="Left" text="Get started" link="/school" />
       <NavigationBarItem float="Left" text="How it works" link="/how" />
       <NavigationBarItem float="Left" text="Home" link="/" />

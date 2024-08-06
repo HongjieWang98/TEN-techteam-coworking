@@ -9,12 +9,6 @@ export default function SignIn() {
   const { signIn, currentUser } = useAuthContext();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (currentUser) {
-      navigate('/listing/buy', { replace: true });
-    }
-  }, [currentUser]);
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
