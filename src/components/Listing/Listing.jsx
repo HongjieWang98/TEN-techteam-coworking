@@ -1,5 +1,8 @@
 import DisplayCheckboxGroup from '../common/DisplayCheckboxGroup';
 import DisplayInput from '../common/DisplayInput';
+import { Container, Row, Col } from 'react-bootstrap';
+import React from 'react';
+import './Listing.css'
 
 /**
  * Represents details of a listing.
@@ -30,7 +33,7 @@ import DisplayInput from '../common/DisplayInput';
  * @returns {JSX.Element} JSX element representing the listing.
  */
 function Listing({ listingData }) {
-  const { isbn, title, edition, department, courseNumber, price, buyer, seller } = listingData;
+  const { isbn, title, author, edition, department, courseNumber, price, buyer, seller } = listingData;
 
   // TODO find a better way to get this data
   const userPaymentMethods = {
@@ -39,27 +42,83 @@ function Listing({ listingData }) {
   };
 
   return (
-    <div>
-      <DisplayInput name="isbn" type="text" value={isbn} label="ISBN:" />
-      <DisplayInput name="title" type="text" value={title} label="Title:" />
-      <DisplayInput name="edition" type="text" value={edition} label="Edition:" />
-      <DisplayInput name="department" type="text" value={department} label="Department:" />
-      <DisplayInput name="courseNumber" type="text" value={courseNumber} label="Course Number:" />
-      <DisplayInput name="price" type="text" value={price} label="Price:" />
-      {/* TODO need to show user preferred contact info */}
-      <DisplayInput name="buyerEmail" type="text" value={buyer?.contact_info.school_email ?? 'N/A'} label="Buyer:" />
-      <DisplayInput name="sellerEmail" type="text" value={seller.contact_info.school_email} label="Seller:" />
-      <DisplayCheckboxGroup
-        label="Buyer Accepted Payment Methods:"
-        options={userPaymentMethods}
-        checkedOptions={buyer?.payment_method ?? []}
-      />
-      <DisplayCheckboxGroup
-        label="Seller Accepted Payment Methods:"
-        options={userPaymentMethods}
-        checkedOptions={seller.payment_method ?? []}
-      />
-    </div>
+    <Container className="listing-page-container">
+      <h2 className="text-left mb-0">View Listing</h2>
+      <br />
+      <Row>
+        <Col md={4}>
+          <Row className="listing-row">
+            {/* Status will go here, possibly using the process textbooks function (will need to ask Kevin for help)*/}
+          </Row>
+          <Row className="listing-row">
+            <div className="image-placeholder">
+              <p>Ability to upload textbook photo coming soon!</p>
+            </div>
+          </Row>
+        </Col>
+        <Col md={8}>
+          <Row className="listing-row">
+            <Col md={12}>
+              <DisplayInput name="isbn" type="text" value={isbn} label="ISBN:" />
+            </Col>
+          </Row>
+          <Row className="listing-row">
+            <Col md={6}>
+              <DisplayInput name="title" type="text" value={title} label="Title:" />
+            </Col>
+            <Col md={2}>
+              <DisplayInput name="edition" type="text" value={edition} label="Edition:" />
+            </Col>
+            <Col md={4}>
+              <DisplayInput name="author" type="text" value={author} label="Author:" />
+            </Col>
+          </Row>
+          <Row className="listing-row">
+            <Col md={4}>
+              <DisplayInput name="department" type="text" value={department} label="Department:" />
+            </Col>
+            <Col md={4}>
+              <DisplayInput name="courseNumber" type="text" value={courseNumber} label="Course Number:" />
+            </Col>
+            <Col md={4}>
+              <DisplayInput name="price" type="text" value={price} label="Price:" />
+            </Col>
+          </Row>
+          <Row className="listing-row">
+            <Col md={6}>
+              <DisplayInput name="buyerEmail" type="text" value={buyer?.email ?? 'N/A'} label="Buyer:" />
+            </Col>
+            <Col md={6}>
+              <DisplayInput name="sellerEmail" type="text" value={seller.email} label="Seller:" />
+            </Col>
+          </Row>
+          <Row className="listing-row">
+            <Col md={6}>
+              <DisplayInput name="buyerContact" type="text" value={buyer?.preferredContactMethod ?? 'N/A'} label="Buyer’s Preferred Contact Method:" />
+            </Col>
+            <Col md={6}>
+              <DisplayInput name="sellerContact" type="text" value={seller.preferredContactMethod} label="Seller’s Preferred Contact Method:" />
+            </Col>
+          </Row>
+          <Row className="listing-row">
+            <Col md={6}>
+              <DisplayCheckboxGroup
+                label="Buyer Accepted Payment Methods:"
+                options={userPaymentMethods}
+                checkedOptions={buyer?.acceptedPaymentMethods ?? []}
+              />
+            </Col>
+            <Col md={6}>
+              <DisplayCheckboxGroup
+                label="Seller Accepted Payment Methods:"
+                options={userPaymentMethods}
+                checkedOptions={seller.acceptedPaymentMethods ?? []}
+              />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

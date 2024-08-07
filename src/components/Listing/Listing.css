@@ -1,0 +1,42 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .image-placeholder {
+    width: 90% !important;
+    height: 350px;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .listing-row {
+    margin-bottom: 15px;
+  }
+  
+  button {
+    margin-top: 20px;
+  }
+  
+  .w-100.text-center.mt-2 a {
+    text-decoration: underline;
+  }

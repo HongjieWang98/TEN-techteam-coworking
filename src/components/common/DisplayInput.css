@@ -1,0 +1,9 @@
+.display-input-container {
+    width: 100%;
+  }
+  
+  .display-input-container label,
+  .display-input-container input {
+    display: block;
+    width: 100%;
+  }

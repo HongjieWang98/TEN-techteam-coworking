@@ -1,3 +1,5 @@
+import "./DisplayInput.css"
+
 /**
  * Represents a read-only input field for displaying information.
  * @param {Object} props - The component props.
@@ -9,9 +11,9 @@
  */
 export default function DisplayInput({ name, value, type, label }) {
   return (
-    <>
+    <div className="display-input-container">
       <label htmlFor={name}>{label}</label>
       <input name={name} value={value} type={type} disabled />
-    </>
+    </div>
   );
 }
