@@ -1,4 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Table } from 'react-bootstrap';
 import { useBuyContext } from '../../contexts/BuyContext';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { reserveTextbooks } from '../../api/textbook';
@@ -16,26 +17,48 @@ function BuyConfirmPage() {
     navigate('/buysuccess', { state: { bookReserve } });
   }
 
+  function backToInventory() {
+    navigate('/inventory');
+  }
+
   return (
     <>
-      {cartData.map((textbook) => {
-        return <h1 key={textbook.id}>{textbook.title}</h1>;
-      })}
+      <h2>Textbooks:</h2>
+      {currentUser && cartData ? (
+        <>
+          <Table bordered>
+            <thead>
+              <tr>
+                <th>Course</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cartData.map((textbook) => (
+                <tr key={textbook.id}>
+                  <td>{`${textbook.department} ${textbook.course_number}`}</td>
+                  <td>{textbook.title}</td>
+                  <td>{textbook.author}</td>
+                  <td>{textbook.isbn}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
 
-      <Link to="/inventory" className="btn btn-primary" type="button">
-        Add Another Item
-      </Link>
+          <button type="button" className="btn btn-primary" onClick={backToInventory}>
+            Add Another Item
+          </button>
 
-      {
-        // Only can click to reserve textbooks if the current user has been loaded
-        currentUser ? (
-          <button type="button" onClick={reserveBooks}>
+          <button type="button" className="btn btn-secondary" onClick={reserveBooks}>
             Reserve Books
           </button>
-        ) : (
-          <h1>Loading...</h1>
-        )
-      }
+        </>
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </>
   );
 }
