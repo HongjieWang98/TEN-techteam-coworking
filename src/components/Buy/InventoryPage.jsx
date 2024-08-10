@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import InventoryTable from './InventoryTable';
 import SideCart from './SideCart';
 import { useBuyContext } from '../../contexts/BuyContext';
@@ -38,18 +39,22 @@ export default function InventoryPage({ buyFunctionality }) {
   };
 
   return (
-    <>
-      <h1 className="page-title">Textbook Inventory</h1>
-      <div className="inventory-page">
-        <div className="inventory-table">
+    <Container className="inventory-page">
+      <Row className="mb-4">
+        <Col className="text-center">
+          <h1 className="page-title">Inventory Management</h1>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col xs={12} md={7} lg={8} className="inventory-table">
           <InventoryTable buyFunctionality tableData={data} setTableData={setData} handleAddToCart={handleAddToCart} />
-        </div>
+        </Col>
         {buyFunctionality && (
-          <div className="side-cart">
+          <Col xs={12} md={5} lg={4} className="side-cart">
             <SideCart setTableData={setData} handleAddToCart={handleAddToCart} />
-          </div>
+          </Col>
         )}
-      </div>
-    </>
+      </Row>
+    </Container>
   );
 }

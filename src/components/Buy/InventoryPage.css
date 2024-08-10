@@ -1,47 +1,32 @@
 /* Flex container for side-by-side alignment and equal height */
 .inventory-page {
-  display: flex;
-  gap: 20px; /* Space between components */
-  align-items: stretch; /* Stretch items to be the same height */
-  justify-content: center; /* Center components horizontally */
-  width: 100%; /* Allow it to take full width available */
   padding: 20px; /* Optional: Add padding if needed */
-  flex-wrap: wrap; /* Allow items to wrap onto multiple lines */
 }
 
 /* Title styling */
 .page-title {
-  text-align: center; /* Center the title */
-  margin-bottom: 20px; /* Space between title and content */
+  font-size: 2rem; /* Adjust font size as needed */
 }
 
 /* Individual component styling */
 .inventory-table {
-  flex: 3; /* Make InventoryTable take up more space */
-  min-width: 300px; /* Minimum width for InventoryTable */
   display: flex; /* Allow internal content to adjust */
   flex-direction: column; /* Stack children vertically if needed */
 }
 
 .side-cart {
-  flex: 1.5; /* Make SideCart take up less space */
-  min-width: 200px; /* Minimum width for SideCart */
   display: flex; /* Allow internal content to adjust */
   flex-direction: column; /* Stack children vertically if needed */
 }
 
 /* Media query for smaller screens */
-@media (max-width: 992px) {
-  /* Adjusted breakpoint to 992px */
+@media (max-width: 768px) {
   .inventory-page {
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
+    padding: 10px; /* Adjust padding for smaller screens */
   }
 
   .inventory-table,
   .side-cart {
-    flex: none; /* Remove flex grow/shrink */
     width: 100%; /* Make each component take full width */
-    min-width: auto; /* Remove minimum width */
   }
 }

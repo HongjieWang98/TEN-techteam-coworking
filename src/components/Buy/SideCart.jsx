@@ -60,15 +60,14 @@ function SideCartEntry({ textbook, setTableData, handleAddToCart }) {
 }
 
 export default function SideCart({ setTableData, handleAddToCart }) {
-  const { cartData } = useBuyContext();
+  const { cartData, cartPrice } = useBuyContext();
 
   return (
     <div className="container">
       <div className="col-sm SideCartContainer">
         <div className="Box">
           <div className="SideCartHeader">
-            <i className="fa fa-shopping-cart" />
-            Cart ({cartData.length})
+            <i className="fa fa-shopping-cart" /> Cart ({cartData.length}) Total Cart Price (${cartPrice})
           </div>
           <div className="SideCartEntries container-fluid">
             {cartData.length === 0 ? (

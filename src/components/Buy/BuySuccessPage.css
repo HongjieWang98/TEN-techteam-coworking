@@ -1,0 +1,33 @@
+/* BuySuccessPage.css */
+
+/* Ensure tables use full width of their container */
+.table-full-width {
+  width: 100% !important;
+}
+
+/* Ensure no additional padding or margin constraints */
+.container-fluid {
+  padding: 0 15px; /* Adjust if needed to use more width */
+}
+
+.row {
+  margin: 0; /* Ensure rows take up full width without extra margin */
+}
+
+.col {
+  padding: 0; /* Adjust padding if needed */
+}
+
+h1,
+h2 {
+  margin-bottom: 1rem; /* Adjust heading margins */
+}
+
+/* Custom styles for accordion to match the look */
+.accordion-button {
+  font-size: 1.25rem; /* Example font size */
+}
+
+.accordion-body {
+  font-size: 1rem; /* Example font size */
+}

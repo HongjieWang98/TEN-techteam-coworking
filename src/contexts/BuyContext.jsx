@@ -2,6 +2,7 @@ import React, { useContext, useState, createContext, useMemo } from 'react';
 
 export function BuyProvider({ children }) {
   const [cartData, setCartData] = useState([]);
+  const [cartPrice, setCartPrice] = useState(0);
 
   const addToCart = (newTextbook) => {
     setCartData((currentCartData) => {
@@ -10,6 +11,8 @@ export function BuyProvider({ children }) {
 
       // If the item does not exist, add it to the cart
       if (!itemExists) {
+        // Update the total price of the cart
+        setCartPrice((currentCartPrice) => currentCartPrice + Number(newTextbook.price.slice(1)));
         return [newTextbook, ...currentCartData];
       }
 
@@ -19,16 +22,19 @@ export function BuyProvider({ children }) {
   };
 
   const removeFromCart = (newTextbook) => {
+    setCartPrice((currentCartPrice) => currentCartPrice - Number(newTextbook.price.slice(1)));
     setCartData((currentCartData) => currentCartData.filter((item) => item.id !== newTextbook.id));
   };
 
   const emptyCart = () => {
+    setCartPrice(0);
     setCartData([]);
   };
 
   const value = useMemo(
     () => ({
       cartData,
+      cartPrice,
       addToCart,
       removeFromCart,
       emptyCart
