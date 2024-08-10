@@ -2,6 +2,7 @@ import { useState } from 'react';
 import InventoryTable from './InventoryTable';
 import SideCart from './SideCart';
 import { useBuyContext } from '../../contexts/BuyContext';
+import './InventoryPage.css';
 
 // eslint-disable-next-line no-unused-vars
 export default function InventoryPage({ buyFunctionality }) {
@@ -38,8 +39,17 @@ export default function InventoryPage({ buyFunctionality }) {
 
   return (
     <>
-      <InventoryTable buyFunctionality tableData={data} setTableData={setData} handleAddToCart={handleAddToCart} />
-      {buyFunctionality && <SideCart setTableData={setData} handleAddToCart={handleAddToCart} />}
+      <h1 className="page-title">Textbook Inventory</h1>
+      <div className="inventory-page">
+        <div className="inventory-table">
+          <InventoryTable buyFunctionality tableData={data} setTableData={setData} handleAddToCart={handleAddToCart} />
+        </div>
+        {buyFunctionality && (
+          <div className="side-cart">
+            <SideCart setTableData={setData} handleAddToCart={handleAddToCart} />
+          </div>
+        )}
+      </div>
     </>
   );
 }

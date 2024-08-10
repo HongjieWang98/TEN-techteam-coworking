@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 // eslint-disable-next-line no-unused-vars
-import { collection, getDocs, getDoc, doc, query, where } from 'firebase/firestore/lite';
+import { collection, getDocs } from 'firebase/firestore/lite';
 import { MDBDataTable } from 'mdbreact';
 import { db } from '../../firebase/firebase_config';
 import { useAuthContext } from '../../contexts/AuthContext';
@@ -110,8 +110,8 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
 
   // Just trying to test if cartData actually contains the books added to it
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      <h1>Inventory Table</h1>
       {currentUser ? (
         <div className="BrowseContainer">
           <MDBDataTable
