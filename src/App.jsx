@@ -8,7 +8,6 @@ import ListingPage from './pages/Sell/ListingPage';
 import ConfirmationPage from './pages/Sell/ConfirmationPage';
 import ViewListingPage from './pages/Listing/ViewListingPage';
 import { Providers } from './contexts/Providers';
-import AcceptDenyBuyerPage from './pages/Listing/AcceptDenyBuyerPage';
 import PageWrapper from './components/PageWrapper';
 import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
@@ -19,7 +18,6 @@ import NavigationBar from './components/NavigationBar/NavBar';
 import BuySuccess from './pages/Buy/BuySuccess';
 import PrivacyPage from './pages/Overview/Privacy/Privacy';
 import TermsPage from './pages/Overview/Terms/Terms';
-import ReactDOM from 'react-dom';
 
 function App() {
   return (
@@ -44,7 +42,6 @@ function App() {
             <Route path="/listing">
               <Route path="buy" />
               <Route path=":listingId" element={<ViewListingPage />} />
-              <Route path=":listingId/accept" element={<AcceptDenyBuyerPage />} />
             </Route>
             <Route path="/signup" element={<CreateAccount />} />
             <Route path="/signup/success" element={<SuccessCreateAccount />} />
