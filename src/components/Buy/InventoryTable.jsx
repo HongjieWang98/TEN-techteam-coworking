@@ -3,16 +3,14 @@ import { useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore/lite';
 import { MDBDataTable } from 'mdbreact';
 import { db } from '../../firebase/firebase_config';
-import { useAuthContext } from '../../contexts/AuthContext';
 import { buyColumn, listingDetailColumns } from './column';
 import './InventoryTable.css';
 import './AddToCartButton.css';
 import { useBuyContext } from '../../contexts/BuyContext';
 import { getTextbooksByOrganizationId } from '../../api/textbook';
 
-function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddToCart }) {
+function InventoryTable({ buyFunctionality = false, tableData, setTableData, handleAddToCart = null, user = null }) {
   const { cartData } = useBuyContext();
-  const { currentUser } = useAuthContext();
 
   // This function builds the data we want to display in the inventory
   // it builds this through book the current textbook information and getting
@@ -63,72 +61,62 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
     // Otherwise if we just want to display no need for an add to cart functionality
     return rowInfo;
   }
-  useEffect(
-    () => {
-      async function fetchTextbooks() {
-        try {
-          // If we have buyFunctionality and the currentUser (of the session) has been loaded
-          if (buyFunctionality && currentUser) {
-            const booksDB = await getTextbooksByOrganizationId(currentUser.organization_id, true);
-            // Filter out all the books that have been reserved or do not have a seller for some reason (NOTE THAT WE ARE NOT CHECKING IF THE BUYER_ID IS NULL)
-            const unreservedBooks = booksDB.filter((book) => book.status === 'active' && book.seller != null);
-            const booksTable = unreservedBooks.map((book) => tableFormatBook(book));
-            // Initalize the datatable
-            setTableData({
-              columns: [...listingDetailColumns, buyColumn],
-              rows: booksTable
-            });
-          }
-          // Sort of a janky fix (before there was a bug involving where the current user had not been
-          // loaded yet and thus all the textbooks from all the universities were quickly displayed (before the current user had been loaded))
-          // Therefore this else if is necessary to prevent this from happening
-
-          // *** @todo move this code into the textbook api and update so that it uses the textbook events****
-          else if (!buyFunctionality) {
-            const booksDatabase = await getDocs(collection(db, 'textbooks'));
-            const books = booksDatabase.docs;
-            // Filter out all the books that have been reserved
-            const unreservedBooks = books.filter((book) => book.data().buyer_id == null);
-            // Format the books as necessary
-            const booksTablePromises = unreservedBooks.map((book) => tableFormatBook({ ...book.data(), id: book.id }));
-            // Need to Promise.all here because we have calls to get the seller info in tableFormatBook
-            const booksTable = await Promise.all(booksTablePromises);
-            // Initalize the datatable
-            setTableData({
-              columns: listingDetailColumns,
-              rows: booksTable
-            });
-          }
-        } catch (e) {
-          console.error(e);
+  useEffect(() => {
+    async function fetchTextbooks() {
+      try {
+        // If we have buyFunctionality and the currentUser (of the session) has been loaded
+        if (buyFunctionality && user) {
+          const booksDB = await getTextbooksByOrganizationId(user.organization_id, true);
+          // Filter out all the books that have been reserved or do not have a seller for some reason (NOTE THAT WE ARE NOT CHECKING IF THE BUYER_ID IS NULL)
+          const unreservedBooks = booksDB.filter((book) => book.status === 'active' && book.seller != null);
+          const booksTable = unreservedBooks.map((book) => tableFormatBook(book));
+          // Initalize the datatable
+          setTableData({
+            columns: [...listingDetailColumns, buyColumn],
+            rows: booksTable
+          });
         }
+        // Sort of a janky fix (before there was a bug involving where the current user had not been
+        // loaded yet and thus all the textbooks from all the universities were quickly displayed (before the current user had been loaded))
+        // Therefore this else if is necessary to prevent this from happening
+
+        // *** @todo move this code into the textbook api and update so that it uses the textbook events****
+        else if (!buyFunctionality) {
+          const booksDatabase = await getDocs(collection(db, 'textbooks'));
+          const books = booksDatabase.docs;
+          // Filter out all the books that have been reserved
+          const unreservedBooks = books.filter((book) => book.data().buyer_id == null);
+          // Format the books as necessary
+          const booksTablePromises = unreservedBooks.map((book) => tableFormatBook({ ...book.data(), id: book.id }));
+          // Need to Promise.all here because we have calls to get the seller info in tableFormatBook
+          const booksTable = await Promise.all(booksTablePromises);
+          // Initalize the datatable
+          setTableData({
+            columns: listingDetailColumns,
+            rows: booksTable
+          });
+        }
+      } catch (e) {
+        console.error(e);
       }
-      fetchTextbooks();
-    },
-    // Have to reload the table once the user data is fetched
-    [currentUser]
-  );
+    }
+    fetchTextbooks();
+  }, []);
 
   // Just trying to test if cartData actually contains the books added to it
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
-      {currentUser ? (
-        <div className="BrowseContainer">
-          <MDBDataTable
-            striped
-            hover
-            entries={20}
-            pagesAmount={5}
-            responsiveSm
-            paginationLabel={['Prev', 'Next']}
-            data={tableData}
-          />
-        </div>
-      ) : (
-        <div>Loading...</div>
-      )}
-    </>
+    <div className="BrowseContainer">
+      <MDBDataTable
+        striped
+        hover
+        entries={20}
+        pagesAmount={5}
+        responsiveSm
+        noBottomColumns
+        paginationLabel={['Prev', 'Next']}
+        data={tableData}
+      />
+    </div>
   );
 }
 
