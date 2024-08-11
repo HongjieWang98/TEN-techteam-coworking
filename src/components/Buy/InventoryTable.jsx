@@ -6,6 +6,7 @@ import { db } from '../../firebase/firebase_config';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { buyColumn, listingDetailColumns } from './column';
 import './InventoryTable.css';
+import './AddToCartButton.css';
 import { useBuyContext } from '../../contexts/BuyContext';
 import { getTextbooksByOrganizationId } from '../../api/textbook';
 
@@ -53,7 +54,7 @@ function InventoryTable({ buyFunctionality, tableData, setTableData, handleAddTo
       return {
         ...rowInfo,
         addToCart: (
-          <button type="button" onClick={(e) => handleAddToCart(rowInfo, e)}>
+          <button type="button" className="AddToCart" onClick={(e) => handleAddToCart(rowInfo, e)}>
             Add to cart
           </button>
         )

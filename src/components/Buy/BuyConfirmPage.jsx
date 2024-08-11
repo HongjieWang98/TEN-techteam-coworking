@@ -38,17 +38,17 @@ function BuyConfirmPage() {
                   <tr>
                     <th>Course</th>
                     <th>Title</th>
-                    <th>Author</th>
-                    <th>ISBN</th>
+                    <th>Condition</th>
+                    <th>Payment Methods</th>
                   </tr>
                 </thead>
                 <tbody>
                   {cartData.map((textbook) => (
                     <tr key={textbook.id}>
-                      <td>{`${textbook.department} ${textbook.course_number}`}</td>
                       <td>{textbook.title}</td>
-                      <td>{textbook.author}</td>
-                      <td>{textbook.isbn}</td>
+                      <td>{textbook.courseAndDpmt}</td>
+                      <td>{textbook.condition}</td>
+                      <td>{textbook.paymentMethods}</td>
                     </tr>
                   ))}
                 </tbody>

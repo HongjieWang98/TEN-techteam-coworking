@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useBuyContext } from '../../contexts/BuyContext';
 import './SideCart.css';
+import './AddToCartButton.css';
 
 function SideCartEntry({ textbook, setTableData, handleAddToCart }) {
   const { removeFromCart } = useBuyContext();
@@ -19,7 +20,7 @@ function SideCartEntry({ textbook, setTableData, handleAddToCart }) {
                 newRows[rowIndex] = {
                   ...newRows[rowIndex],
                   addToCart: (
-                    <button type="button" onClick={(e) => handleAddToCart(textbook, e)}>
+                    <button type="button" className="AddToCart" onClick={(e) => handleAddToCart(textbook, e)}>
                       Add to cart
                     </button>
                   )

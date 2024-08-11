@@ -1,4 +1,5 @@
-import { collection, orderBy, query, getDocs, getDoc, updateDoc } from 'firebase/firestore/lite';
+import { collection, orderBy, query, getDocs, getDoc, updateDoc, doc } from 'firebase/firestore/lite';
+import { db } from '../firebase/firebase_config';
 import { getUserById } from './user';
 
 /**
@@ -80,9 +81,9 @@ export async function processTextbook(textbookRef, textbook, includeSellerBuyerS
     throw new Error(`Could not find 'textbook_events' subcollection reference on textbook id: ${textbook.id}`);
   }
 
-  const textbookEvents = (
-    await getDocs(query(textbookEventsRef, orderBy('timestamp', 'desc')))
-  ).docs.map((doc) => doc.data());
+  const textbookEvents = (await getDocs(query(textbookEventsRef, orderBy('timestamp', 'desc')))).docs.map((doc) =>
+    doc.data()
+  );
 
   if (!textbookEvents) {
     throw new Error(`Could not find 'textbook_events' subcollection on textbook id: ${textbook.id}`);
@@ -94,11 +95,9 @@ export async function processTextbook(textbookRef, textbook, includeSellerBuyerS
   let buyer_id = textbook.buyer_id;
   const nullifyBuyerForTextbookIds = [];
 
-  // Since the buyer can be removed from the textbook in the case their reservation 
+  // Since the buyer can be removed from the textbook in the case their reservation
   // expires or the listing is removed, we need to nullify the buyer
-  if ((textbookStatus === EventStatus.REMOVED || 
-    textbookStatus === EventStatus.ACTIVE) && buyer_id
-  ) {
+  if ((textbookStatus === EventStatus.REMOVED || textbookStatus === EventStatus.ACTIVE) && buyer_id) {
     buyer_id = null;
     nullifyBuyerForTextbookIds.push(textbookRef.id);
   }
@@ -134,7 +133,7 @@ async function nullifyBuyerForTextbooks(textbookIds) {
   const nullifyBuyerPromises = textbookIds.map(async (id) => {
     const textbookRef = doc(db, 'textbooks', id);
     const textbookSnapshot = await getDoc(textbookRef);
-    
+
     if (textbookSnapshot.exists() && textbookSnapshot.data().buyer_id) {
       return updateDoc(textbookRef, { buyer_id: null });
     }
@@ -173,7 +172,7 @@ function evaluateEventStatus(mostRecentEvent) {
 }
 
 async function evaluateSellerIdAndBuyerId(textbookEvents) {
-  const seller_id = textbookEvents.find(event => event.event_type === EventType.LISTED)?.user_id;
+  const seller_id = textbookEvents.find((event) => event.event_type === EventType.LISTED)?.user_id;
   let buyer_id = null;
 
   const status = evaluateEventStatus(textbookEvents[0]);
@@ -182,16 +181,15 @@ async function evaluateSellerIdAndBuyerId(textbookEvents) {
     case EventStatus.RESERVED:
       // .find() looks for the first element that satisfies the condition and the order is in descending
       //  we should be finding the buyer_id of the most recent reservation
-      buyer_id = textbookEvents.find(event => 
-        event.event_type === EventType.RESERVED && 
-        event.timestamp.seconds + RESERVATION_EXPIRATION > Date.now() / 1000
+      buyer_id = textbookEvents.find(
+        (event) =>
+          event.event_type === EventType.RESERVED &&
+          event.timestamp.seconds + RESERVATION_EXPIRATION > Date.now() / 1000
       )?.user_id;
       break;
     case EventStatus.PENDING_CONFIRMATION:
     case EventStatus.SOLD:
-      buyer_id = textbookEvents.find(event => 
-        event.event_type === EventType.RESERVED
-      )?.user_id;
+      buyer_id = textbookEvents.find((event) => event.event_type === EventType.RESERVED)?.user_id;
       break;
     default:
       buyer_id = null;

@@ -42,7 +42,7 @@ export default function InventoryPage({ buyFunctionality }) {
     <Container className="inventory-page">
       <Row className="mb-4">
         <Col className="text-center">
-          <h1 className="page-title">Inventory Management</h1>
+          <h1 className="page-title">Textbook Inventory</h1>
         </Col>
       </Row>
       <Row className="justify-content-center">

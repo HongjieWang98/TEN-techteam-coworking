@@ -48,7 +48,7 @@ export async function getTextbooksByOrganizationId(organizationId, includeSeller
 
   return Promise.all(
     textbooks.map(async (textbook) => {
-      return await processTextbook(textbook.ref, textbook.data(), includeSellerBuyerSubmodel);
+      return processTextbook(textbook.ref, textbook.data(), includeSellerBuyerSubmodel);
     })
   );
 }
