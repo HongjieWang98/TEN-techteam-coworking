@@ -56,10 +56,10 @@ function SellerListing({ listingData }) {
       </Row>
       
       <Row className="info-row mt-4">
-        <p> <b>Accept:</b> Share your contact info with the Buyer. You will be responsible for reaching out to the buyer to set up an exchange.</p>
+        <div><b>Accept: </b> We will share your contact info with the Buyer. You will be responsible for reaching out to the buyer to set up an exchange.</div>
       </Row>
       <Row className="info-row">
-        <p> <b>Deny:</b> put your item back on sale for another buyer to purchase.</p>
+        <div><b>Deny:</b> We will put your item back on sale for another buyer to purchase.</div>
       </Row>
     </>
     </Container>
