@@ -11,7 +11,7 @@ function BuyConfirmPage() {
 
   async function reserveBooks() {
     // Reserve the textbooks returns a list of the textbook object with an
-    // additional parameter to state whether it has been bought or not
+    // additional parameter to state whether it has been reserved or not
     const bookReserve = await reserveTextbooks(cartData, currentUser.id);
     emptyCart();
     navigate('/buysuccess', { state: { bookReserve } });
@@ -38,8 +38,9 @@ function BuyConfirmPage() {
                   <tr>
                     <th>Course</th>
                     <th>Title</th>
-                    <th>Condition</th>
-                    <th>Payment Methods</th>
+                    <th>Edition</th>
+                    <th>ISBN</th>
+                    <th>Price ($)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -47,8 +48,9 @@ function BuyConfirmPage() {
                     <tr key={textbook.id}>
                       <td>{textbook.title}</td>
                       <td>{textbook.courseAndDpmt}</td>
-                      <td>{textbook.condition}</td>
-                      <td>{textbook.paymentMethods}</td>
+                      <td>{textbook.edition}</td>
+                      <td>{textbook.isbn}</td>
+                      <td>{textbook.price}</td>
                     </tr>
                   ))}
                 </tbody>

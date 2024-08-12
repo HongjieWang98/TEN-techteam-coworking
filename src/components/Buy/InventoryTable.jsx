@@ -34,6 +34,7 @@ function InventoryTable({ buyFunctionality = false, tableData, setTableData, han
       title: bookData.title,
       courseAndDpmt: `${bookData.department} ${bookData.course_number}`,
       edition: bookData.edition,
+      isbn: bookData.isbn,
       price: `$${bookData.price}`,
       condition: bookData.condition,
       paymentMethods: maybeSellerPaymentMethods
@@ -111,7 +112,7 @@ function InventoryTable({ buyFunctionality = false, tableData, setTableData, han
         hover
         entries={20}
         pagesAmount={5}
-        responsiveSm
+        responsive
         noBottomColumns
         paginationLabel={['Prev', 'Next']}
         data={tableData}

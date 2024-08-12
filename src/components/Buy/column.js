@@ -20,6 +20,12 @@ export const listingDetailColumns = [
     width: 200
   },
   {
+    label: 'ISBN',
+    field: 'isbn',
+    sort: 'asc',
+    width: 100
+  },
+  {
     label: 'Price',
     field: 'price',
     sort: 'asc',
@@ -31,8 +37,9 @@ export const listingDetailColumns = [
     sort: 'asc',
     width: 100
   },
+
   {
-    label: 'Payment Methods',
+    label: 'Preferred Payment Methods',
     field: 'paymentMethods',
     sort: 'asc',
     width: 100

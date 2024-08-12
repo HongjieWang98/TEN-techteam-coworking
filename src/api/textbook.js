@@ -43,7 +43,7 @@ export async function getTextbooksByUserId(userId) {
 export async function getTextbooksByOrganizationId(organizationId, includeSellerBuyerSubmodel = false) {
   // TODO put some caching here
   const textbookCollectionRef = collection(db, 'textbooks');
-  const q = query(textbookCollectionRef, where('orgazation_id', '==', organizationId));
+  const q = query(textbookCollectionRef, where('organization_id', '==', organizationId));
   const textbooks = (await getDocs(q)).docs;
 
   return Promise.all(
@@ -77,7 +77,7 @@ export async function listTextbook(textbook, userId) {
 // Takes in an array of textbook, returns a list of true or false (relating to whether or not the textbook was bought)
 // Additionally takes in a userId for the user that wants to reserve these textbooks
 export async function reserveTextbooks(textbooks, userId) {
-  const boughtStatus = await Promise.all(
+  const reservedStatus = await Promise.all(
     textbooks.map(async (textbook) => {
       try {
         const currTextbook = await getTextbookById(textbook.id);
@@ -93,14 +93,14 @@ export async function reserveTextbooks(textbooks, userId) {
             user_id: userId,
             timestamp: currTime
           });
-          return { ...textbook, bought: true };
+          return { ...textbook, reserved: true };
         }
       } catch (e) {
-        return { ...textbook, bought: false };
+        return { ...textbook, reserved: false };
       }
-      return { ...textbook, bought: false };
+      return { ...textbook, reserved: false };
     })
   );
   // Note that bought status is a list where each element is a textbook object and a bool relating to whether or not the textbook was bought
-  return boughtStatus;
+  return reservedStatus;
 }
