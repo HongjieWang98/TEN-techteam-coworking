@@ -29,14 +29,14 @@ function BuySuccessPage() {
                   <Card.Text>
                     Exchanges must occur at [location of exchange] between the hours of [time of exchange]. Please
                     confirm on the payment method used in advance, and make the payment in person during the exchange.
-                    If doing an electronic payment, you must exchange handles with the seller
+                    If doing an electronic payment, you must exchange handles with the seller.
                   </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
             <Col md={12} className="mb-4">
               <Card className="next-steps-card">
-                <Card.Header as="h5">Cancel your listing</Card.Header>
+                <Card.Header as="h5">Cancel your reservation</Card.Header>
                 <Card.Body>
                   <Card.Text>
                     If you wish to cancel, navigate to “My account” and cancel the reservation. This will cancel your
@@ -51,7 +51,7 @@ function BuySuccessPage() {
                 <Card.Body>
                   <Card.Text>
                     Once the exchange has occurred, please confirm the transaction in the “My account” tab; if textbooks
-                    are not exchanged and confirmed within 1 week, they will be automatically put back on sale
+                    are not exchanged and confirmed within 1 week, they will be automatically put back on sale.
                   </Card.Text>
                 </Card.Body>
               </Card>
