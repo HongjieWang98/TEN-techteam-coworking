@@ -25,7 +25,7 @@ function BuyConfirmPage() {
     <Container fluid className="p-4">
       <Row className="mb-4">
         <Col>
-          <h2>Textbooks:</h2>
+          <h2>Textbooks Cart:</h2>
         </Col>
       </Row>
 
