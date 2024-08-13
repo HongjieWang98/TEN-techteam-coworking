@@ -5,7 +5,7 @@ export async function getOrganizations() {
   const organizationCollectionRef = collection(db, 'organizations');
   const q = query(organizationCollectionRef, where('deleted_at', '==', null));
   const organizations = (await getDocs(q)).docs;
-  const organizations_domainName = organizations.data().domains;
+  //const organizations_domainName = organizations.data().domains;
 
   return Promise.all(
     organizations.map((org) => {
