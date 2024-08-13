@@ -58,7 +58,7 @@ function SellerListing({ listingData }) {
             </Col>
           </>
         )}
-
+        
         {/* Show accept and deny button only if textbook is reserved */}
         {textbookstatus === "pending_confirmation" && (
           <>
@@ -87,7 +87,6 @@ function SellerListing({ listingData }) {
           </Row>
         </>
       )}
-
     </>
     </Container>
   );
