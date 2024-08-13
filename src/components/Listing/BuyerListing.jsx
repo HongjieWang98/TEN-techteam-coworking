@@ -8,7 +8,7 @@ function BuyerListing({ listingData }) {
     // TODO logic to cancel a reservation
   };
 
-  const buyerConfirmTransaction = () => {
+  const handleBuyerConfirmTransaction = () => {
     // TODO logic to confirm a transaction
   };
 
@@ -18,7 +18,7 @@ function BuyerListing({ listingData }) {
       <Listing listingData={listingData} />
 
       {/* Show accept and deny button only if textbook is reserved */}
-      {textbookstatus === "buyer_accepted" && (
+      {textbookstatus === "pending_confirmation" && (
         <>
           <Col md={3}>
             <button type="button" onClick={handleCancelReservation} className="btn btn-primary w-20 mt-2 mx-auto">
@@ -26,7 +26,7 @@ function BuyerListing({ listingData }) {
             </button>
           </Col>
           <Col md={3}>
-          <button type="button" onClick={sellerConfirmTransaction} className="btn btn-primary w-20 mt-2 mx-auto">
+          <button type="button" onClick={handleBuyerConfirmTransaction} className="btn btn-primary w-20 mt-2 mx-auto">
             Confirm Transaction is Complete
           </button>
           </Col>

@@ -5,9 +5,7 @@ import { Button, Row, Col, Container } from 'react-bootstrap';
 function SellerListing({ listingData }) {
     
   const textbookstatus = "reserved";
-  //options include: listed, reserved, reservation_canceled, listing_removed, 
-  //buyer_accepted, buyer_denied, seller_confirmed_transaction, 
-  //buyer_confirmed_transaction
+  //options include: active, removed, reserved, pending_confirmation, sold
 
   const handleAcceptBuyer = () => {
     // TODO logic to accept the buyer
@@ -25,7 +23,7 @@ function SellerListing({ listingData }) {
     // TODO logic to cancel a reservation
   };
 
-  const sellerConfirmTransaction = () => {
+  const handleSellerConfirmTransaction = () => {
     // TODO logic to confirm a transaction
   };
 
@@ -37,7 +35,7 @@ function SellerListing({ listingData }) {
       <Row>
         {/* Show remove listing button only if textbook transaction has not been completed */}
         <Col md={3}>
-          {textbookstatus !== "seller_confirmed_transaction" && textbookstatus !== "buyer_confirmed_transaction" && textbookstatus !== "listing_removed" && (
+          {textbookstatus !== "sold" && textbookstatus !== "removed" && (
             <button type="button" onClick={handleRemoveListing} className="btn btn-secondary w-20 mt-2 mx-auto">
               Remove Listing
             </button>
@@ -62,7 +60,7 @@ function SellerListing({ listingData }) {
         )}
 
         {/* Show accept and deny button only if textbook is reserved */}
-        {textbookstatus === "buyer_accepted" && (
+        {textbookstatus === "pending_confirmation" && (
           <>
             <Col md={3}>
               <button type="button" onClick={handleCancelReservation} className="btn btn-primary w-20 mt-2 mx-auto">
@@ -70,7 +68,7 @@ function SellerListing({ listingData }) {
               </button>
             </Col>
             <Col md={3}>
-            <button type="button" onClick={sellerConfirmTransaction} className="btn btn-primary w-20 mt-2 mx-auto">
+            <button type="button" onClick={handleSellerConfirmTransaction} className="btn btn-primary w-20 mt-2 mx-auto">
               Confirm Transaction is Complete
             </button>
             </Col>
