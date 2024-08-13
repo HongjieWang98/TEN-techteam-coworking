@@ -11,7 +11,7 @@ import { Providers } from './contexts/Providers';
 import PageWrapper from './components/PageWrapper';
 import CreateAccount from './pages/Account/CreateAccount';
 import SuccessCreateAccount from './pages/Account/SuccessAccountCreate';
-import Profile from './pages/Profile';
+import Profile from './pages/Profile/Profile';
 import Inventory from './pages/Buy/Inventory';
 import BuyConfirm from './pages/Buy/BuyConfirm';
 import NavigationBar from './components/NavigationBar/NavBar';

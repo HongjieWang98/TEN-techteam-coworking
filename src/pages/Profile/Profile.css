@@ -1,0 +1,39 @@
+.profile-container {
+    padding-right: 10px !important; /* Adjust as needed */
+    padding-left: 10px !important; /* Adjust as needed */
+  }
+
+.user-image-placeholder {
+    width: 200px;
+    height: 250px;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 15px;
+  }
+
+  .card-body {
+    display: flex;
+    justify-content: center;  /* Horizontally center */
+    align-items: center;      /* Vertically center */
+  }
+
+  .logout-button {
+    margin-top: 10px; /* Adjust as needed for space above the button */
+    display: flex;
+    justify-content: center;  
+  }
+
+  .accordion-container {
+    width: 100%; /* Adjust as needed to fit the parent container */
+  }
+  
+  .accordion-item {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .accordion-body {
+    overflow: hidden; /* Prevent overflow issues */
+  }
