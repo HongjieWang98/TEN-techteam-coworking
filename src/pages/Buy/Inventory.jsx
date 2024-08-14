@@ -1,7 +1,7 @@
 import InventoryPage from '../../components/Buy/InventoryPage';
 
 function Inventory() {
-  return <InventoryPage buyFunctionality />;
+  return <InventoryPage />;
 }
 
 export default Inventory;

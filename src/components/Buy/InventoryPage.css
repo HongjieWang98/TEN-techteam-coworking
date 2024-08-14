@@ -1,0 +1,32 @@
+/* Flex container for side-by-side alignment and equal height */
+.inventory-page {
+  padding: 20px; /* Optional: Add padding if needed */
+}
+
+/* Title styling */
+.page-title {
+  font-size: 2rem; /* Adjust font size as needed */
+}
+
+/* Individual component styling */
+.inventory-table {
+  display: flex; /* Allow internal content to adjust */
+  flex-direction: column; /* Stack children vertically if needed */
+}
+
+.side-cart {
+  display: flex; /* Allow internal content to adjust */
+  flex-direction: column; /* Stack children vertically if needed */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .inventory-page {
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .inventory-table,
+  .side-cart {
+    width: 100%; /* Make each component take full width */
+  }
+}

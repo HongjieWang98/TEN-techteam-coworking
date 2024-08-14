@@ -1,12 +1,16 @@
 import { useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import InventoryTable from './InventoryTable';
 import SideCart from './SideCart';
 import { useBuyContext } from '../../contexts/BuyContext';
+import { useAuthContext } from '../../contexts/AuthContext';
+import './InventoryPage.css';
 
 // eslint-disable-next-line no-unused-vars
-export default function InventoryPage({ buyFunctionality }) {
+export default function InventoryPage() {
   // Used in the handleAddToCart
   const { addToCart } = useBuyContext();
+  const { currentUser } = useAuthContext();
   // Represents the data prop passed into the datatable
   // Edited in the SideCart component
   const [data, setData] = useState({
@@ -37,9 +41,31 @@ export default function InventoryPage({ buyFunctionality }) {
   };
 
   return (
-    <>
-      <InventoryTable buyFunctionality tableData={data} setTableData={setData} handleAddToCart={handleAddToCart} />
-      {buyFunctionality && <SideCart setTableData={setData} handleAddToCart={handleAddToCart} />}
-    </>
+    <Container className="inventory-page">
+      <Row className="mb-4">
+        <Col className="text-center">
+          <h1 className="page-title">Textbook Inventory</h1>
+        </Col>
+      </Row>
+      {currentUser ? (
+        <Row className="justify-content-center">
+          <Col xs={12} md={7} lg={8} className="inventory-table">
+            <InventoryTable
+              buyFunctionality
+              tableData={data}
+              setTableData={setData}
+              handleAddToCart={handleAddToCart}
+              user={currentUser}
+            />
+          </Col>
+
+          <Col xs={12} md={5} lg={4} className="side-cart">
+            <SideCart setTableData={setData} handleAddToCart={handleAddToCart} />
+          </Col>
+        </Row>
+      ) : (
+        <h1>Loading...</h1>
+      )}
+    </Container>
   );
 }

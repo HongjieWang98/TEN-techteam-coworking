@@ -1,0 +1,21 @@
+.next-steps-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.next-steps-card {
+  border: none !important;
+  background-color: #fff !important;
+  /*border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;*/
+}
+
+.next-steps-card h5 {
+  text-align: center;
+}
+
+.next-steps-card .card-body {
+  padding: 20px;
+}
