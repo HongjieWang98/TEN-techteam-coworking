@@ -5,7 +5,7 @@
 
 .image-placeholder {
   width: 90%;
-  height: 350px;
+  height: 350px !important;
   background-color: #e0e0e0;
   display: flex;
   justify-content: left;
