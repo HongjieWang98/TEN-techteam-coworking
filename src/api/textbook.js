@@ -104,3 +104,70 @@ export async function reserveTextbooks(textbooks, userId) {
   // Note that bought status is a list where each element is a textbook object and a bool relating to whether or not the textbook was bought
   return reservedStatus;
 }
+
+// Accept the reservation made by a buyer
+export async function acceptBuyer(textbook) {
+  const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
+  const currTime = serverTimestamp();
+  await addDoc(subcollectionRef, {
+    event_type: 'buyer_accepted',
+    user_id: textbook.seller_id,
+    timestamp: currTime
+  });
+}
+
+// Deny the reservation made by a buyer (have to null the buyer field)
+export async function denyBuyer(textbook) {
+  const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
+  const currTime = serverTimestamp();
+  await updateDoc(doc(db, 'textbooks', textbook.id), {
+    buyer_id: null,
+    updated_at: currTime
+  });
+  await addDoc(subcollectionRef, {
+    event_type: 'buyer_denied',
+    user_id: textbook.seller_id,
+    timestamp: currTime
+  });
+}
+
+// Remove the listing from the inventory (nullify the buyer_id slot if applicable)
+export async function listingRemove(textbook) {
+  const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
+  const currTime = serverTimestamp();
+  await updateDoc(doc(db, 'textbooks', textbook.id), {
+    buyer_id: null,
+    updated_at: currTime
+  });
+  await addDoc(subcollectionRef, {
+    event_type: 'listing_removed',
+    user_id: textbook.seller_id,
+    timestamp: currTime
+  });
+}
+
+// Cancel the reservation
+export async function sellerReservationCancel(textbook) {
+  const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
+  const currTime = serverTimestamp();
+  await updateDoc(doc(db, 'textbooks', textbook.id), {
+    buyer_id: null,
+    updated_at: currTime
+  });
+  await addDoc(subcollectionRef, {
+    event_type: 'reservation_canceled',
+    user_id: textbook.seller_id,
+    timestamp: currTime
+  });
+}
+
+// Seller confirms the reservation
+export async function sellerConfirmTransaction(textbook) {
+  const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
+  const currTime = serverTimestamp();
+  await addDoc(subcollectionRef, {
+    event_type: 'seller_confirmed_transaction',
+    user_id: textbook.seller_id,
+    timestamp: currTime
+  });
+}
