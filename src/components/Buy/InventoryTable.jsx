@@ -70,7 +70,9 @@ function InventoryTable({ buyFunctionality = false, tableData, setTableData, han
         if (buyFunctionality && user) {
           const booksDB = await getTextbooksByOrganizationId(user.organization_id, true);
           // Filter out all the books that have been reserved or do not have a seller for some reason (NOTE THAT WE ARE NOT CHECKING IF THE BUYER_ID IS NULL)
-          const unreservedBooks = booksDB.filter((book) => book.status === EventStatus.ACTIVE && book.seller != null);
+          const unreservedBooks = booksDB.filter(
+            (book) => book.status === EventStatus.ACTIVE && book.seller != null && book.seller_id !== user.id
+          );
           const booksTable = unreservedBooks.map((book) => tableFormatBook(book));
           // Initalize the datatable
           setTableData({

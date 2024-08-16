@@ -77,8 +77,8 @@ function BuySuccessPage() {
             <tbody>
               {successfullyReserved.map((textbook) => (
                 <tr key={textbook.id}>
-                  <td>{textbook.title}</td>
                   <td>{textbook.courseAndDpmt}</td>
+                  <td>{textbook.title}</td>
                   <td>{textbook.edition}</td>
                   <td>{textbook.isbn}</td>
                   <td>{textbook.price}</td>

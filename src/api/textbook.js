@@ -81,7 +81,7 @@ export async function reserveTextbooks(textbooks, userId) {
     textbooks.map(async (textbook) => {
       try {
         const currTextbook = await getTextbookById(textbook.id);
-        if (currTextbook != null && currTextbook.status === EventStatus.ACTIVE) {
+        if (currTextbook != null && currTextbook.status === EventStatus.ACTIVE && currTextbook.seller_id !== userId) {
           const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
           const currTime = serverTimestamp();
           await updateDoc(doc(db, 'textbooks', textbook.id), {

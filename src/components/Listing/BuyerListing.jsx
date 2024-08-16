@@ -1,18 +1,21 @@
 import { Col, Container } from 'react-bootstrap';
+import { useState } from 'react';
 import { buyerConfirmTransaction, buyerReservationCancel } from '../../api/textbook';
 import { EventStatus } from '../../api/process_textbook';
 import Listing from './Listing';
 
 function BuyerListing({ listingData }) {
-  const textbookstatus = listingData.status;
+  const [textbookstatus, settextbookstatus] = useState(listingData.status);
 
-  const handleCancelReservation = () => {
+  async function handleCancelReservation() {
+    settextbookstatus(EventStatus.ACTIVE);
     buyerReservationCancel(listingData);
-  };
+  }
 
-  const handleBuyerConfirmTransaction = () => {
+  async function handleBuyerConfirmTransaction() {
+    settextbookstatus(EventStatus.SOLD);
     buyerConfirmTransaction(listingData);
-  };
+  }
 
   return (
     <Container className="page-container">

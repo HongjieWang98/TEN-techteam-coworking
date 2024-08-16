@@ -1,4 +1,5 @@
 import { Row, Col, Container } from 'react-bootstrap';
+import { useState } from 'react';
 import { EventStatus } from '../../api/process_textbook';
 import Listing from './Listing';
 import {
@@ -11,25 +12,32 @@ import {
 
 function SellerListing({ listingData }) {
   // options include: active, removed, reserved, pending_confirmation, sold
-  const textbookstatus = listingData.status;
+  // Using useState is a patchwork fix in the future there might be additional DB Gets
+  // especially if the buyer does something which should change the buttons on the seller side (but currently would not be updated)
+  const [textbookstatus, settextbookstatus] = useState(listingData.status);
 
   async function handleAcceptBuyer() {
+    settextbookstatus(EventStatus.PENDING_CONFIRMATION);
     await acceptBuyer(listingData);
   }
 
   async function handleDenyBuyer() {
+    settextbookstatus(EventStatus.ACTIVE);
     await denyBuyer(listingData);
   }
 
   async function handleRemoveListing() {
+    settextbookstatus(EventStatus.REMOVED);
     await listingRemove(listingData);
   }
 
   async function handleCancelReservation() {
+    settextbookstatus(EventStatus.ACTIVE);
     await sellerReservationCancel(listingData);
   }
 
   async function handleSellerConfirmTransaction() {
+    settextbookstatus(EventStatus.SOLD);
     await sellerConfirmTransaction(listingData);
   }
 
@@ -47,7 +55,7 @@ function SellerListing({ listingData }) {
               </button>
             )}
           </Col>
-          <Col md={3}></Col>
+          <Col md={3} />
 
           {/* Show accept and deny button only if textbook is reserved */}
           {textbookstatus === EventStatus.RESERVED && (
