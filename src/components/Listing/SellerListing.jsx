@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { Row, Col, Container } from 'react-bootstrap';
+import { EventStatus } from '../../api/process_textbook';
 import Listing from './Listing';
-import { Button, Row, Col, Container } from 'react-bootstrap';
 import {
   acceptBuyer,
   denyBuyer,
@@ -41,7 +41,7 @@ function SellerListing({ listingData }) {
         <Row>
           {/* Show remove listing button only if textbook transaction has not been completed */}
           <Col md={3}>
-            {textbookstatus !== 'sold' && textbookstatus !== 'removed' && (
+            {textbookstatus !== EventStatus.SOLD && textbookstatus !== EventStatus.REMOVED && (
               <button type="button" onClick={handleRemoveListing} className="btn btn-secondary w-20 mt-2 mx-auto">
                 Remove Listing
               </button>
@@ -50,7 +50,7 @@ function SellerListing({ listingData }) {
           <Col md={3}></Col>
 
           {/* Show accept and deny button only if textbook is reserved */}
-          {textbookstatus === 'reserved' && (
+          {textbookstatus === EventStatus.RESERVED && (
             <>
               <Col md={3}>
                 <button type="button" onClick={handleAcceptBuyer} className="btn btn-primary w-20 mt-2 mx-auto">
@@ -66,7 +66,7 @@ function SellerListing({ listingData }) {
           )}
 
           {/* Show accept and deny button only if textbook is reserved */}
-          {textbookstatus === 'pending_confirmation' && (
+          {textbookstatus === EventStatus.PENDING_CONFIRMATION && (
             <>
               <Col md={3}>
                 <button type="button" onClick={handleCancelReservation} className="btn btn-primary w-20 mt-2 mx-auto">
@@ -86,7 +86,7 @@ function SellerListing({ listingData }) {
         </Row>
 
         {/* Show text only when textbook is reserved and the accept and deny button is visible */}
-        {textbookstatus === 'reserved' && (
+        {textbookstatus === EventStatus.RESERVED && (
           <>
             <Row className="info-row mt-4">
               <div>

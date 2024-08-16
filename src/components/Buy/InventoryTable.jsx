@@ -8,7 +8,7 @@ import './InventoryTable.css';
 import './AddToCartButton.css';
 import { useBuyContext } from '../../contexts/BuyContext';
 import { getTextbooksByOrganizationId } from '../../api/textbook';
-import { EventStatus} from '../../api/process_textbook';
+import { EventStatus } from '../../api/process_textbook';
 
 function InventoryTable({ buyFunctionality = false, tableData, setTableData, handleAddToCart = null, user = null }) {
   const { cartData } = useBuyContext();

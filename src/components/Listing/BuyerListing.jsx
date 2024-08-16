@@ -1,4 +1,6 @@
+import { Col, Container } from 'react-bootstrap';
 import { buyerConfirmTransaction, buyerReservationCancel } from '../../api/textbook';
+import { EventStatus } from '../../api/process_textbook';
 import Listing from './Listing';
 
 function BuyerListing({ listingData }) {
@@ -18,7 +20,7 @@ function BuyerListing({ listingData }) {
         <Listing listingData={listingData} />
 
         {/* Show accept and deny button only if textbook is reserved */}
-        {textbookstatus === 'pending_confirmation' && (
+        {textbookstatus === EventStatus.PENDING_CONFIRMATION && (
           <>
             <Col md={3}>
               <button type="button" onClick={handleCancelReservation} className="btn btn-primary w-20 mt-2 mx-auto">
