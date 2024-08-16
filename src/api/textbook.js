@@ -171,3 +171,30 @@ export async function sellerConfirmTransaction(textbook) {
     timestamp: currTime
   });
 }
+
+// Cancel the reservation
+export async function buyerReservationCancel(textbook) {
+  const formerBuyer = textbook.buyer_id;
+  const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
+  const currTime = serverTimestamp();
+  await updateDoc(doc(db, 'textbooks', textbook.id), {
+    buyer_id: null,
+    updated_at: currTime
+  });
+  await addDoc(subcollectionRef, {
+    event_type: 'reservation_canceled',
+    user_id: formerBuyer,
+    timestamp: currTime
+  });
+}
+
+// Seller confirms the reservation
+export async function buyerConfirmTransaction(textbook) {
+  const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
+  const currTime = serverTimestamp();
+  await addDoc(subcollectionRef, {
+    event_type: 'buyer_confirmed_transaction',
+    user_id: textbook.buyer_id,
+    timestamp: currTime
+  });
+}
