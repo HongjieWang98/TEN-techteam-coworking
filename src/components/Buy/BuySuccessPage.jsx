@@ -29,16 +29,6 @@ function BuySuccessPage() {
     //console.log("Organization ID:", currentUser?.organization_id);  // Log the organization_id if available
 
     async function fetchData() {
-      /*if (!currentUser) {
-        setError('User is not available');
-        setLoading(false);
-        return;
-      }
-      if (!currentUser.organization_id) {
-        setError('Organization ID is not available');
-        setLoading(false);
-        return;
-      } */
       
       try {
         const data = await getExchangeLocationAndSchedule(currentUser.organization_id);
@@ -93,19 +83,17 @@ function BuySuccessPage() {
             <Col md={10} className="mb-4 d-flex flex-column align-items-center justify-content-center">
               <Card className="next-steps-card">
                 <Card.Header as="h5">You will be contacted to set up an exchange!</Card.Header>
-                <Card.Body>
+                <Card.Body className="flex-column">
                   <Card.Text>
-                    <p>
                       The Seller has been notified that you are interested in their textbook! They will accept or decline
                       the request to purchase this textbook and you will be notified. If they accept, we will provide them
                       your contact information and they will reach out to you to organize an exchange. This should occur
                       within the next week.
-                    </p>
-                    <p>
+                  </Card.Text>
+                  <Card.Text>
                       Exchanges must occur at {organizationData?.exchange_location || 'Location not available'} between the hours of {scheduleString}. Please
                       confirm on the payment method used in advance, and make the payment in person during the exchange.
                       If doing an electronic payment, you must exchange handles with the seller.
-                    </p>
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -127,7 +115,7 @@ function BuySuccessPage() {
                 <Card.Body>
                   <Card.Text>
                     Once the exchange has occurred, please confirm the transaction in the “My account” tab; if textbooks
-                    are not exchanged and confirmed within 1 week, they will be automatically put back on sale.
+                    are not exchanged and confirmed within 1 week, they will be automatically put back on sale. If you need any help please email textbookexchangenetwork@gmail.com.
                   </Card.Text>
                 </Card.Body>
               </Card>

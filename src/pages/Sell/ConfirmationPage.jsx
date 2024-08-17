@@ -83,7 +83,7 @@ function NextSteps() {
                     Exchanges must occur at {organizationData?.exchange_location || 'Location not available'} between the hours of {scheduleString}. Please confirm the payment method to be used in advance, but the payment should be made in person during the exchange.
                   </p>
                   <p>
-                    Once the exchange has occurred, please confirm the transaction in the “My account” tab. If textbooks are not confirmed within 1 week, they will be automatically put back on sale.
+                    Once the exchange has occurred, please confirm the transaction in the “My account” tab. If textbooks are not confirmed within 1 week, they will be automatically put back on sale. If you need any help please email textbookexchangenetwork@gmail.com.
                   </p>
                 </Card.Text>
               </Card.Body>

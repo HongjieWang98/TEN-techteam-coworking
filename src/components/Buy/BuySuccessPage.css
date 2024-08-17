@@ -18,4 +18,8 @@
 
 .next-steps-card .card-body {
   padding: 15px;
+
+.flex-column {
+  display: flex;
+  flex-direction: column; /* Stacks items vertically */
 }
