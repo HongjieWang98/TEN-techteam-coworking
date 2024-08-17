@@ -1,5 +1,13 @@
 {
-  "projects": {
-    "default": "fir-testjuly8"
-  }
+  "projects": {},
+  "targets": {
+    "fir-testjuly8": {
+      "hosting": {
+        "dev": [
+          "ten-virtual-exchange-dev"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

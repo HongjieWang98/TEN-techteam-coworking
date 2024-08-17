@@ -25,12 +25,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "start-windows": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "DISABLE_ESLINT_PLUGIN=true REACT_APP_NODE_ENV=development react-scripts start",
+    "start-windows": "REACT_APP_NODE_ENV=development react-scripts start",
+    "build": "REACT_APP_FIREBASE_AUTH_DOMAIN='fir-testjuly8.firebaseapp.com' DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy-prod": "react-scripts build && firebase deploy --only hosting",
+    "deploy-dev": "DISABLE_ESLINT_PLUGIN=true REACT_APP_NODE_ENV=development react-scripts build && firebase deploy --only hosting:dev",
+    "deploy-prod": "REACT_APP_NODE_ENV=production react-scripts build && firebase deploy --only hosting",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
@@ -54,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.29.1",
