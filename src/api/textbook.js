@@ -30,11 +30,10 @@ export async function getTextbooksByUserId(userId) {
   const textbookCollectionRef = collection(db, 'textbooks');
   const q = query(textbookCollectionRef, or(where('seller_id', '==', userId), where('buyer_id', '==', userId)));
   const textbooks = (await getDocs(q)).docs;
-
   return (
     await Promise.all(
       textbooks.map(async (textbook) => {
-        return await processTextbook(textbook.ref, textbook.data());
+        return processTextbook(textbook.ref, textbook.data());
       })
     )
   ).filter((textbook) => textbook.seller_id === userId || textbook.buyer_id === userId);
