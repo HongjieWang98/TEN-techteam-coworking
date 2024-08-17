@@ -1,9 +1,72 @@
 import { useSellContext } from '../../contexts/SellContext';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Button, Card, Row, Col } from 'react-bootstrap';
 import './ConfirmationPage.css'
+import { getExchangeLocationAndSchedule } from '../../api/organization';
+import { useAuthContext } from '../../contexts/AuthContext';
+
+function getDayName(index) {
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  return days[index];
+}
 
 function NextSteps() {
+  const [organizationData, setOrganizationData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { currentUser } = useAuthContext();
+
+  useEffect(() => {
+
+    async function fetchData() {
+      if (!currentUser || !currentUser.organization_id) {
+        setError('User or organization ID is not available');
+        setLoading(false);
+        return;
+      }
+      
+      try {
+        const data = await getExchangeLocationAndSchedule(currentUser.organization_id);
+        setOrganizationData(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [currentUser]);
+
+  // Create a complete schedule with all days, including those without times
+  const completeSchedule = [
+    { day: 'Sun', start: '', end: '' },
+    { day: 'Mon', start: '', end: '' },
+    { day: 'Tue', start: '', end: '' },
+    { day: 'Wed', start: '', end: '' },
+    { day: 'Thu', start: '', end: '' },
+    { day: 'Fri', start: '', end: '' },
+    { day: 'Sat', start: '', end: '' }
+  ];
+
+  // Fill in the schedule with data from organizationData
+  if (organizationData && organizationData.schedule) {
+    organizationData.schedule.forEach((day, index) => {
+      if (day && day.start && day.end) {
+        completeSchedule[index] = {
+          day: getDayName(index),
+          start: day.start,
+          end: day.end
+        };
+      }
+    });
+  }
+
+  // Filter out days with missing times and format the schedule string
+  const scheduleString = completeSchedule
+    .filter(day => day.start && day.end) // Exclude days with missing times
+    .map(day => `${day.day}: ${day.start} - ${day.end}`)
+    .join('; ');
+
   return (
     <Col md={8} className="mb-4">
       <Container className="next-steps-container">
@@ -17,7 +80,7 @@ function NextSteps() {
                     When a buyer is interested in your textbook, we will email you and ask for you to accept or decline the buyer. If you decline the buyer, your textbook will be put back up for sale. If you accept them, you will be responsible for contacting them and coordinating a time to conduct the exchange. The textbook will be reserved for 1 week for a buyer.
                   </p>
                   <p>
-                    Exchanges must occur at [location of exchange] between the hours of [time of exchange]. Please confirm the payment method to be used in advance, but the payment should be made in person during the exchange.
+                    Exchanges must occur at {organizationData?.exchange_location || 'Location not available'} between the hours of {scheduleString}. Please confirm the payment method to be used in advance, but the payment should be made in person during the exchange.
                   </p>
                   <p>
                     Once the exchange has occurred, please confirm the transaction in the “My account” tab. If textbooks are not confirmed within 1 week, they will be automatically put back on sale.
