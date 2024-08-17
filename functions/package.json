@@ -5,8 +5,10 @@
   "scripts": {
     "lint": "eslint .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ../.prettierrc",
-    "serve": "firebase emulators:start --only functions",
-    "prod-deploy": "firebase deploy --only functions",
+    "serve-dev": "firebase use fir-testjuly8 && firebase emulators:start --only functions",
+    "serve-prod": "firebase use ten-virtual-exchange-prod && firebase emulators:start --only functions",
+    "functions:deploy-dev": "firebase use fir-testjuly8 && firebase deploy --only functions",
+    "functions:deploy-prod": "firebase use ten-virtual-exchange-prod && firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
   "engines": {
