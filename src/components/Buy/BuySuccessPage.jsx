@@ -29,16 +29,6 @@ function BuySuccessPage() {
     //console.log("Organization ID:", currentUser?.organization_id);  // Log the organization_id if available
 
     async function fetchData() {
-      /*if (!currentUser) {
-        setError('User is not available');
-        setLoading(false);
-        return;
-      }
-      if (!currentUser.organization_id) {
-        setError('Organization ID is not available');
-        setLoading(false);
-        return;
-      } */
       
       try {
         const data = await getExchangeLocationAndSchedule(currentUser.organization_id);
@@ -127,7 +117,7 @@ function BuySuccessPage() {
                 <Card.Body>
                   <Card.Text>
                     Once the exchange has occurred, please confirm the transaction in the “My account” tab; if textbooks
-                    are not exchanged and confirmed within 1 week, they will be automatically put back on sale.
+                    are not exchanged and confirmed within 1 week, they will be automatically put back on sale. If you need any help please email textbookexchangenetwork@gmail.com.
                   </Card.Text>
                 </Card.Body>
               </Card>

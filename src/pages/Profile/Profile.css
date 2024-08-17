@@ -11,6 +11,7 @@
     justify-content: center !important;
     align-items: center !important;
     margin-bottom: 15px;
+    text-align: center;     /* Center text inside */
   }
 
   .card-body {
@@ -36,4 +37,9 @@
   
   .accordion-body {
     overflow: hidden; /* Prevent overflow issues */
+  }
+
+  .centered-text {
+    text-align: center;
+    padding: 20px 0; /* Adjust vertical padding as needed */
   }

@@ -1,15 +1,16 @@
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Button from 'react-bootstrap/Button';
-import { Container } from 'react-bootstrap';
+import { Container, Button, Card, Row, Col, ListGroup, Accordion } from 'react-bootstrap';
 import { auth } from '../../firebase/firebase_config';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { MDBDataTable } from 'mdbreact';
+import { useState, useEffect } from 'react';
+import { getExchangeLocationAndSchedule } from '../../api/organization';
 import "./Profile.css"
+
+function getDayName(index) {
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  return days[index];
+}
 
 function Profile() {
   const { currentUser, signOut } = useAuthContext();
@@ -34,10 +35,69 @@ function Profile() {
     navigate('/');
   };
 
+  const [organizationData, setOrganizationData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    //console.log("Current User object:", currentUser);  // Log the entire currentUser object
+    //console.log("Organization ID:", currentUser?.organization_id);  // Log the organization_id if available
+
+    async function fetchData() {
+      if (!currentUser || !currentUser.organization_id) {
+        setError('User or organization ID is not available');
+        setLoading(false);
+        return;
+      }
+      try {
+        const data = await getExchangeLocationAndSchedule(currentUser.organization_id);
+        setOrganizationData(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [currentUser]);
+
+  // Create a complete schedule with all days, including those without times
+  const completeSchedule = [
+    { day: 'Sun', start: '', end: '' },
+    { day: 'Mon', start: '', end: '' },
+    { day: 'Tue', start: '', end: '' },
+    { day: 'Wed', start: '', end: '' },
+    { day: 'Thu', start: '', end: '' },
+    { day: 'Fri', start: '', end: '' },
+    { day: 'Sat', start: '', end: '' }
+  ];
+
+  // Fill in the schedule with data from organizationData
+  if (organizationData && organizationData.schedule) {
+    organizationData.schedule.forEach((day, index) => {
+      if (day && day.start && day.end) {
+        completeSchedule[index] = {
+          day: getDayName(index),
+          start: day.start,
+          end: day.end
+        };
+      }
+    });
+  }
+
+  // Filter out days with missing times and format the schedule string
+  const scheduleString = completeSchedule
+    .filter(day => day.start && day.end) // Exclude days with missing times
+    .map(day => `${day.day}: ${day.start} - ${day.end}`)
+    .join('; ');
 
   return (
     <>
       <Container fluid className="profile-container">
+        <div className="centered-text">
+          Remember, for your universitiy, exchanges must occur at {organizationData?.exchange_location || '[location not available]'} between the hours of {scheduleString || '[time not available]'}
+        </div>
+
         <Row>
           <Col md={4}>
             <Container>
