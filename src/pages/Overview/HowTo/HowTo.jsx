@@ -166,19 +166,37 @@ function FAQVirtual() {
         <Accordion.Item eventKey="0">
           <Accordion.Header>What happens if my textbook is not sold?</Accordion.Header>
           <Accordion.Body className="left-align">
-            Your textbook will remain listed until you remove it. If the textbook is not sold and you do not remove the listing, it will remain indefinitely.
+            Your textbook will remain listed until you remove it. If the textbook is not sold and you do not remove the
+            listing, it will remain indefinitely.
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="1">
-          <Accordion.Header>What happens if the seller does not approve me? What if the seller approves me, but they never reach out?</Accordion.Header>
+          <Accordion.Header>
+            What happens if the seller does not approve me? What if the seller approves me, but they never reach out?
+          </Accordion.Header>
           <Accordion.Body className="left-align">
-            <p>To purchase a textbook, buyers must request approval from the seller. Once a buyer reserves a textbook, the seller will receive an email to either approve or deny the request. If the seller does not respond within one week, the reservation will be canceled and the textbook will be re-listed. The buyer will need to reserve a different textbook if this occurs. </p>
-            <p>If the seller approves your request, they will contact you to arrange a time and location for the exchange. For safety reasons, exchanges must occur at a designated location and time set by your university. If the seller does not reach out within one week, the reservation will be canceled and the textbook will be re-listed. In this case, you should attempt to reserve another textbook. Alternatively, if the seller has approved your request, you can view their contact information on your profile page and reach out to them directly.</p>
+            <p>
+              To purchase a textbook, buyers must request approval from the seller. Once a buyer reserves a textbook,
+              the seller will receive an email to either approve or deny the request. If the seller does not respond
+              within one week, the reservation will be canceled and the textbook will be re-listed. The buyer will need
+              to reserve a different textbook if this occurs.{' '}
+            </p>
+            <p>
+              If the seller approves your request, they will contact you to arrange a time and location for the
+              exchange. For safety reasons, exchanges must occur at a designated location and time set by your
+              university. If the seller does not reach out within one week, the reservation will be canceled and the
+              textbook will be re-listed. In this case, you should attempt to reserve another textbook. Alternatively,
+              if the seller has approved your request, you can view their contact information on your profile page and
+              reach out to them directly.
+            </p>
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="2">
           <Accordion.Header>What do I do if I no longer want to sell my textbook?</Accordion.Header>
-          <Accordion.Body className="left-align">You can easily cancel listings at any time from our website! Please note that this must occur before any purchase is made - all purchases are final.</Accordion.Body>
+          <Accordion.Body className="left-align">
+            You can easily cancel listings at any time from our website! Please note that this must occur before any
+            purchase is made - all purchases are final.
+          </Accordion.Body>
         </Accordion.Item>
       </Accordion>
     </div>
@@ -193,14 +211,18 @@ function FAQInPerson() {
         <Accordion.Item eventKey="0">
           <Accordion.Header>What happens if my textbook is not sold?</Accordion.Header>
           <Accordion.Body className="left-align">
-          If your textbook is not sold, you may pick it up at any time during open hours. After 2 years, if your textbook remains unsold, you will be required to pick it up. If you do not retrieve your textbook, TEN may donate it or dispose of it in another manner.
+            If your textbook is not sold, you may pick it up at any time during open hours. After 2 years, if your
+            textbook remains unsold, you will be required to pick it up. If you do not retrieve your textbook, TEN may
+            donate it or dispose of it in another manner.
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="1">
           <Accordion.Header>Can I return a textbook once I've bought it?</Accordion.Header>
           <Accordion.Body className="left-align">
-            Once a textbook has been purchased and payment has been made to the seller, returns are not permitted. For privacy reasons, we cannot provide the contact information of the seller. However, you may re-list the textbook for sale on TEN.
-            Similarly, if you have sold a textbook and received payment, the textbook cannot be retrieved. 
+            Once a textbook has been purchased and payment has been made to the seller, returns are not permitted. For
+            privacy reasons, we cannot provide the contact information of the seller. However, you may re-list the
+            textbook for sale on TEN. Similarly, if you have sold a textbook and received payment, the textbook cannot
+            be retrieved.
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="2">
@@ -209,7 +231,10 @@ function FAQInPerson() {
             Come into the textbook exchange during open hours and ask a volunteer for it back! It's that easy! Please
             note that this must occur before any purchase is made - all purchases are final.
           </Accordion.Body>
-          <Accordion.Body className="left-align">Come into the textbook exchange during open hours and ask a volunteer for it back! It's that easy! Please note that this must occur before any purchase is made - all purchases are final.</Accordion.Body>
+          <Accordion.Body className="left-align">
+            Come into the textbook exchange during open hours and ask a volunteer for it back! It's that easy! Please
+            note that this must occur before any purchase is made - all purchases are final.
+          </Accordion.Body>
         </Accordion.Item>
       </Accordion>
     </div>

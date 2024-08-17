@@ -35,7 +35,8 @@ function SideCartEntry({ textbook, setTableData, handleAddToCart }) {
           }
         }}
         type="button"
-        className="SubEntryButtons">
+        className="SubEntryButtons"
+      >
         Remove
       </button>
     );

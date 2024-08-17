@@ -1,4 +1,4 @@
-import "./DisplayInput.css"
+import './DisplayInput.css';
 
 /**
  * Represents a read-only input field for displaying information.

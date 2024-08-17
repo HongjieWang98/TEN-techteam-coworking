@@ -9,7 +9,7 @@ import { auth } from '../../firebase/firebase_config';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { MDBDataTable } from 'mdbreact';
-import "./Profile.css"
+import './Profile.css';
 
 function Profile() {
   const { currentUser, signOut } = useAuthContext();
@@ -22,8 +22,8 @@ function Profile() {
       { label: 'View textbook', field: 'view', sort: 'asc' }
     ],
     rows: [
-      { title: 'General Chemistry', cost: 30, author: 'John Smith', view: 'button'},
-      { title: 'Calculus', cost: 25, author: 'John Smith', view: 'button' },
+      { title: 'General Chemistry', cost: 30, author: 'John Smith', view: 'button' },
+      { title: 'Calculus', cost: 25, author: 'John Smith', view: 'button' }
     ]
   };
 
@@ -33,7 +33,6 @@ function Profile() {
     }
     navigate('/');
   };
-
 
   return (
     <>
@@ -68,8 +67,8 @@ function Profile() {
                     <MDBDataTable
                       bordered
                       small
-                      entries={false}  // Hide "Show Entries"
-                      paging={false}   // Remove pagination (Next/Previous buttons)
+                      entries={false} // Hide "Show Entries"
+                      paging={false} // Remove pagination (Next/Previous buttons)
                       searching={false} // Remove the search bar
                       displayEntries={false} // Remove footer (column titles at the bottom)
                       data={testdata}
@@ -82,8 +81,8 @@ function Profile() {
                     <MDBDataTable
                       bordered
                       small
-                      entries={false}  // Hide "Show Entries"
-                      paging={false}   // Remove pagination (Next/Previous buttons)
+                      entries={false} // Hide "Show Entries"
+                      paging={false} // Remove pagination (Next/Previous buttons)
                       searching={false} // Remove the search bar
                       displayEntries={false} // Remove footer (column titles at the bottom)
                       data={testdata}
@@ -96,8 +95,8 @@ function Profile() {
                     <MDBDataTable
                       bordered
                       small
-                      entries={false}  // Hide "Show Entries"
-                      paging={false}   // Remove pagination (Next/Previous buttons)
+                      entries={false} // Hide "Show Entries"
+                      paging={false} // Remove pagination (Next/Previous buttons)
                       searching={false} // Remove the search bar
                       displayEntries={false} // Remove footer (column titles at the bottom)
                       data={testdata}
@@ -110,8 +109,8 @@ function Profile() {
                     <MDBDataTable
                       bordered
                       small
-                      entries={false}  // Hide "Show Entries"
-                      paging={false}   // Remove pagination (Next/Previous buttons)
+                      entries={false} // Hide "Show Entries"
+                      paging={false} // Remove pagination (Next/Previous buttons)
                       searching={false} // Remove the search bar
                       displayEntries={false} // Remove footer (column titles at the bottom)
                       data={testdata}

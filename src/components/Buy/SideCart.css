@@ -1,80 +1,80 @@
 .Box {
-    background-color: #f8f8f8;
-  }
+  background-color: #f8f8f8;
+}
+.SideCartContainer {
+  height: 620px;
+  width: 400px; /*temp*/
+  text-align: center;
+  margin: auto;
+  margin-bottom: 30px;
+  padding: 0;
+  font-size: 14px;
+  font-family: 'Avenir', 'Nunito Sans', sans-serif;
+  font-weight: 100;
+  color: #828282;
+}
+.SideCartHeader {
+  color: rgb(128, 128, 128);
+  margin-bottom: 30px;
+}
+.SideCartEntryContainer {
+  text-align: left;
+  margin: 0;
+}
+.SideCartEntries {
+  margin-left: -25px;
+  height: 450px;
+  overflow: auto;
+}
+
+.EntrySubInfo {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.SideCartContinueButton {
+  margin-top: 20px;
+  width: 200px;
+}
+.CartEmptyText {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+}
+.SubEntryButtons {
+  padding: 0px;
+  font-size: 0.8rem;
+  color: rgb(79, 143, 204);
+  cursor: pointer;
+  border: none;
+  background-color: #f8f8f8;
+}
+.SubEntryButtons:hover {
+  text-decoration: underline;
+  transition: 0s;
+  color: rgb(79, 143, 204);
+}
+.fa-custom {
+  height: 100%;
+  width: 100%;
+  font-size: 20px;
+  margin: auto !important;
+  color: rgb(79, 143, 204) !important;
+}
+hr {
+  border: 0;
+  clear: both;
+  display: block;
+  width: 96%;
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 1px;
+}
+
+@media only screen and (max-height: 1040px) {
   .SideCartContainer {
-    height: 620px;
-    width: 400px; /*temp*/
-    text-align: center;
-    margin: auto;
-    margin-bottom: 30px;
-    padding: 0;
-    font-size: 14px;
-    font-family: 'Avenir', 'Nunito Sans', sans-serif;
-    font-weight: 100;
-    color: #828282;
-  }
-  .SideCartHeader {
-    color: rgb(128, 128, 128);
-    margin-bottom: 30px;
-  }
-  .SideCartEntryContainer {
-    text-align: left;
-    margin: 0;
+    height: 500px;
   }
   .SideCartEntries {
-    margin-left: -25px;
-    height: 450px;
-    overflow: auto;
+    height: 330px;
   }
-  
-  .EntrySubInfo {
-    font-size: 0.9rem;
-    font-weight: bold;
-  }
-  .SideCartContinueButton {
-    margin-top: 20px;
-    width: 200px;
-  }
-  .CartEmptyText {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -55%);
-  }
-  .SubEntryButtons {
-    padding: 0px;
-    font-size: 0.8rem;
-    color: rgb(79, 143, 204);
-    cursor: pointer;
-    border: none;
-    background-color: #f8f8f8;
-  }
-  .SubEntryButtons:hover {
-    text-decoration: underline;
-    transition: 0s;
-    color: rgb(79, 143, 204);
-  }
-  .fa-custom {
-    height: 100%;
-    width: 100%;
-    font-size: 20px;
-    margin: auto !important;
-    color: rgb(79, 143, 204) !important;
-  }
-  hr {
-    border: 0;
-    clear: both;
-    display: block;
-    width: 96%;
-    background-color: rgba(0, 0, 0, 0.1);
-    height: 1px;
-  }
-  
-  @media only screen and (max-height: 1040px) {
-    .SideCartContainer {
-      height: 500px;
-    }
-    .SideCartEntries {
-      height: 330px;
-    }
-  }
+}

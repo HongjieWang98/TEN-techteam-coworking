@@ -1,14 +1,5 @@
 // For uniform styling in the future
-export default function Input({
-  name,
-  placeholder,
-  isLoading,
-  inputRef,
-  errorMessage,
-  type,
-  label,
-  required
-}) {
+export default function Input({ name, placeholder, isLoading, inputRef, errorMessage, type, label, required }) {
   const inputContainerStyle = {
     display: 'flex',
     flexDirection: 'column',

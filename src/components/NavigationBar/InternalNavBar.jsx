@@ -12,7 +12,8 @@ function InternalNavigationBar() {
         style={{
           float: 'left',
           padding: '5px 0'
-        }}>
+        }}
+      >
         <Link to="/" className="NavigationBarItemAnchor">
           <img src={logo} className="NavigationBarImage" alt="TEN Logo" />
         </Link>

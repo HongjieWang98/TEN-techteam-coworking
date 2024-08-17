@@ -8,20 +8,12 @@ import { getOrganizations } from '../../../api/organization';
 
 function ProdTwoInventory(props) {
   const { school } = props; // destructuring prop or else would get linter error
-  return (
-    <>
-        {/* Code for Prod 2 Inventory */}
-    </>
-  );
+  return <>{/* Code for Prod 2 Inventory */}</>;
 }
 
 function ProdOneInventory(props) {
   const { school } = props; // destructuring prop or else would get linter error
-  return (
-    <>
-        {/* Code for Prod 1 Inventory */}
-    </>
-  );
+  return <>{/* Code for Prod 1 Inventory */}</>;
 }
 
 function EndingLogo() {

@@ -39,7 +39,7 @@ function BuySuccessPage() {
         setLoading(false);
         return;
       } */
-      
+
       try {
         const data = await getExchangeLocationAndSchedule(currentUser.organization_id);
         setOrganizationData(data);
@@ -81,9 +81,9 @@ function BuySuccessPage() {
 
   // Filter out days with missing times and format the schedule string
   const scheduleString = completeSchedule
-  .filter(day => day.start && day.end) // Exclude days with missing times
-  .map(day => `${day.day}: ${day.start} - ${day.end}`)
-  .join('; ');
+    .filter((day) => day.start && day.end) // Exclude days with missing times
+    .map((day) => `${day.day}: ${day.start} - ${day.end}`)
+    .join('; ');
 
   return (
     <Container fluid className="p-4">
@@ -96,15 +96,16 @@ function BuySuccessPage() {
                 <Card.Body>
                   <Card.Text>
                     <p>
-                      The Seller has been notified that you are interested in their textbook! They will accept or decline
-                      the request to purchase this textbook and you will be notified. If they accept, we will provide them
-                      your contact information and they will reach out to you to organize an exchange. This should occur
-                      within the next week.
+                      The Seller has been notified that you are interested in their textbook! They will accept or
+                      decline the request to purchase this textbook and you will be notified. If they accept, we will
+                      provide them your contact information and they will reach out to you to organize an exchange. This
+                      should occur within the next week.
                     </p>
                     <p>
-                      Exchanges must occur at {organizationData?.exchange_location || 'Location not available'} between the hours of {scheduleString}. Please
-                      confirm on the payment method used in advance, and make the payment in person during the exchange.
-                      If doing an electronic payment, you must exchange handles with the seller.
+                      Exchanges must occur at {organizationData?.exchange_location || 'Location not available'} between
+                      the hours of {scheduleString}. Please confirm on the payment method used in advance, and make the
+                      payment in person during the exchange. If doing an electronic payment, you must exchange handles
+                      with the seller.
                     </p>
                   </Card.Text>
                 </Card.Body>
@@ -115,8 +116,8 @@ function BuySuccessPage() {
                 <Card.Header as="h5">Cancel your reservation</Card.Header>
                 <Card.Body>
                   <Card.Text>
-                    If you wish to cancel, navigate to the “My account” page, click "View listing" and click "Cancel the reservation". This will cancel your
-                    reservation and automatically put the book back up for sale.
+                    If you wish to cancel, navigate to the “My account” page, click "View listing" and click "Cancel the
+                    reservation". This will cancel your reservation and automatically put the book back up for sale.
                   </Card.Text>
                 </Card.Body>
               </Card>

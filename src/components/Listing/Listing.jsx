@@ -2,7 +2,7 @@ import DisplayCheckboxGroup from '../common/DisplayCheckboxGroup';
 import DisplayInput from '../common/DisplayInput';
 import { Container, Row, Col } from 'react-bootstrap';
 import React from 'react';
-import './Listing.css'
+import './Listing.css';
 
 /**
  * Represents details of a listing.
@@ -94,10 +94,20 @@ function Listing({ listingData }) {
           </Row>
           <Row className="listing-row">
             <Col md={6}>
-              <DisplayInput name="buyerContact" type="text" value={buyer?.preferredContactMethod ?? 'N/A'} label="Buyer’s Preferred Contact Method:" />
+              <DisplayInput
+                name="buyerContact"
+                type="text"
+                value={buyer?.preferredContactMethod ?? 'N/A'}
+                label="Buyer’s Preferred Contact Method:"
+              />
             </Col>
             <Col md={6}>
-              <DisplayInput name="sellerContact" type="text" value={seller.preferredContactMethod} label="Seller’s Preferred Contact Method:" />
+              <DisplayInput
+                name="sellerContact"
+                type="text"
+                value={seller.preferredContactMethod}
+                label="Seller’s Preferred Contact Method:"
+              />
             </Col>
           </Row>
           <Row className="listing-row">

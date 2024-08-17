@@ -12,7 +12,8 @@ function FilterDropdown({ currElement, data, callbackFunc }) {
       onSelect={(eventKey) => {
         // this is pretty hacky and im not proud of it, but it works
         callbackFunc(JSON.parse(eventKey));
-      }}>
+      }}
+    >
       <Dropdown.Toggle id="dropdown-custom-components">{currElement?.name ?? ''}</Dropdown.Toggle>
 
       <Dropdown.Menu as={CustomMenu}>

@@ -18,8 +18,6 @@ export async function checkDuplicateUserBySchoolEmail(schoolEmail) {
   }
 }
 
-
-
 export async function validateUser(userAccount) {
   // Check if the user already exists
   const schoolEmail = userAccount.contact_info.school_email;
@@ -29,7 +27,7 @@ export async function validateUser(userAccount) {
   const match = schoolEmail.match(regex);
 
   if (!match) {
-    console.log("No domain found");
+    console.log('No domain found');
   }
 
   const domain = match[1];
@@ -46,19 +44,16 @@ export async function validateUser(userAccount) {
   // const organizations = await getOrganizations();
 
   // Find the organization with the matching domain
-  const orgDomain = organizations.find(org => org.domains[domain]);
-
-
+  const orgDomain = organizations.find((org) => org.domains[domain]);
 
   if (!orgDomain[domain]) {
     throw new Error('Invalid school email domain');
   }
 
-  console.log("domain validation passed")
+  console.log('domain validation passed');
 
   // TODO Validate the rest of the fields
 }
-
 
 /**
  * Expects all fields to be validated before calling this function

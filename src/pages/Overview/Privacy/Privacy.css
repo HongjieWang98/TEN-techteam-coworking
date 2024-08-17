@@ -1,69 +1,68 @@
 .everything {
-    width: 90%;
-    white-space: normal;
-    font-size: medium;
-  }
-  .title {
-    position: relative;
-    font-size: larger;
-    line-height: 1.5;
-    margin-left: 50px;
-  }
-  .lastupdated {
-    margin-left: 50px;
-    color: grey;
-    font-size: medium;
-  }
-  .decimal {
-    margin-left: 0px;
-    list-style-type: decimal;
-    line-height: 1.5;
-    font-size: medium;
-  }
-  .subtitle {
-    font-size: large;
-    margin-left: 30px;
-  }
-  .regtext {
-    margin-left: 30px;
-    font-size: medium;
-  }
-  .short {
-    font-size: medium;
-    font-style: italic;
-  }
-  .text {
-    font-size: medium;
-    margin-left: -30px;
-  }
-  .text1 {
-    font-size: medium;
-    margin-left: 0px;
-  }
-  .text2 {
-    font-size: medium;
-    margin-left: -40px;
-    font-weight: normal;
-  }
-  .lower-latin {
-    list-style-type: lower-latin;
-    margin-left: 60px;
-    font-size: medium;
-  }
-  .bold {
-    font-size: large;
-    margin-left: 30px;
-    font-weight: bold;
-  }
-  li {
-    display: list-item;
-  }
-  pre {
-    overflow-x: auto;
-    white-space: pre-wrap;
-    white-space: -moz-pre-wrap;
-    white-space: -pre-wrap;
-    white-space: -o-pre-wrap;
-    word-wrap: break-word;
-  }
-  
+  width: 90%;
+  white-space: normal;
+  font-size: medium;
+}
+.title {
+  position: relative;
+  font-size: larger;
+  line-height: 1.5;
+  margin-left: 50px;
+}
+.lastupdated {
+  margin-left: 50px;
+  color: grey;
+  font-size: medium;
+}
+.decimal {
+  margin-left: 0px;
+  list-style-type: decimal;
+  line-height: 1.5;
+  font-size: medium;
+}
+.subtitle {
+  font-size: large;
+  margin-left: 30px;
+}
+.regtext {
+  margin-left: 30px;
+  font-size: medium;
+}
+.short {
+  font-size: medium;
+  font-style: italic;
+}
+.text {
+  font-size: medium;
+  margin-left: -30px;
+}
+.text1 {
+  font-size: medium;
+  margin-left: 0px;
+}
+.text2 {
+  font-size: medium;
+  margin-left: -40px;
+  font-weight: normal;
+}
+.lower-latin {
+  list-style-type: lower-latin;
+  margin-left: 60px;
+  font-size: medium;
+}
+.bold {
+  font-size: large;
+  margin-left: 30px;
+  font-weight: bold;
+}
+li {
+  display: list-item;
+}
+pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}

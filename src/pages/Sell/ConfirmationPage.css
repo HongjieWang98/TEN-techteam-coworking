@@ -1,76 +1,75 @@
 .confirmation-page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .confirmation-card {
-    width: 100%;
-    border: none !important;
-    background-color: #fff !important;
-    /*border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.confirmation-card {
+  width: 100%;
+  border: none !important;
+  background-color: #fff !important;
+  /*border: 1px solid #ddd;
     border-radius: 10px;
     background-color: #f9f9f9;*/
-  }
+}
 
-  .next-steps-card .card-header {
-    background-color: #fff;
-    text-align: left;
-  }
+.next-steps-card .card-header {
+  background-color: #fff;
+  text-align: left;
+}
 
-  .confirmation-card-body {
-    text-align: center;
-  }
-  
-  .confirmation-card-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .listing-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .listing-image {
-    width: 200px;
-    height: 250px;
-    background-color: #e0e0e0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .listing-info {
-    text-align: left;
-  }
-  
-  .listing-info div {
-    margin-bottom: 8px;
-  }
-  
-  .next-steps-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .next-steps-card {
-    border: none !important;
-    background-color: #fff !important;
-    /*border: 1px solid #ddd;
+.confirmation-card-body {
+  text-align: center;
+}
+
+.confirmation-card-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.listing-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.listing-image {
+  width: 200px;
+  height: 250px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.listing-info {
+  text-align: left;
+}
+
+.listing-info div {
+  margin-bottom: 8px;
+}
+
+.next-steps-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.next-steps-card {
+  border: none !important;
+  background-color: #fff !important;
+  /*border: 1px solid #ddd;
     border-radius: 10px;
     background-color: #f9f9f9;*/
-  }
-  
-  .next-steps-card h5 {
-    text-align: center;
-  }
-  
-  .next-steps-card .card-body {
-    padding: 20px;
-  }
-  
+}
+
+.next-steps-card h5 {
+  text-align: center;
+}
+
+.next-steps-card .card-body {
+  padding: 20px;
+}
