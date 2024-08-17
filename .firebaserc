@@ -1,10 +1,21 @@
 {
-  "projects": {},
+  "projects": {
+    "default": "fir-testjuly8",
+    "dev": "ten-virtual-exchange-dev",
+    "prod": "ten-virtual-exchange-prod"
+  },
   "targets": {
     "fir-testjuly8": {
       "hosting": {
         "dev": [
           "ten-virtual-exchange-dev"
+        ]
+      }
+    },
+    "ten-virtual-exchange-prod": {
+      "hosting": {
+        "prod": [
+          "ten-virtual-exchange-prod"
         ]
       }
     }

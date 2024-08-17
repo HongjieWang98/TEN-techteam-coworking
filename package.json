@@ -10,6 +10,7 @@
     "boostrap": "^2.0.0",
     "bootstrap": "^5.1.3",
     "bootstrap-css-only": "^4.4.1",
+    "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "firebase": "^10.7.2",
@@ -27,11 +28,11 @@
   "scripts": {
     "start": "DISABLE_ESLINT_PLUGIN=true REACT_APP_NODE_ENV=development react-scripts start",
     "start-windows": "REACT_APP_NODE_ENV=development react-scripts start",
-    "build": "REACT_APP_FIREBASE_AUTH_DOMAIN='fir-testjuly8.firebaseapp.com' DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy-dev": "DISABLE_ESLINT_PLUGIN=true REACT_APP_NODE_ENV=development react-scripts build && firebase deploy --only hosting:dev",
-    "deploy-prod": "REACT_APP_NODE_ENV=production react-scripts build && firebase deploy --only hosting",
+    "deploy-dev": "firebase use fir-testjuly8 && DISABLE_ESLINT_PLUGIN=true REACT_APP_ENV=staging env-cmd -f .env.development npm run build && firebase deploy --only hosting:dev",
+    "deploy-prod": "firebase use ten-virtual-exchange-prod && DISABLE_ESLINT_PLUGIN=true REACT_APP_NODE_ENV=production env-cmd -f .env.production npm run build && firebase deploy --only hosting:prod",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
