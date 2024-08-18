@@ -216,7 +216,7 @@ function Profile() {
             <div className="accordion-container">
               <Accordion defaultActiveKey={['0', '1']} alwaysOpen>
                 <Accordion.Item eventKey="0" className="accordion-item">
-                  <Accordion.Header>Your Listings</Accordion.Header>
+                  <Accordion.Header>Your In Progress Sales</Accordion.Header>
                   <Accordion.Body>
                     <MDBDataTable
                       bordered
