@@ -80,7 +80,7 @@ function NextSteps() {
                     When a buyer is interested in your textbook, we will email you and ask for you to accept or decline the buyer. If you decline the buyer, your textbook will be put back up for sale. If you accept them, you will be responsible for contacting them and coordinating a time to conduct the exchange. The textbook will be reserved for 1 week for a buyer.
                   </p>
                   <p>
-                    Exchanges must occur at {organizationData?.exchange_location || 'Location not available'} between the hours of {scheduleString}. Please confirm the payment method to be used in advance, but the payment should be made in person during the exchange.
+                    Exchanges must occur at {organizationData?.exchange_location || '[Location not available]'} between the hours of {scheduleString || '[Schedule not available]'}. Please confirm the payment method to be used in advance, but the payment should be made in person during the exchange.
                   </p>
                   <p>
                     Once the exchange has occurred, please confirm the transaction in the “My account” tab. If textbooks are not confirmed within 1 week, they will be automatically put back on sale. If you need any help please email textbookexchangenetwork@gmail.com.
