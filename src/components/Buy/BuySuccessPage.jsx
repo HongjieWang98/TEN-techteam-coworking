@@ -91,7 +91,7 @@ function BuySuccessPage() {
                       within the next week.
                   </Card.Text>
                   <Card.Text>
-                      Exchanges must occur at {organizationData?.exchange_location || 'Location not available'} between the hours of {scheduleString}. Please
+                      Exchanges must occur at {organizationData?.exchange_location || '[Location not available]'} between the hours of {scheduleString || '[Schedule not available]'}. Please
                       confirm on the payment method used in advance, and make the payment in person during the exchange.
                       If doing an electronic payment, you must exchange handles with the seller.
                   </Card.Text>

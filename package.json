@@ -10,6 +10,7 @@
     "boostrap": "^2.0.0",
     "bootstrap": "^5.1.3",
     "bootstrap-css-only": "^4.4.1",
+    "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "firebase": "^10.7.2",
@@ -25,12 +26,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "start-windows": "react-scripts start",
+    "start": "DISABLE_ESLINT_PLUGIN=true REACT_APP_NODE_ENV=development react-scripts start",
+    "start-windows": "REACT_APP_NODE_ENV=development react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy-prod": "react-scripts build && firebase deploy --only hosting",
+    "deploy-dev": "firebase use fir-testjuly8 && DISABLE_ESLINT_PLUGIN=true REACT_APP_ENV=development env-cmd -f .env.development npm run build && firebase deploy --only hosting:dev",
+    "deploy-prod": "firebase use ten-virtual-exchange-prod && DISABLE_ESLINT_PLUGIN=true REACT_APP_NODE_ENV=production env-cmd -f .env.production npm run build && firebase deploy --only hosting:prod",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
@@ -54,6 +56,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.29.1",

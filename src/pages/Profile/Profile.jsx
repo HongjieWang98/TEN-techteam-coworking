@@ -153,7 +153,7 @@ function Profile() {
   // Fill in the schedule with data from organizationData
   if (organizationData && organizationData.schedule) {
     organizationData.schedule.forEach((day, index) => {
-      if (day && day.start && day.end) {
+      if (day !== null && day.start && day.end) {
         completeSchedule[index] = {
           day: getDayName(index),
           start: day.start,

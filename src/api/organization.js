@@ -32,11 +32,10 @@ export async function getExchangeLocationAndSchedule(organizationId) {
     // Return the specific fields
     return {
       exchange_location: data.exchange_location || '',
-      schedule:
-        data.schedule?.map((day) => ({
-          start: day?.start || '',
-          end: day?.end || ''
-        })) || []
+      schedule: data.schedule?.map((day) => day ? {
+        start: day.start || '',
+        end: day.end || ''
+      } : { start: '', end: '' }) || []
     };
   } else {
     // Handle the case where the document doesn't exist

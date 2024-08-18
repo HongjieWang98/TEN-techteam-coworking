@@ -19,8 +19,13 @@ import BuySuccess from './pages/Buy/BuySuccess';
 import PrivacyPage from './pages/Overview/Privacy/Privacy';
 import TermsPage from './pages/Overview/Terms/Terms';
 import PublicInventoryPage from './pages/Overview/PublicInventory/PublicInventory';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    document.title = 'Virtual TEN';
+  }, []); // The empty dependency array ensures this runs only on mount
+
   return (
     <Router>
       <Providers>
