@@ -194,7 +194,7 @@ export async function buyerReservationCancel(textbook) {
   });
 }
 
-// Seller confirms the reservation
+// Buyer confirms the reservation
 export async function buyerConfirmTransaction(textbook) {
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
