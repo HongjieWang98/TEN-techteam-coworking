@@ -61,6 +61,16 @@ curl -X POST http://127.0.0.1:5001/fir-testjuly8/us-central1/updateOrgSchedule -
 }'
 ```
 
+#### `sendEmail`
+
+```bash
+curl -X POST http://127.0.0.1:5001/fir-testjuly8/us-central1/sendEmail -H 'Content-Type: application/json' -d '{
+  "emailTo": "kevinbae15@gmail.com",
+  "subject": "wow",
+  "body": "hello ave"
+}'
+```
+
 `dryRun` is set to `false` by default. Set to `true` if you actually want to add an org.
 
 ### To deploy the function to prod
