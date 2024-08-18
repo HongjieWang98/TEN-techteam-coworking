@@ -62,9 +62,9 @@ function Profile() {
       author: textbook.author,
       status: textbook.status,
       view: (
-        <Link to={`/listing/${textbook.id}`} type="button">
-          View details
-        </Link>
+        <Button variant="secondary" as={Link} to={`/listing/${textbook.id}`} type="button">
+          View Details
+        </Button>
       )
     };
     return rowInfo;
