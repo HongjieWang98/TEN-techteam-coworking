@@ -109,6 +109,9 @@ export async function reserveTextbooks(textbooks, userId) {
 export async function acceptBuyer(textbook) {
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
+  await updateDoc(doc(db, 'textbooks', textbook.id), {
+    updated_at: currTime
+  });
   await addDoc(subcollectionRef, {
     event_type: 'buyer_accepted',
     user_id: textbook.seller_id,
@@ -165,6 +168,9 @@ export async function sellerReservationCancel(textbook) {
 export async function sellerConfirmTransaction(textbook) {
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
+  await updateDoc(doc(db, 'textbooks', textbook.id), {
+    updated_at: currTime
+  });
   await addDoc(subcollectionRef, {
     event_type: 'seller_confirmed_transaction',
     user_id: textbook.seller_id,
@@ -192,6 +198,9 @@ export async function buyerReservationCancel(textbook) {
 export async function buyerConfirmTransaction(textbook) {
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
+  await updateDoc(doc(db, 'textbooks', textbook.id), {
+    updated_at: currTime
+  });
   await addDoc(subcollectionRef, {
     event_type: 'buyer_confirmed_transaction',
     user_id: textbook.buyer_id,
