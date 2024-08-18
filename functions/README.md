@@ -1,12 +1,12 @@
 # How to use
 
-### Install firebase-tools globally first
+### Install firebase-tools globally first (just once)
 
 ```
 npm install -g firebase-tools
 ```
 
-### Login into firebase
+### Login into firebase (also just once)
 
 ```
 firebase login
@@ -15,7 +15,13 @@ firebase login
 ### Start emulator
 
 ```
-npm run serve
+npm run serve-dev
+```
+
+### Start emulator in PROD (BE CAREFUL)
+
+```
+npm run serve-prod
 ```
 
 ### Now your firebase emulator is running and firebase functions can invoked
@@ -33,14 +39,25 @@ You can invoke a function by hitting its url
 http://127.0.0.1:5001/[project_id]/[region]/[function_name]
 ```
 
-Here is an example of the `addNewOrg` function
+## Usage w/ example curl:
 
-```
+#### `addNewOrg`
+
+```bash
 curl -X POST http://127.0.0.1:5001/fir-testjuly8/us-central1/addNewOrg -H 'Content-Type: application/json' -d '{
   "name": "Test Organization",
-  "domains": ["tufts.edu"], 
-  "exchange_location": "hello ave", 
+  "domains": ["tufts.edu"],
+  "exchange_location": "hello ave",
   "schedule": [null, null, null, null, null, null, {"start": "10:00", "end": "24:00"}]
+}'
+```
+
+#### `updateOrgSchedule`
+
+```bash
+curl -X POST http://127.0.0.1:5001/fir-testjuly8/us-central1/updateOrgSchedule -H 'Content-Type: application/json' -d '{
+"id": "cVWuLsnxCv2qLNHzI7pE",
+"schedule": [{"start": "09:00", "end": "17:00"}, {"start": "00:00", "end": "24:00"}, null, null, null, null, {"start": "10:00", "end": "24:00"}]
 }'
 ```
 
@@ -52,4 +69,4 @@ curl -X POST http://127.0.0.1:5001/fir-testjuly8/us-central1/addNewOrg -H 'Conte
 npm run prod-deploy
 ```
 
-#Todo, add how to use the production version of function 
+#Todo, add how to use the production version of function

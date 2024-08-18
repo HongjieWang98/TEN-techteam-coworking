@@ -1,1 +1,6 @@
-export { addNewOrg } from "./src/addNewOrg.js";
+import { initializeApp } from 'firebase-admin/app';
+
+initializeApp();
+
+export { addNewOrg } from './src/addNewOrg.js';
+export { updateOrgSchedule } from './src/updateOrgSchedule.js';

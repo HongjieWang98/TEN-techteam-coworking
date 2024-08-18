@@ -1,36 +1,27 @@
 import { onRequest } from 'firebase-functions/v2/https';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 
-const domainPattern = /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+
 const militaryTimePattern = /^([01]\d|2[0-3]):([0-5]\d)|24:00$/;
 
-export const addNewOrg = onRequest(async (req, res) => {
+export const updateOrgSchedule = onRequest(async (req, res) => {
   const respondWithErrorMessage = (errorMessage) => {
     return res.json({
       result: 'error',
       message: errorMessage
     });
   };
-  const newOrgData = req.body;
-  console.log('Received request for new org: ' + JSON.stringify(newOrgData));
+  const orgData = req.body;
+  console.log('Received request to update org: ' + JSON.stringify(orgData));
 
   // first validate the object and make sure no extraneous fields are added
-  for (const key in newOrgData) {
-    if (!['domains', 'exchange_location', 'name', 'schedule', 'dryRun'].includes(key)) {
+  for (const key in orgData) {
+    if (!['id', 'schedule', 'dryRun'].includes(key)) {
       return respondWithErrorMessage(`extraneous field defined in body: ${key}`);
     }
   }
 
-  const { domains, exchange_location, name, schedule, dryRun = true } = newOrgData;
-
-  // now validate the fields
-  if (!name || name.trim() === '') {
-    return respondWithErrorMessage('name is empty');
-  }
-
-  if (!exchange_location || exchange_location.trim() === '') {
-    return respondWithErrorMessage('exchange_location is empty');
-  }
+  const { id, schedule, dryRun = true } = orgData;
 
   if (schedule !== undefined) {
     if (!Array.isArray(schedule) || schedule.length !== 7) {
@@ -50,31 +41,18 @@ export const addNewOrg = onRequest(async (req, res) => {
     });
   }
 
-  if (schedule.some((day) => day)) {
-    if (!domains || !Array.isArray(domains) || domains.length === 0) {
-      return respondWithErrorMessage('domains must be defined, be of type array, and have at least one domain within it');
-    }
-  
-    domains.forEach((domain) => {
-      if (!domainPattern.test(domain)) {
-        return respondWithErrorMessage(`domain ${domain} is not valid`);
-      }
-    });
-  }
-
   // add the fields to the new document
   try {
     if (dryRun === false) {
-      const newOrg = await getFirestore()
-        .collection('organizations')
-        .add({
-          ...newOrgData,
-          created_at: Timestamp.now(),
-          updated_at: Timestamp.now(),
-          deleted_at: null
-        });
+        await getFirestore()
+          .collection('organizations')
+          .doc(id)
+          .update({
+            schedule: schedule,
+            updated_at: Timestamp.now()
+          });
 
-      return res.json({ result: `New org with ID: ${newOrg.id} added.` });
+      return res.json({ result: `Updated the org.` });
     }
 
     return res.json({
