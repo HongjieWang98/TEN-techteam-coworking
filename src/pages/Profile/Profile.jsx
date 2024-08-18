@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { getExchangeLocationAndSchedule } from '../../api/organization';
 import './Profile.css';
-import { getTextbookById, getTextbooksByUserId } from '../../api/textbook';
+import { getTextbooksByUserId } from '../../api/textbook';
 import { EventStatus } from '../../api/process_textbook';
 
 function getDayName(index) {
@@ -22,6 +22,7 @@ function Profile() {
     { label: 'View textbook', field: 'view', sort: 'asc' }
   ];
   const { currentUser, signOut } = useAuthContext();
+  console.log(currentUser);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -75,15 +76,20 @@ function Profile() {
     //console.log("Organization ID:", currentUser?.organization_id);  // Log the organization_id if available
 
     async function fetchSchedulingData() {
+      console.log('fetchscheduling');
       if (!currentUser || !currentUser.organization_id) {
+        console.log(currentUser, 'yeaaaa');
         setError('User or organization ID is not available');
         setLoading(false);
         return;
       }
       try {
+        console.log('blah');
         const data = await getExchangeLocationAndSchedule(currentUser.organization_id);
+
         setOrganizationData(data);
       } catch (err) {
+        console.log(err);
         setError(err.message);
       } finally {
         setLoading(false);
