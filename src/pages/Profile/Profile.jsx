@@ -62,7 +62,7 @@ function Profile() {
       author: textbook.author,
       status: textbook.status,
       view: (
-        <Button variant="secondary" as={Link} to={`/listing/${textbook.id}`} type="button">
+        <Button variant="primary" as={Link} to={`/listing/${textbook.id}`} className="viewdetails-button">
           View Details
         </Button>
       )
