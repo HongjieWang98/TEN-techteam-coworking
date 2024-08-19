@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import './PublicInventory.css';
-import { Container } from 'react-bootstrap';
 import { useAuthContext } from '../../../contexts/AuthContext';
 import logoimage from '../../../images/logo2.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getOrganizations } from '../../../api/organization';
 
-function ProdTwoInventory(props) {
+function VirtualInventory(props) {
   const { school } = props; // destructuring prop or else would get linter error
-  return (
-    <>
-        {/* Code for Prod 2 Inventory */}
-    </>
-  );
+  return <>{/* Code for Prod 2 Inventory */}</>;
 }
 
-function ProdOneInventory(props) {
-  const { school } = props; // destructuring prop or else would get linter error
+function InPersonInventory(props) {
+  const { school } = props;
   return (
     <>
-        {/* Code for Prod 1 Inventory */}
+      <div className="SectionSubtitle">{school} is using an in-person textbook exchange!</div>
+      <div className="SectionContent">
+        <Link to="https://www.textbookexchangenetwork.com/browse">Go to Inventory</Link>
+      </div>
     </>
   );
 }
@@ -58,9 +56,9 @@ function PublicInventory() {
       <>
         {selectedSchool ? (
           selectedSchool.isVirtual ? (
-            <ProdTwoInventory school={selectedSchool.name} />
+            <VirtualInventory school={selectedSchool.name} />
           ) : (
-            <ProdOneInventory school={selectedSchool.name} />
+            <InPersonInventory school={selectedSchool.name} />
           )
         ) : (
           <p>Please select a school from the dropdown.</p>
