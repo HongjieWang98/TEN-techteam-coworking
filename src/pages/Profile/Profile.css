@@ -1,45 +1,52 @@
 .profile-container {
-    padding-right: 10px !important; /* Adjust as needed */
-    padding-left: 10px !important; /* Adjust as needed */
-  }
+  padding-right: 10px !important; /* Adjust as needed */
+  padding-left: 10px !important; /* Adjust as needed */
+}
 
 .user-image-placeholder {
-    width: 200px;
-    height: 250px;
-    background-color: #e0e0e0;
-    display: flex;
-    justify-content: center !important;
-    align-items: center !important;
-    margin-bottom: 15px;
-    text-align: center;     /* Center text inside */
-  }
+  width: 200px;
+  height: 250px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-bottom: 15px;
+  text-align: center; /* Center text inside */
+}
 
-  .card-body {
-    display: flex;
-    justify-content: center;  /* Horizontally center */
-    align-items: center;      /* Vertically center */
-  }
+.card-body {
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+}
 
-  .logout-button {
-    margin-top: 10px; /* Adjust as needed for space above the button */
-    display: flex;
-    justify-content: center;  
-  }
+.viewdetails-button {
+  background-color: #5690ce !important; /* Ensure this matches the Logout button color */
+  border-color: #5690ce !important;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.75rem;
+}
 
-  .accordion-container {
-    width: 100%; /* Adjust as needed to fit the parent container */
-  }
-  
-  .accordion-item {
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .accordion-body {
-    overflow: hidden; /* Prevent overflow issues */
-  }
+.logout-button {
+  margin-top: 10px; /* Adjust as needed for space above the button */
+  display: flex;
+  justify-content: center;
+}
 
-  .centered-text {
-    text-align: center;
-    padding: 20px 0; /* Adjust vertical padding as needed */
-  }
+.accordion-container {
+  width: 100%; /* Adjust as needed to fit the parent container */
+}
+
+.accordion-item {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.accordion-body {
+  overflow: hidden; /* Prevent overflow issues */
+}
+
+.centered-text {
+  text-align: center;
+  padding: 20px 0; /* Adjust vertical padding as needed */
+}

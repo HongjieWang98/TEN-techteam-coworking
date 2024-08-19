@@ -17,18 +17,18 @@ export async function getOrganizations() {
     })
   );
 }
-  
+
 export async function getExchangeLocationAndSchedule(organizationId) {
   // Create a reference to the specific document using the organization ID
   const organizationDocRef = doc(db, 'organizations', organizationId);
-  
+
   // Retrieve the document snapshot
   const organizationDoc = await getDoc(organizationDocRef);
-  
+
   if (organizationDoc.exists()) {
     // Extract the data from the document
     const data = organizationDoc.data();
-    
+
     // Return the specific fields
     return {
       exchange_location: data.exchange_location || '',

@@ -1,11 +1,12 @@
 import { Container, Button, Card, Row, Col, ListGroup, Accordion } from 'react-bootstrap';
-import { auth } from '../../firebase/firebase_config';
-import { useAuthContext } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MDBDataTable } from 'mdbreact';
 import { useState, useEffect } from 'react';
+import { useAuthContext } from '../../contexts/AuthContext';
 import { getExchangeLocationAndSchedule } from '../../api/organization';
-import "./Profile.css"
+import './Profile.css';
+import { getTextbooksByUserId } from '../../api/textbook';
+import { EventStatus } from '../../api/process_textbook';
 
 function getDayName(index) {
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -13,20 +14,15 @@ function getDayName(index) {
 }
 
 function Profile() {
+  const profileColumn = [
+    { label: 'Textbook', field: 'title', sort: 'asc' },
+    { label: 'Price', field: 'price', sort: 'asc' },
+    { label: 'Author', field: 'author', sort: 'asc' },
+    { label: 'Status', field: 'status', sort: 'asc' },
+    { label: 'View textbook', field: 'view', sort: 'asc' }
+  ];
   const { currentUser, signOut } = useAuthContext();
   const navigate = useNavigate();
-  const testdata = {
-    columns: [
-      { label: 'Textbook', field: 'title', sort: 'asc' },
-      { label: 'Cost', field: 'cost', sort: 'asc' },
-      { label: 'Author', field: 'author', sort: 'asc' },
-      { label: 'View textbook', field: 'view', sort: 'asc' }
-    ],
-    rows: [
-      { title: 'General Chemistry', cost: 30, author: 'John Smith', view: 'button'},
-      { title: 'Calculus', cost: 25, author: 'John Smith', view: 'button' },
-    ]
-  };
 
   const handleLogout = async () => {
     if (currentUser) {
@@ -36,14 +32,49 @@ function Profile() {
   };
 
   const [organizationData, setOrganizationData] = useState(null);
+
+  // These states reflect the rows of the 4 different tables
+  const [userSelling, setUserSelling] = useState({
+    columns: profileColumn,
+    rows: []
+  });
+  const [userBuying, setUserBuying] = useState({
+    columns: profileColumn,
+    rows: []
+  });
+  const [userBought, setUserBought] = useState({
+    columns: profileColumn,
+    rows: []
+  });
+  const [userSold, setUserSold] = useState({
+    columns: profileColumn,
+    rows: []
+  });
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  function formatTableRows(textbook) {
+    const rowInfo = {
+      id: textbook.id,
+      title: textbook.title,
+      price: `$${textbook.price}`,
+      author: textbook.author,
+      status: textbook.status,
+      view: (
+        <Button variant="primary" as={Link} to={`/listing/${textbook.id}`} className="viewdetails-button">
+          View Details
+        </Button>
+      )
+    };
+    return rowInfo;
+  }
 
   useEffect(() => {
     //console.log("Current User object:", currentUser);  // Log the entire currentUser object
     //console.log("Organization ID:", currentUser?.organization_id);  // Log the organization_id if available
 
-    async function fetchData() {
+    async function fetchSchedulingData() {
       if (!currentUser || !currentUser.organization_id) {
         setError('User or organization ID is not available');
         setLoading(false);
@@ -51,14 +82,61 @@ function Profile() {
       }
       try {
         const data = await getExchangeLocationAndSchedule(currentUser.organization_id);
+
         setOrganizationData(data);
       } catch (err) {
+        console.log(err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     }
-    fetchData();
+
+    async function fetchUserRelevantTextbooks() {
+      if (!currentUser) {
+        return;
+      }
+      const textbookData = await getTextbooksByUserId(currentUser.id);
+      if (textbookData) {
+        const userSell = textbookData.filter(
+          (book) =>
+            (book.status === EventStatus.ACTIVE ||
+              book.status === EventStatus.PENDING_CONFIRMATION ||
+              book.status === EventStatus.RESERVED) &&
+            book.seller_id === currentUser.id
+        );
+        const userBuy = textbookData.filter(
+          (book) =>
+            (book.status === EventStatus.PENDING_CONFIRMATION || book.status === EventStatus.RESERVED) &&
+            book.buyer_id === currentUser.id
+        );
+        const userDoneSell = textbookData.filter(
+          (book) => book.status === EventStatus.SOLD && book.seller_id === currentUser.id
+        );
+        const userDoneBuy = textbookData.filter(
+          (book) => book.status === EventStatus.SOLD && book.buyer_id === currentUser.id
+        );
+
+        setUserSelling({
+          columns: profileColumn,
+          rows: userSell.map((book) => formatTableRows(book))
+        });
+        setUserBuying({
+          columns: profileColumn,
+          rows: userBuy.map((book) => formatTableRows(book))
+        });
+        setUserSold({
+          columns: profileColumn,
+          rows: userDoneSell.map((book) => formatTableRows(book))
+        });
+        setUserBought({
+          columns: profileColumn,
+          rows: userDoneBuy.map((book) => formatTableRows(book))
+        });
+      }
+    }
+    fetchSchedulingData();
+    fetchUserRelevantTextbooks();
   }, [currentUser]);
 
   // Create a complete schedule with all days, including those without times
@@ -87,15 +165,18 @@ function Profile() {
 
   // Filter out days with missing times and format the schedule string
   const scheduleString = completeSchedule
-    .filter(day => day.start && day.end) // Exclude days with missing times
-    .map(day => `${day.day}: ${day.start} - ${day.end}`)
+    .filter((day) => day.start && day.end) // Exclude days with missing times
+    .map((day) => `${day.day}: ${day.start} - ${day.end}`)
     .join('; ');
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       <Container fluid className="profile-container">
         <div className="centered-text">
-          Remember, for your universitiy, exchanges must occur at {organizationData?.exchange_location || '[location not available]'} between the hours of {scheduleString || '[time not available]'}
+          Remember, for your university, exchanges must occur at{' '}
+          {organizationData?.exchange_location || '[location not available]'} between the hours of{' '}
+          {scheduleString || '[time not available]'}
         </div>
 
         <Row>
@@ -108,9 +189,21 @@ function Profile() {
                   </div>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
-                  <ListGroup.Item>Student Email</ListGroup.Item>
-                  <ListGroup.Item>Student Phone Number</ListGroup.Item>
-                  <ListGroup.Item>Student Venmo</ListGroup.Item>
+                  <ListGroup.Item>
+                    {currentUser?.contact_info.school_email
+                      ? `Student School Email: ${currentUser.contact_info.school_email}`
+                      : 'No school email available'}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    {currentUser?.contact_info.secondary_email
+                      ? `Student Secondary Email: ${currentUser.contact_info.secondary_email}`
+                      : 'No secondary email available'}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    {currentUser?.contact_info.phone_number
+                      ? `Student Phone Number: ${currentUser.contact_info.phone_number}`
+                      : 'No phone number available'}
+                  </ListGroup.Item>
                   {/* <Button variant="primary">View Account Information</Button>{' '} */}
                 </ListGroup>
               </Card>
@@ -123,16 +216,16 @@ function Profile() {
             <div className="accordion-container">
               <Accordion defaultActiveKey={['0', '1']} alwaysOpen>
                 <Accordion.Item eventKey="0" className="accordion-item">
-                  <Accordion.Header>Your Listings</Accordion.Header>
+                  <Accordion.Header>Your In Progress Sales</Accordion.Header>
                   <Accordion.Body>
                     <MDBDataTable
                       bordered
                       small
-                      entries={false}  // Hide "Show Entries"
-                      paging={false}   // Remove pagination (Next/Previous buttons)
+                      paging={false} // Remove pagination (Next/Previous buttons)
                       searching={false} // Remove the search bar
                       displayEntries={false} // Remove footer (column titles at the bottom)
-                      data={testdata}
+                      noBottomColumns
+                      data={userSelling}
                     />
                   </Accordion.Body>
                 </Accordion.Item>
@@ -142,11 +235,11 @@ function Profile() {
                     <MDBDataTable
                       bordered
                       small
-                      entries={false}  // Hide "Show Entries"
-                      paging={false}   // Remove pagination (Next/Previous buttons)
+                      paging={false} // Remove pagination (Next/Previous buttons)
                       searching={false} // Remove the search bar
                       displayEntries={false} // Remove footer (column titles at the bottom)
-                      data={testdata}
+                      noBottomColumns
+                      data={userBuying}
                     />
                   </Accordion.Body>
                 </Accordion.Item>
@@ -156,11 +249,11 @@ function Profile() {
                     <MDBDataTable
                       bordered
                       small
-                      entries={false}  // Hide "Show Entries"
-                      paging={false}   // Remove pagination (Next/Previous buttons)
+                      paging={false} // Remove pagination (Next/Previous buttons)
                       searching={false} // Remove the search bar
                       displayEntries={false} // Remove footer (column titles at the bottom)
-                      data={testdata}
+                      noBottomColumns
+                      data={userBought}
                     />
                   </Accordion.Body>
                 </Accordion.Item>
@@ -170,11 +263,11 @@ function Profile() {
                     <MDBDataTable
                       bordered
                       small
-                      entries={false}  // Hide "Show Entries"
-                      paging={false}   // Remove pagination (Next/Previous buttons)
+                      paging={false} // Remove pagination (Next/Previous buttons)
                       searching={false} // Remove the search bar
                       displayEntries={false} // Remove footer (column titles at the bottom)
-                      data={testdata}
+                      noBottomColumns
+                      data={userSold}
                     />
                   </Accordion.Body>
                 </Accordion.Item>
