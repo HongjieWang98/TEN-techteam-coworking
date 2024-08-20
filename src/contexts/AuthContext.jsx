@@ -39,7 +39,12 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        setCurrentUser(await getUserById(user.uid));
+        try {
+          setCurrentUser(await getUserById(user.uid));
+        } catch (e) {
+          // on account signup, the user might not be in the database yet
+          // silently ignore this error until we figure out a better way to handle this
+        }
         setCurrentAuthUser(user);
       }
     });

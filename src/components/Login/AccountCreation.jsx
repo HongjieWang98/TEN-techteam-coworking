@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import FilterDropdown from '../common/FilterDropdown';
-import { validateUser, postUser, getUserById } from '../../api/user';
+import { validateUser } from '../../api/user';
 import preferredContactEnum from '../../db-enums/preferred_contact';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { getOrganizations } from '../../api/organization';
@@ -35,7 +35,6 @@ export default function AccountCreation() {
   useEffect(() => {
     fetchData();
   }, []);
-
 
   async function handleSubmit(e) {
     // prevent the form from refreshing
@@ -162,20 +161,8 @@ export default function AccountCreation() {
           )}
           <Form.Group>
             <Form.Label>Payment Methods Accepted</Form.Label>
-            <Form.Check
-              type="checkbox"
-              id="cash"
-              label="Cash"
-              name="cash"
-              onChange={handlePreferredPayment}
-            />
-            <Form.Check
-              type="checkbox"
-              id="venmo"
-              label="Venmo"
-              name="venmo"
-              onChange={handlePreferredPayment}
-            />
+            <Form.Check type="checkbox" id="cash" label="Cash" name="cash" onChange={handlePreferredPayment} />
+            <Form.Check type="checkbox" id="venmo" label="Venmo" name="venmo" onChange={handlePreferredPayment} />
           </Form.Group>
           {paymentMethod.venmo && (
             <Form.Group id="venmo-username">
