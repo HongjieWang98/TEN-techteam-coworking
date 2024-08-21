@@ -46,12 +46,17 @@ function SellerListing({ listingData }) {
       await listingRemove(listingData);
       settextbookstatus(EventStatus.REMOVED);
       setDidConfirmation(true);
+      setModalInfo({
+        message: 'Your listing was successfully removed!',
+        functionOnConfirm: null
+      });
     } catch (e) {
       setDidConfirmation(false);
       setModalInfo((prevModalInfo) => {
         return {
           ...prevModalInfo,
-          message: `Error in processing this action, the buyer could have already interacted with this textbook, try again now or refresh the page and trying again.`
+          message:
+            'Error in removing your listing, the buyer could have already interacted with this textbook, try again now or refresh the page and try again.'
         };
       });
     }
