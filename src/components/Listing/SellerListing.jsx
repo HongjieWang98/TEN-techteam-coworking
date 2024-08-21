@@ -1,4 +1,4 @@
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Button, Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import { EventStatus } from '../../api/process_textbook';
 import Listing from './Listing';
@@ -15,6 +15,21 @@ function SellerListing({ listingData }) {
   // Using useState is a patchwork fix in the future there might be additional DB Gets
   // especially if the buyer does something which should change the buttons on the seller side (but currently would not be updated)
   const [textbookstatus, settextbookstatus] = useState(listingData.status);
+  const [show, setShow] = useState(false);
+  const [modalInfo, setModalInfo] = useState({
+    message: '',
+    functionOnConfirm: null
+  });
+  const [didConfirmation, setDidConfirmation] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = (action, actionFunction) => {
+    setModalInfo({
+      message: `Are you sure you want to ${action}?`,
+      functionOnConfirm: actionFunction
+    });
+    setShow(true);
+  };
 
   async function handleAcceptBuyer() {
     settextbookstatus(EventStatus.PENDING_CONFIRMATION);
@@ -27,8 +42,19 @@ function SellerListing({ listingData }) {
   }
 
   async function handleRemoveListing() {
-    settextbookstatus(EventStatus.REMOVED);
-    await listingRemove(listingData);
+    try {
+      await listingRemove(listingData);
+      settextbookstatus(EventStatus.REMOVED);
+      setDidConfirmation(true);
+    } catch (e) {
+      setDidConfirmation(false);
+      setModalInfo((prevModalInfo) => {
+        return {
+          ...prevModalInfo,
+          message: `Error in processing this action, the buyer could have already interacted with this textbook, try again now or refresh the page and trying again.`
+        };
+      });
+    }
   }
 
   async function handleCancelReservation() {
@@ -46,11 +72,30 @@ function SellerListing({ listingData }) {
       <>
         <Listing listingData={listingData} />
 
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmation</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{modalInfo.message}</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            {!didConfirmation && (
+              <Button variant="primary" onClick={() => modalInfo.functionOnConfirm()}>
+                Confirm Action
+              </Button>
+            )}
+          </Modal.Footer>
+        </Modal>
         <Row>
           {/* Show remove listing button only if textbook transaction has not been completed */}
           <Col md={3}>
             {textbookstatus !== EventStatus.SOLD && textbookstatus !== EventStatus.REMOVED && (
-              <button type="button" onClick={handleRemoveListing} className="btn btn-secondary w-20 mt-2 mx-auto">
+              <button
+                type="button"
+                onClick={() => handleShow('remove your listing', handleRemoveListing)}
+                className="btn btn-secondary w-20 mt-2 mx-auto">
                 Remove Listing
               </button>
             )}
