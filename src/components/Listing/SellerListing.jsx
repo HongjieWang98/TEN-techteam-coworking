@@ -32,13 +32,45 @@ function SellerListing({ listingData }) {
   };
 
   async function handleAcceptBuyer() {
-    settextbookstatus(EventStatus.PENDING_CONFIRMATION);
-    await acceptBuyer(listingData);
+    try {
+      await acceptBuyer(listingData);
+      settextbookstatus(EventStatus.PENDING_CONFIRMATION);
+      setDidConfirmation(true);
+      setModalInfo({
+        message: 'The buyer was successfully accepted!',
+        functionOnConfirm: null
+      });
+    } catch (e) {
+      setDidConfirmation(false);
+      setModalInfo((prevModalInfo) => {
+        return {
+          ...prevModalInfo,
+          message:
+            'Error in accepting your buyer, the buyer could have already interacted with this textbook, try again now or refresh the page and try again.'
+        };
+      });
+    }
   }
 
   async function handleDenyBuyer() {
-    settextbookstatus(EventStatus.ACTIVE);
-    await denyBuyer(listingData);
+    try {
+      await denyBuyer(listingData);
+      settextbookstatus(EventStatus.ACTIVE);
+      setDidConfirmation(true);
+      setModalInfo({
+        message: 'The buyer was successfully denied!',
+        functionOnConfirm: null
+      });
+    } catch (e) {
+      setDidConfirmation(false);
+      setModalInfo((prevModalInfo) => {
+        return {
+          ...prevModalInfo,
+          message:
+            'Error in denying your buyer, the buyer could have already interacted with this textbook, try again now or refresh the page and try again.'
+        };
+      });
+    }
   }
 
   async function handleRemoveListing() {
@@ -63,13 +95,45 @@ function SellerListing({ listingData }) {
   }
 
   async function handleCancelReservation() {
-    settextbookstatus(EventStatus.ACTIVE);
-    await sellerReservationCancel(listingData);
+    try {
+      await sellerReservationCancel(listingData);
+      settextbookstatus(EventStatus.ACTIVE);
+      setDidConfirmation(true);
+      setModalInfo({
+        message: 'The reservation was successfully canceled!',
+        functionOnConfirm: null
+      });
+    } catch (e) {
+      setDidConfirmation(false);
+      setModalInfo((prevModalInfo) => {
+        return {
+          ...prevModalInfo,
+          message:
+            'Error in canceling your reservation, the buyer could have already interacted with this textbook, try again now or refresh the page and try again.'
+        };
+      });
+    }
   }
 
   async function handleSellerConfirmTransaction() {
-    settextbookstatus(EventStatus.SOLD);
-    await sellerConfirmTransaction(listingData);
+    try {
+      await sellerConfirmTransaction(listingData);
+      settextbookstatus(EventStatus.SOLD);
+      setDidConfirmation(true);
+      setModalInfo({
+        message: 'The transaction was successfully canceled!',
+        functionOnConfirm: null
+      });
+    } catch (e) {
+      setDidConfirmation(false);
+      setModalInfo((prevModalInfo) => {
+        return {
+          ...prevModalInfo,
+          message:
+            'Error in confirming your transaction, the buyer could have already interacted with this textbook, try again now or refresh the page and try again.'
+        };
+      });
+    }
   }
 
   return (
@@ -111,12 +175,18 @@ function SellerListing({ listingData }) {
           {textbookstatus === EventStatus.RESERVED && (
             <>
               <Col md={3}>
-                <button type="button" onClick={handleAcceptBuyer} className="btn btn-primary w-20 mt-2 mx-auto">
+                <button
+                  type="button"
+                  onClick={() => handleShow('accept the buyer', handleAcceptBuyer)}
+                  className="btn btn-primary w-20 mt-2 mx-auto">
                   Accept Buyer
                 </button>
               </Col>
               <Col md={3}>
-                <button type="button" onClick={handleDenyBuyer} className="btn btn-primary w-20 mt-2 mx-auto">
+                <button
+                  type="button"
+                  onClick={() => handleShow('deny the buyer', handleDenyBuyer)}
+                  className="btn btn-primary w-20 mt-2 mx-auto">
                   Deny Buyer
                 </button>
               </Col>
@@ -127,14 +197,17 @@ function SellerListing({ listingData }) {
           {textbookstatus === EventStatus.PENDING_CONFIRMATION && (
             <>
               <Col md={3}>
-                <button type="button" onClick={handleCancelReservation} className="btn btn-primary w-20 mt-2 mx-auto">
+                <button
+                  type="button"
+                  onClick={() => handleShow('cancel your reservation', handleCancelReservation)}
+                  className="btn btn-primary w-20 mt-2 mx-auto">
                   Cancel Reservation
                 </button>
               </Col>
               <Col md={3}>
                 <button
                   type="button"
-                  onClick={handleSellerConfirmTransaction}
+                  onClick={() => handleShow('confirm the transaction', handleSellerConfirmTransaction)}
                   className="btn btn-primary w-20 mt-2 mx-auto">
                   Confirm Transaction is Complete
                 </button>
