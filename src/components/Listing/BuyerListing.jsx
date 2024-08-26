@@ -14,8 +14,8 @@ function BuyerListing({ listingData }) {
   const [didConfirmation, setDidConfirmation] = useState(false);
 
   const handleClose = () => {
-    setDidConfirmation(false);
     setShow(false);
+    setDidConfirmation(false);
   };
   const handleShow = (action, actionFunction) => {
     setModalInfo({
@@ -92,7 +92,7 @@ function BuyerListing({ listingData }) {
     <Container className="page-container">
       <>
         <Listing listingData={listingData} />
-        <Modal show={show} onHide={() => handleClose()}>
+        <Modal show={show} onHide={() => handleClose()} animation={false}>
           <Modal.Header closeButton>
             <Modal.Title>Confirmation</Modal.Title>
           </Modal.Header>
@@ -108,14 +108,16 @@ function BuyerListing({ listingData }) {
             )}
           </Modal.Footer>
         </Modal>
-        <Col md={3}>
-          <button
-            type="button"
-            onClick={() => handleShow('cancel your reservation request', handleCancelReservationRequest)}
-            className="btn btn-primary w-20 mt-2 mx-auto">
-            Cancel Reservation Request
-          </button>
-        </Col>
+        {textbookstatus === EventStatus.RESERVED && (
+          <Col md={3}>
+            <button
+              type="button"
+              onClick={() => handleShow('cancel your reservation request', handleCancelReservationRequest)}
+              className="btn btn-primary w-20 mt-2 mx-auto">
+              Cancel Reservation Request
+            </button>
+          </Col>
+        )}
 
         {/* Show confirmation button only when buyer has been accepted */}
         {textbookstatus === EventStatus.PENDING_CONFIRMATION && (

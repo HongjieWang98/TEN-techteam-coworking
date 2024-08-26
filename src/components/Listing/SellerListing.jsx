@@ -144,7 +144,7 @@ function SellerListing({ listingData }) {
       <>
         <Listing listingData={listingData} />
 
-        <Modal show={show} onHide={() => handleClose()}>
+        <Modal show={show} onHide={() => handleClose()} animation={false}>
           <Modal.Header closeButton>
             <Modal.Title>Confirmation</Modal.Title>
           </Modal.Header>

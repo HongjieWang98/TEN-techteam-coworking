@@ -113,8 +113,7 @@ function InventoryTable({ buyFunctionality = false, tableData, setTableData, han
       <MDBDataTable
         striped
         hover
-        entries={20}
-        pagesAmount={5}
+        entries={10}
         responsive
         noBottomColumns
         paginationLabel={['Prev', 'Next']}
