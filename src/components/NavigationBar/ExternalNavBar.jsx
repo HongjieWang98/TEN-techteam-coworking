@@ -18,7 +18,6 @@ function ExternalNavigationBar() {
       </div>
       <NavigationBarItem float="Left" text="Get started" link="/school" />
       <NavigationBarItem float="Left" text="How it works" link="/how" />
-      <NavigationBarItem float="Left" text="Inventory" link="/publicinventory" />
       <NavigationBarItem float="Left" text="Home" link="/" />
     </div>
   );
