@@ -22,7 +22,10 @@ function SellerListing({ listingData }) {
   });
   const [didConfirmation, setDidConfirmation] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setDidConfirmation(false);
+    setShow(false);
+  };
   const handleShow = (action, actionFunction) => {
     setModalInfo({
       message: `Are you sure you want to ${action}?`,
@@ -141,13 +144,13 @@ function SellerListing({ listingData }) {
       <>
         <Listing listingData={listingData} />
 
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={() => handleClose()}>
           <Modal.Header closeButton>
             <Modal.Title>Confirmation</Modal.Title>
           </Modal.Header>
           <Modal.Body>{modalInfo.message}</Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={() => handleClose()}>
               Close
             </Button>
             {!didConfirmation && (

@@ -36,7 +36,6 @@ export default function AccountCreation() {
     fetchData();
   }, []);
 
-
   async function handleSubmit(e) {
     // prevent the form from refreshing
     e.preventDefault();
@@ -154,7 +153,7 @@ export default function AccountCreation() {
               <Form.Control type="email" ref={secondaryEmailRef} required />
             </Form.Group>
           )}
-          {preferredContact === preferredContactEnum.PHONE && (
+          {preferredContact === preferredContactEnum.PHONE_NUMBER && (
             <Form.Group id="phone">
               <Form.Label>Phone number</Form.Label>
               <Form.Control type="tel" ref={phoneRef} required />
@@ -162,20 +161,8 @@ export default function AccountCreation() {
           )}
           <Form.Group>
             <Form.Label>Payment Methods Accepted</Form.Label>
-            <Form.Check
-              type="checkbox"
-              id="cash"
-              label="Cash"
-              name="cash"
-              onChange={handlePreferredPayment}
-            />
-            <Form.Check
-              type="checkbox"
-              id="venmo"
-              label="Venmo"
-              name="venmo"
-              onChange={handlePreferredPayment}
-            />
+            <Form.Check type="checkbox" id="cash" label="Cash" name="cash" onChange={handlePreferredPayment} />
+            <Form.Check type="checkbox" id="venmo" label="Venmo" name="venmo" onChange={handlePreferredPayment} />
           </Form.Group>
           {paymentMethod.venmo && (
             <Form.Group id="venmo-username">

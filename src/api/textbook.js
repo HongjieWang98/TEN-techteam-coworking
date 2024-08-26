@@ -106,6 +106,10 @@ export async function reserveTextbooks(textbooks, userId) {
 
 // Accept the reservation made by a buyer
 export async function acceptBuyer(textbook) {
+  const updatedTextbook = await getTextbookById(textbook.id);
+  if (updatedTextbook.status !== EventStatus.RESERVED) {
+    throw new Error('Textbook does not have appropriate status for action');
+  }
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
   await updateDoc(doc(db, 'textbooks', textbook.id), {
@@ -120,6 +124,10 @@ export async function acceptBuyer(textbook) {
 
 // Deny the reservation made by a buyer (have to null the buyer field)
 export async function denyBuyer(textbook) {
+  const updatedTextbook = await getTextbookById(textbook.id);
+  if (updatedTextbook.status !== EventStatus.RESERVED) {
+    throw new Error('Textbook does not have appropriate status for action');
+  }
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
   await updateDoc(doc(db, 'textbooks', textbook.id), {
@@ -135,6 +143,10 @@ export async function denyBuyer(textbook) {
 
 // Remove the listing from the inventory (nullify the buyer_id slot if applicable)
 export async function listingRemove(textbook) {
+  const updatedTextbook = await getTextbookById(textbook.id);
+  if (updatedTextbook.status === EventStatus.REMOVED || updatedTextbook.status === EventStatus.SOLD) {
+    throw new Error('Textbook does not have appropriate status for action');
+  }
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
   await updateDoc(doc(db, 'textbooks', textbook.id), {
@@ -150,6 +162,10 @@ export async function listingRemove(textbook) {
 
 // Cancel the reservation
 export async function sellerReservationCancel(textbook) {
+  const updatedTextbook = await getTextbookById(textbook.id);
+  if (updatedTextbook.status !== EventStatus.PENDING_CONFIRMATION) {
+    throw new Error('Textbook does not have appropriate status for action');
+  }
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
   await updateDoc(doc(db, 'textbooks', textbook.id), {
@@ -165,6 +181,10 @@ export async function sellerReservationCancel(textbook) {
 
 // Seller confirms the reservation
 export async function sellerConfirmTransaction(textbook) {
+  const updatedTextbook = await getTextbookById(textbook.id);
+  if (updatedTextbook.status !== EventStatus.PENDING_CONFIRMATION) {
+    throw new Error('Textbook does not have appropriate status for action');
+  }
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
   await updateDoc(doc(db, 'textbooks', textbook.id), {
@@ -178,7 +198,31 @@ export async function sellerConfirmTransaction(textbook) {
 }
 
 // Cancel the reservation
+export async function buyerReservationRequestCancel(textbook) {
+  const updatedTextbook = await getTextbookById(textbook.id);
+  if (updatedTextbook.status !== EventStatus.RESERVED) {
+    throw new Error('Textbook does not have appropriate status for action');
+  }
+  const formerBuyer = textbook.buyer_id;
+  const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
+  const currTime = serverTimestamp();
+  await updateDoc(doc(db, 'textbooks', textbook.id), {
+    buyer_id: null,
+    updated_at: currTime
+  });
+  await addDoc(subcollectionRef, {
+    event_type: 'reservation_canceled',
+    user_id: formerBuyer,
+    timestamp: currTime
+  });
+}
+
+// Cancel the reservation
 export async function buyerReservationCancel(textbook) {
+  const updatedTextbook = await getTextbookById(textbook.id);
+  if (updatedTextbook.status === EventStatus.REMOVED || updatedTextbook.status === EventStatus.SOLD) {
+    throw new Error('Textbook does not have appropriate status for action');
+  }
   const formerBuyer = textbook.buyer_id;
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
@@ -195,6 +239,10 @@ export async function buyerReservationCancel(textbook) {
 
 // Buyer confirms the reservation
 export async function buyerConfirmTransaction(textbook) {
+  const updatedTextbook = await getTextbookById(textbook.id);
+  if (updatedTextbook.status !== EventStatus.PENDING_CONFIRMATION) {
+    throw new Error('Textbook does not have appropriate status for action');
+  }
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
   await updateDoc(doc(db, 'textbooks', textbook.id), {
