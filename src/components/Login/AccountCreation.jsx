@@ -121,7 +121,7 @@ export default function AccountCreation() {
           </Form.Group>
           <Form.Group>
             <Form.Label>Preferred Contact Method</Form.Label>
-            <Form.Label className="muted">(from buyer and TEN)</Form.Label>
+            <Form.Label className="muted"> (from buyer and TEN)</Form.Label>
             <Form.Check
               type="radio"
               id="prefer-school-email"
@@ -153,7 +153,7 @@ export default function AccountCreation() {
               <Form.Control type="email" ref={secondaryEmailRef} required />
             </Form.Group>
           )}
-          {preferredContact === preferredContactEnum.PHONE && (
+          {preferredContact === preferredContactEnum.PHONE_NUMBER && (
             <Form.Group id="phone">
               <Form.Label>Phone number</Form.Label>
               <Form.Control type="tel" ref={phoneRef} required />
