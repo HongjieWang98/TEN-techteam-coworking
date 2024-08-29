@@ -18,6 +18,22 @@ export async function getOrganizations() {
   );
 }
 
+export async function getOrganizationById(id) {
+  const organizationCollectionRef = collection(db, 'organizations');
+  const organizationDocRef = doc(organizationCollectionRef, id);
+  const organization = await getDoc(organizationDocRef);
+  if (!organization.exists()) {
+    throw new Error('Organization not found');
+  }
+
+
+  return {
+    id: organization.id,
+    isVirtual: organization.data().schedule?.some((day) => day !== null) ?? false,
+    ...organization.data()
+  };
+}
+
 export async function getExchangeLocationAndSchedule(organizationId) {
   // Create a reference to the specific document using the organization ID
   const organizationDocRef = doc(db, 'organizations', organizationId);
@@ -32,10 +48,15 @@ export async function getExchangeLocationAndSchedule(organizationId) {
     // Return the specific fields
     return {
       exchange_location: data.exchange_location || '',
-      schedule: data.schedule?.map((day) => day ? {
-        start: day.start || '',
-        end: day.end || ''
-      } : { start: '', end: '' }) || []
+      schedule:
+        data.schedule?.map((day) =>
+          day
+            ? {
+                start: day.start || '',
+                end: day.end || ''
+              }
+            : { start: '', end: '' }
+        ) || []
     };
   } else {
     // Handle the case where the document doesn't exist

@@ -18,23 +18,25 @@ export async function checkDuplicateUserBySchoolEmail(schoolEmail) {
   }
 }
 
-
-
-export async function validateUser(userAccount) {
-  // Check if the user already exists
-  const schoolEmail = userAccount.contact_info.school_email;
-  await checkDuplicateUserBySchoolEmail(schoolEmail);
-
+export async function validateEmailDomain(schoolEmail, schoolId) {
   const regex = /@([^@]+)$/;
   const match = schoolEmail.match(regex);
 
   if (!match) {
-    throw new Error("No domain found");
+    throw new Error('No domain found');
   }
+
+  const university = await g
+}
+
+export async function validateUser(userAccount) {
+  // Check if the user already exists
+  const schoolEmail = userAccount.contact_info.school_email;
+  const universityId = userAccount.organization_id;
+  await checkDuplicateUserBySchoolEmail(schoolEmail, universityId);
 
   // TODO Validate the rest of the fields
 }
-
 
 /**
  * Expects all fields to be validated before calling this function
