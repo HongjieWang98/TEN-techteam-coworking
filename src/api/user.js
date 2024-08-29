@@ -1,5 +1,6 @@
 import { collection, query, where, getDocs, getDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
+import { getOrganizationById } from './organization';
 
 export async function checkDuplicateUserBySchoolEmail(schoolEmail) {
   const userRef = collection(db, 'users');
@@ -26,14 +27,23 @@ export async function validateEmailDomain(schoolEmail, schoolId) {
     throw new Error('No domain found');
   }
 
-  const university = await g
+  const extractedDomain = match[1];
+
+  const university = await getOrganizationById(schoolId);
+  const { domains } = university;
+
+  if (!domains[extractedDomain]) {
+    throw new Error('Invalid email domain, use a valid school email.');
+  }
 }
 
 export async function validateUser(userAccount) {
   // Check if the user already exists
   const schoolEmail = userAccount.contact_info.school_email;
   const universityId = userAccount.organization_id;
-  await checkDuplicateUserBySchoolEmail(schoolEmail, universityId);
+
+  await checkDuplicateUserBySchoolEmail(schoolEmail);
+  await validateEmailDomain(schoolEmail, universityId);
 
   // TODO Validate the rest of the fields
 }
