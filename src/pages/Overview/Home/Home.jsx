@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
-import ReactDOM from 'react-dom';
 import { useEffect, useRef } from 'react';
 
 //Images
@@ -47,7 +46,7 @@ function MissionStatement() {
         The Textbook Exchange Network is a 501(c)(3) nonprofit that was founded at Tufts University in 2017. The mission
         of the Textbook Exchange Network (TEN) is to increase access to affordable learning materials. To achieve this,
         TEN provides software to run student-to-student exchanges that facilitates the communication between buyers and
-        sellers. TEN now saves students across the United States $100,000+ annually. 
+        sellers. TEN now saves students across the United States $100,000+ annually.
       </div>
     </div>
   );
@@ -151,7 +150,7 @@ function Solution() {
       <div className="SectionContent">
         Expensive textbooks are daunting, but we have a solution. We help students to buy and sell their textbooks, in
         an effort to offset the high costs of college. We were founded in 2017 at Tufts University, but have since
-        spread to campuses accross the US. If you would like to join our team or start a textbook exchange on your 
+        spread to campuses accross the US. If you would like to join our team or start a textbook exchange on your
         campus, please email <i>textbookexchangenetwork@gmail.com.</i>
       </div>
       <div className="row DescriptionRow">

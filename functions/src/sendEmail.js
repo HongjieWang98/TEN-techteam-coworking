@@ -1,12 +1,18 @@
-import { onRequest } from 'firebase-functions/v2/https';
+import { onCall } from 'firebase-functions/v2/https';
 import {createTransport} from 'nodemailer';
-import { respondWithErrorMessage, validateEmail } from './utils.js';
+import { validateEmail } from './utils.js';
 import { config } from 'dotenv';
 config();
 
 const SENDING_EMAIL_ADDRESS = "textbookexchangenetwork@gmail.com"
+const devCorsConfig = [/localhost/, /textbookexchangenetwork\.com$/];
+// we should eventually utilize different env vars when deploying to handle different env files
+// https://firebase.google.com/docs/functions/config-env?gen=2nd#deploying_multiple_sets_of_environment_variables
+// const prodCorsConfig = [/textbookexchangenetwork\.com$/];
+// const cors = process.env.FIREBASE_ENV === 'production' ? prodCorsConfig : devCorsConfig;
 
-export const sendEmail = onRequest(async (req, res) => {
+// eventually we will want to use onCall instead of onRequest to authorize the user
+export const sendEmail = onCall({ cors: devCorsConfig }, async (req) => {
   let transporter
   try {
     transporter = createTransport({
@@ -17,10 +23,13 @@ export const sendEmail = onRequest(async (req, res) => {
       },
     });
   } catch (e) {
-    return respondWithErrorMessage(res, "Could not setup email transport");
+    return {
+      result: 'error',
+      message: "Could not setup email transport"
+    }
   }
 
-  const emailData = req.body;
+  const emailData = req.data;
   const { emailTo, subject, body, dryRun = true } = emailData;
 
   const mailOptions = {
@@ -31,25 +40,34 @@ export const sendEmail = onRequest(async (req, res) => {
   };
 
   if (!validateEmail(emailTo)) {
-    return respondWithErrorMessage(res, "emailTo is not a valid email");
+    return {
+      result: 'error',
+      message: "emailTo is not a valid email"
+    }
   }
 
   if (!dryRun) {
     try {
       transporter.sendMail(mailOptions, (error, _info) => {
         if (error) {
-          respondWithErrorMessage(res, `Could not send email: ${error.message}`);
+          return {
+            result: 'error',
+            message: `Could not send email: ${error.message}`
+          }
         } else {
-          res.json({ result: "Email sent successfully" });
+          return { result: 'success', message: "Email sent successfully" };
         }
       });
     } catch (e) {
-      return respondWithErrorMessage(res, `Error while trying to send email: ${e.message}`);
+      return {
+        result: 'error',
+        message: `Error while trying to send email: ${e.message}`
+      }
     }
   } else {
-    return res.json({
-      result:
-        "Data passed validation. Email not sent as dryRun was enabled. Set 'dryRun: false' if you want to send email."
-    });
+    return {
+      result: 'success',
+      message: "Data passed validation. Email not sent as dryRun was enabled. Set 'dryRun: false' if you want to send email."
+    };
   }
 });
