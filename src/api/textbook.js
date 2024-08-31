@@ -106,7 +106,6 @@ export async function reserveTextbooks(textbooks, userId) {
     })
   );
 
-  console.log(reservedStatus);
   const successfulTextbooks = reservedStatus.filter((textbook) => textbook.reserved);
   if (successfulTextbooks.length > 0) {
     await Promise.all([
