@@ -2,6 +2,7 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 import { listingConfirmationTemplate } from './emailTemplates/listingConfirmation';
 import { reservationConfirmationForReserverTemplate, reservationConfirmationForSellerTemplate } from './emailTemplates/reservationConfirmation';
 import { getPreferredEmailContactInfoByUser, getPreferredEmailContactInfoByUserId, getUserById } from './user';
+import { getOrganizationById } from './organization';
 
 async function sendEmail(emailTo, subject, body) {
   const dryRun = process.env.NODE_ENV === 'development';
@@ -32,22 +33,34 @@ export async function sendListingConfirmation(userId, textbook) {
 }
 
 export async function sendReservationConfirmationToReserver(userId, textbooks) {
-  const listerEmail = await getPreferredEmailContactInfoByUserId(userId);
+  if (textbooks.length === 0) {
+    return;
+  }
+
+  const [listerEmail, org] = await Promise.all([
+    getPreferredEmailContactInfoByUserId(userId),
+    getOrganizationById(textbooks[0].organization_id)
+  ]);
+
   await sendEmail(
     listerEmail,
     "Your have submitted a request for a textbook!",
-    reservationConfirmationForReserverTemplate(textbooks, null)
+    reservationConfirmationForReserverTemplate(textbooks, org)
   );
 }
 
 export async function sendReservationConfirmationToSeller(buyerId, textbooks) {
   Promise.all(textbooks.map(async (textbook) => {
-    const sellerEmail = await getPreferredEmailContactInfoByUserId(textbook.seller_id);
-    const buyer = await getUserById(buyerId);
+    const [sellerEmail, buyer, org] = await Promise.all([
+      getPreferredEmailContactInfoByUserId(textbook.seller_id),
+      getUserById(buyerId),
+      getOrganizationById(textbook.organization_id)
+    ]);
+    
     await sendEmail(
       sellerEmail,
       "Your textbook has been reserved!",
-      reservationConfirmationForSellerTemplate(textbook, buyer, getPreferredEmailContactInfoByUser(buyer), null)
+      reservationConfirmationForSellerTemplate(textbook, buyer, getPreferredEmailContactInfoByUser(buyer), org)
     );
   }));
 }

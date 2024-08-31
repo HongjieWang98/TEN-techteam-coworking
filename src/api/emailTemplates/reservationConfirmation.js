@@ -56,12 +56,14 @@ function convertToAmPm(time) {
 
 function formatSchedule(schedule) {
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  return schedule.map((day, index) => {
+  return schedule.flatMap((day, index) => {
     if (day) {
       const start = convertToAmPm(day.start);
       const end = convertToAmPm(day.end);
-      return `${daysOfWeek[index]}: ${start} - ${end}`;
+      return [`${daysOfWeek[index]}: ${start} - ${end}`];
     }
+
+    return [];
   }).join('\n');
 }
 
