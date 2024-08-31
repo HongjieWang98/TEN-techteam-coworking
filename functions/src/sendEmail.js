@@ -4,7 +4,8 @@ import { validateEmail } from './utils.js';
 import { config } from 'dotenv';
 config();
 
-const SENDING_EMAIL_ADDRESS = "textbookexchangenetwork@gmail.com"
+const SENDING_EMAIL_NAME = "TEN";
+const SENDING_EMAIL_ADDRESS = "textbookexchangenetwork@gmail.com";
 const devCorsConfig = [/localhost/, /textbookexchangenetwork\.com$/];
 // we should eventually utilize different env vars when deploying to handle different env files
 // https://firebase.google.com/docs/functions/config-env?gen=2nd#deploying_multiple_sets_of_environment_variables
@@ -33,7 +34,10 @@ export const sendEmail = onCall({ cors: devCorsConfig }, async (req) => {
   const { emailTo, subject, body, dryRun = true } = emailData;
 
   const mailOptions = {
-    from: SENDING_EMAIL_ADDRESS,
+    from: {
+      name: SENDING_EMAIL_NAME,
+      address: SENDING_EMAIL_ADDRESS,
+    },
     to: emailTo,
     subject: subject,
     text: body,
@@ -48,16 +52,20 @@ export const sendEmail = onCall({ cors: devCorsConfig }, async (req) => {
 
   if (!dryRun) {
     try {
+      let sendEmailError = null;
       transporter.sendMail(mailOptions, (error, _info) => {
         if (error) {
-          return {
-            result: 'error',
-            message: `Could not send email: ${error.message}`
-          }
-        } else {
-          return { result: 'success', message: "Email sent successfully" };
+          sendEmailError = error;
         }
       });
+      if (sendEmailError) {
+        return {
+          result: 'error',
+          message: `Could not send email: ${sendEmailError.message}`
+        };
+      } else {
+        return { result: 'success', message: "Email sent successfully" };
+      }
     } catch (e) {
       return {
         result: 'error',
