@@ -75,7 +75,7 @@ export async function listTextbook(textbook, userId) {
     timestamp: currTime
   });
 
-  await sendListingConfirmation(userId, textbook.title, textbook.department, textbook.courseNumber);
+  await sendListingConfirmation(userId, textbook.title, textbook.department, textbook.course_number);
 }
 
 // Takes in an array of textbook, returns a list of true or false (relating to whether or not the textbook was bought)
