@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 import { EventStatus, processTextbook } from './process_textbook';
-import { sendListingConfirmation } from './email';
+import { sendListingConfirmation, sendReservationConfirmationToReserver, sendReservationConfirmationToSeller } from './email';
 
 export async function getTextbookById(id, includeSellerBuyerSubmodel = false) {
   const textbookCollectionRef = collection(db, 'textbooks');
@@ -75,7 +75,7 @@ export async function listTextbook(textbook, userId) {
     timestamp: currTime
   });
 
-  await sendListingConfirmation(userId, textbook.title, textbook.department, textbook.course_number);
+  await sendListingConfirmation(userId, textbook);
 }
 
 // Takes in an array of textbook, returns a list of true or false (relating to whether or not the textbook was bought)
@@ -105,6 +105,16 @@ export async function reserveTextbooks(textbooks, userId) {
       return { ...textbook, reserved: false };
     })
   );
+
+  console.log(reservedStatus);
+  const successfulTextbooks = reservedStatus.filter((textbook) => textbook.reserved);
+  if (successfulTextbooks.length > 0) {
+    await Promise.all([
+      sendReservationConfirmationToReserver(userId, successfulTextbooks),
+      sendReservationConfirmationToSeller(successfulTextbooks)
+    ]);
+  }
+
   // Note that bought status is a list where each element is a textbook object and a bool relating to whether or not the textbook was bought
   return reservedStatus;
 }

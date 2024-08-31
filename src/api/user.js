@@ -1,7 +1,7 @@
 import { collection, query, where, getDocs, getDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 
-const PreferredContactInfoEnum = {
+export const PreferredContactInfoEnum = {
   SCHOOL_EMAIL: 'school_email',
   SECONDARY_EMAIL: 'secondary_email',
   PHONE_NUMBER: 'phone_number'
@@ -87,6 +87,10 @@ export async function getSchoolEmailByUserId(id) {
 export async function getPreferredEmailContactInfoByUserId(id) {
   const user = await getUserById(id);
 
+  getPreferredEmailContactInfoByUser(user)
+}
+
+export async function getPreferredEmailContactInfoByUser(user) {
   switch (user.contact_info.preferred_contact_info) {
     case PreferredContactInfoEnum.SCHOOL_EMAIL:
       return user.contact_info.school_email;

@@ -1,6 +1,7 @@
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { listingConfirmationTemplate } from './emailTemplates/listingConfirmation';
-import { getPreferredEmailContactInfoByUserId } from './user';
+import { reservationConfirmationForReserverTemplate, reservationConfirmationForSellerTemplate } from './emailTemplates/reservationConfirmation';
+import { getPreferredEmailContactInfoByUser, getPreferredEmailContactInfoByUserId, getUserById } from './user';
 
 async function sendEmail(emailTo, subject, body) {
   const dryRun = process.env.NODE_ENV === 'development';
@@ -21,12 +22,32 @@ async function sendEmail(emailTo, subject, body) {
   }
 }
 
-export async function sendListingConfirmation(userId, title, department, courseNumber) {
+export async function sendListingConfirmation(userId, textbook) {
   const listerEmail = await getPreferredEmailContactInfoByUserId(userId);
   await sendEmail(
     listerEmail,
     'You have listed your textbook!',
-    listingConfirmationTemplate(title, department, courseNumber)
+    listingConfirmationTemplate(textbook.title, textbook.department, textbook.course_number)
   );
 }
 
+export async function sendReservationConfirmationToReserver(userId, textbooks) {
+  const listerEmail = await getPreferredEmailContactInfoByUserId(userId);
+  await sendEmail(
+    listerEmail,
+    "Your have submitted a request for a textbook!",
+    reservationConfirmationForReserverTemplate(textbooks, null)
+  );
+}
+
+export async function sendReservationConfirmationToSeller(textbooks) {
+  Promise.all(textbooks.map(async (textbook) => {
+    const sellerEmail = await getPreferredEmailContactInfoByUserId(textbook.seller_id);
+    const buyer = await getUserById(textbook.buyer_id);
+    await sendEmail(
+      sellerEmail,
+      "Your textbook has been reserved!",
+      reservationConfirmationForSellerTemplate(textbook, buyer, getPreferredEmailContactInfoByUser(buyer), null)
+    );
+  }));
+}
