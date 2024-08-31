@@ -87,10 +87,10 @@ export async function getSchoolEmailByUserId(id) {
 export async function getPreferredEmailContactInfoByUserId(id) {
   const user = await getUserById(id);
 
-  getPreferredEmailContactInfoByUser(user)
+  return getPreferredEmailContactInfoByUser(user)
 }
 
-export async function getPreferredEmailContactInfoByUser(user) {
+export function getPreferredEmailContactInfoByUser(user) {
   switch (user.contact_info.preferred_contact_info) {
     case PreferredContactInfoEnum.SCHOOL_EMAIL:
       return user.contact_info.school_email;

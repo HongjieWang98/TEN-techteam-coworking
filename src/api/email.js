@@ -40,10 +40,10 @@ export async function sendReservationConfirmationToReserver(userId, textbooks) {
   );
 }
 
-export async function sendReservationConfirmationToSeller(textbooks) {
+export async function sendReservationConfirmationToSeller(buyerId, textbooks) {
   Promise.all(textbooks.map(async (textbook) => {
     const sellerEmail = await getPreferredEmailContactInfoByUserId(textbook.seller_id);
-    const buyer = await getUserById(textbook.buyer_id);
+    const buyer = await getUserById(buyerId);
     await sendEmail(
       sellerEmail,
       "Your textbook has been reserved!",

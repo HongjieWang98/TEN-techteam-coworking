@@ -8,9 +8,9 @@ export function reservationConfirmationForReserverTemplate(textbooks, organizati
 
 You have submitted a request to reserve the following textbooks:
 
-${textbooks.map((textbook) => {
-  return "\tTitle: " + textbook.title + "\n" + "Department: " + textbook.department + "\n" + "Course Number: " + textbook.course_number + "\n" + "Price: " + textbook.price + "\n";
-})};
+${(textbooks.map((textbook) => {
+  return `\tTitle: ${textbook.title}, Course: ${textbook.courseAndDpmt}, Price: ${textbook.price}`;
+})).join('\n')};
 
 We have notified the relevant sellers! If they accept you, we will share your contact information with them to set up an exchange. If they deny you, please find a new textbook to reserve! If the seller does not respond within 1 week, the reservation will be canceled and you will be able to request to reserve a new textbook.
 

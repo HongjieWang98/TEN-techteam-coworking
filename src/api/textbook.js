@@ -111,7 +111,7 @@ export async function reserveTextbooks(textbooks, userId) {
   if (successfulTextbooks.length > 0) {
     await Promise.all([
       sendReservationConfirmationToReserver(userId, successfulTextbooks),
-      sendReservationConfirmationToSeller(successfulTextbooks)
+      sendReservationConfirmationToSeller(userId, successfulTextbooks) // userId is the buyerId, seller id is derived by textbook
     ]);
   }
 
