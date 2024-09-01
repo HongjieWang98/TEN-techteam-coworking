@@ -5,7 +5,7 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 import logoimage from '../../../images/logo2.png';
 import { useNavigate } from 'react-router-dom';
 import SignIn from '../../../components/Login/SignIn';
-import { getOrganizations } from '../../../api/organization';
+import { getVirtualOrganizations } from '../../../api/organization';
 
 function LoginView(props) {
   const { school } = props; // destructuring prop or else would get linter error
@@ -54,8 +54,8 @@ function SchoolNavPage() {
   const [selectedSchool, setSelectedSchool] = useState(null);
 
   async function fetchData() {
-    const organizations = await getOrganizations();
-    setAvailableSchools(organizations);
+    const virtualOrganizations = await getVirtualOrganizations();
+    setAvailableSchools(virtualOrganizations);
   }
   useEffect(() => {
     fetchData();

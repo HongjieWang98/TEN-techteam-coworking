@@ -18,6 +18,13 @@ export async function getOrganizations() {
   );
 }
 
+export async function getVirtualOrganizations() {
+  const allOrganizations = await getOrganizations();
+
+  return allOrganizations.filter((organization) => organization.isVirtual);
+
+}
+
 export async function getOrganizationById(id) {
   const organizationCollectionRef = collection(db, 'organizations');
   const organizationDocRef = doc(organizationCollectionRef, id);
@@ -25,7 +32,6 @@ export async function getOrganizationById(id) {
   if (!organization.exists()) {
     throw new Error('Organization not found');
   }
-
 
   return {
     id: organization.id,
