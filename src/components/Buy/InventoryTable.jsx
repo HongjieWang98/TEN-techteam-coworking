@@ -38,7 +38,9 @@ function InventoryTable({ buyFunctionality = false, tableData, setTableData, han
       isbn: bookData.isbn,
       price: `$${bookData.price}`,
       condition: bookData.condition,
-      paymentMethods: maybeSellerPaymentMethods
+      paymentMethods: maybeSellerPaymentMethods,
+      seller_id: bookData.seller_id,
+      organization_id: bookData.organization_id
     };
     // Let a column have a button if we want our table to have add to cart functionality
     if (buyFunctionality) {

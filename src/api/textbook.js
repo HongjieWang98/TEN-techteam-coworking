@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 import { EventStatus, processTextbook } from './process_textbook';
+import { sendListingConfirmation, sendReservationConfirmationToReserver, sendReservationConfirmationToSeller } from './email';
 
 export async function getTextbookById(id, includeSellerBuyerSubmodel = false) {
   const textbookCollectionRef = collection(db, 'textbooks');
@@ -52,10 +53,12 @@ export async function getTextbooksByOrganizationId(organizationId, includeSeller
   );
 }
 
-// we should handle any race conditions that comes with textbook events
+// TODO we should handle any race conditions that comes with textbook events
 // eg listing removal and reservation cancelled at the same time
 
 export async function listTextbook(textbook, userId) {
+  // TODO we should rollback if the email fails to send
+  // TODO we should validte the textbook once here before listing
   const currTime = serverTimestamp();
   const docRef = await addDoc(collection(db, 'textbooks'), {
     ...textbook,
@@ -71,6 +74,8 @@ export async function listTextbook(textbook, userId) {
     user_id: userId,
     timestamp: currTime
   });
+
+  await sendListingConfirmation(userId, textbook);
 }
 
 // Takes in an array of textbook, returns a list of true or false (relating to whether or not the textbook was bought)
@@ -100,6 +105,16 @@ export async function reserveTextbooks(textbooks, userId) {
       return { ...textbook, reserved: false };
     })
   );
+
+  console.log(reservedStatus);
+  const successfulTextbooks = reservedStatus.filter((textbook) => textbook.reserved);
+  if (successfulTextbooks.length > 0) {
+    await Promise.all([
+      sendReservationConfirmationToReserver(userId, successfulTextbooks),
+      sendReservationConfirmationToSeller(userId, successfulTextbooks) // userId is the buyerId, seller id is derived by textbook
+    ]);
+  }
+
   // Note that bought status is a list where each element is a textbook object and a bool relating to whether or not the textbook was bought
   return reservedStatus;
 }
