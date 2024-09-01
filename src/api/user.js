@@ -1,6 +1,12 @@
 import { collection, query, where, getDocs, getDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 
+export const PreferredContactInfoEnum = {
+  SCHOOL_EMAIL: 'school_email',
+  SECONDARY_EMAIL: 'secondary_email',
+  PHONE_NUMBER: 'phone_number'
+}
+
 export async function checkDuplicateUserBySchoolEmail(schoolEmail) {
   const userRef = collection(db, 'users');
   const q = query(userRef, where('schoolEmail', '==', schoolEmail));
@@ -17,8 +23,6 @@ export async function checkDuplicateUserBySchoolEmail(schoolEmail) {
     throw new Error('An account with this email already exists.');
   }
 }
-
-
 
 export async function validateUser(userAccount) {
   // Check if the user already exists
@@ -76,4 +80,27 @@ export async function getUserById(id) {
 export async function getSchoolEmailByUserId(id) {
   const user = await getUserById(id);
   return user.contact_info.school_email;
+}
+
+// This function returns the preferred email contact info for a user
+// If the user has phone number as their preferred contact info, we default to school email
+export async function getPreferredEmailContactInfoByUserId(id) {
+  const user = await getUserById(id);
+
+  return getPreferredEmailContactInfoByUser(user)
+}
+
+export function getPreferredEmailContactInfoByUser(user) {
+  switch (user.contact_info.preferred_contact_info) {
+    case PreferredContactInfoEnum.SCHOOL_EMAIL:
+      return user.contact_info.school_email;
+    case PreferredContactInfoEnum.SECONDARY_EMAIL:
+      return user.contact_info.secondary_email;
+    case PreferredContactInfoEnum.PHONE_NUMBER:
+      // we do not have sms capabilities yet
+      return user.contact_info.school_email;
+    default:
+      // if something is messed up with our data, just default to school email
+      return user.contact_info.school_email;
+  }
 }
