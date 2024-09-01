@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 import { EventStatus, processTextbook } from './process_textbook';
-import { sendListingConfirmation, sendReservationConfirmationToReserver, sendReservationConfirmationToSeller } from './email';
+import { sendBuyerCanceledReservationEmail, sendListingConfirmation, sendReservationConfirmationToReserver, sendReservationConfirmationToSeller, sendSellerAcceptedReservationEmail, sendSellerDeniedReservationEmail } from './email';
 
 export async function getTextbookById(id, includeSellerBuyerSubmodel = false) {
   const textbookCollectionRef = collection(db, 'textbooks');
@@ -106,7 +106,6 @@ export async function reserveTextbooks(textbooks, userId) {
     })
   );
 
-  console.log(reservedStatus);
   const successfulTextbooks = reservedStatus.filter((textbook) => textbook.reserved);
   if (successfulTextbooks.length > 0) {
     await Promise.all([
@@ -125,6 +124,7 @@ export async function acceptBuyer(textbook) {
   if (updatedTextbook.status !== EventStatus.RESERVED) {
     throw new Error('Textbook does not have appropriate status for action');
   }
+
   const subcollectionRef = collection(db, `textbooks/${textbook.id}/textbook_events`);
   const currTime = serverTimestamp();
   await updateDoc(doc(db, 'textbooks', textbook.id), {
@@ -135,6 +135,8 @@ export async function acceptBuyer(textbook) {
     user_id: textbook.seller_id,
     timestamp: currTime
   });
+
+  await sendSellerAcceptedReservationEmail(textbook)  
 }
 
 // Deny the reservation made by a buyer (have to null the buyer field)
@@ -154,6 +156,8 @@ export async function denyBuyer(textbook) {
     user_id: textbook.seller_id,
     timestamp: currTime
   });
+
+  await sendSellerDeniedReservationEmail(textbook)
 }
 
 // Remove the listing from the inventory (nullify the buyer_id slot if applicable)
@@ -173,6 +177,13 @@ export async function listingRemove(textbook) {
     user_id: textbook.seller_id,
     timestamp: currTime
   });
+  
+  // since we are grabbing the textbook again, the buyer id will only exist if the textbook has an ongoing reservation
+  if (updatedTextbook.buyer_id) {
+    await sendSellerDeniedReservationEmail(textbook)
+  }
+
+  await sendListingConfirmation(textbook.seller_id, textbook);
 }
 
 // Cancel the reservation
@@ -192,6 +203,8 @@ export async function sellerReservationCancel(textbook) {
     user_id: textbook.seller_id,
     timestamp: currTime
   });
+
+  await sendSellerDeniedReservationEmail(textbook)
 }
 
 // Seller confirms the reservation
@@ -230,6 +243,8 @@ export async function buyerReservationRequestCancel(textbook) {
     user_id: formerBuyer,
     timestamp: currTime
   });
+
+  await sendBuyerCanceledReservationEmail(textbook)
 }
 
 // Cancel the reservation
@@ -250,6 +265,8 @@ export async function buyerReservationCancel(textbook) {
     user_id: formerBuyer,
     timestamp: currTime
   });
+
+  await sendBuyerCanceledReservationEmail(textbook)
 }
 
 // Buyer confirms the reservation

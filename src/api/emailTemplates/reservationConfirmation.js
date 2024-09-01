@@ -1,6 +1,7 @@
 // commenting out 
 
 import { PreferredContactInfoEnum } from "../user";
+import { getAcceptedPaymentMethods } from "./utils";
 
 // Remember, exchanges must occur at ${location} between the hours of ${time}.
 export function reservationConfirmationForReserverTemplate(textbooks, organization) {
@@ -37,8 +38,7 @@ ${acceptRejectLink}
 
 If you accept the buyer, please reach out via the following information:
 - Email: ${buyerPreferredContactEmail}
-${buyer.preferred_contact_info === PreferredContactInfoEnum.PHONE_NUMBER && buyer.contact_info.phone_number ? `- Phone Number: ${buyer.contact_info.phone_number}` : ''}
-- Preferred Contact Method: ${buyer.preferred_contact_info}
+${buyer.preferred_contact_info === PreferredContactInfoEnum.PHONE_NUMBER && buyer.contact_info.phone_number ? `- Phone Number: ${buyer.contact_info.phone_number}\n` : '' /* Super jank but it prevents a random newline if no phone number */}- Preferred Contact Method: ${buyer.preferred_contact_info}
 - Payment Methods Accepted: ${getAcceptedPaymentMethods(buyer.payment_method).join(', ')}
 
 If you have any questions, please respond to this email!
@@ -65,10 +65,4 @@ function formatSchedule(schedule) {
 
     return [];
   }).join('\n');
-}
-
-function getAcceptedPaymentMethods(paymentMethods) {
-  return Object.entries(paymentMethods)
-    .filter(([method, isAccepted]) => isAccepted)
-    .map(([method]) => method);
 }
