@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import SignIn from '../components/Login/SignIn';
+import SignIn from '../../components/Login/SignIn';
 
 function LoginPage() {
   return (
