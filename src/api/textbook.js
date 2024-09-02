@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore/lite';
 import { db } from '../firebase/firebase_config';
 import { EventStatus, processTextbook } from './process_textbook';
-import { sendBuyerCanceledReservationEmail, sendListingConfirmation, sendReservationConfirmationToReserver, sendReservationConfirmationToSeller, sendSellerAcceptedReservationEmail, sendSellerDeniedReservationEmail } from './email';
+import { sendBuyerCanceledReservationEmail, sendCompletedTransactionConfirmation, sendCompletedTransactionNotification, sendListingConfirmation, sendReservationConfirmationToReserver, sendReservationConfirmationToSeller, sendSellerAcceptedReservationEmail, sendSellerDeniedReservationEmail } from './email';
 
 export async function getTextbookById(id, includeSellerBuyerSubmodel = false) {
   const textbookCollectionRef = collection(db, 'textbooks');
@@ -223,6 +223,11 @@ export async function sellerConfirmTransaction(textbook) {
     user_id: textbook.seller_id,
     timestamp: currTime
   });
+
+  await Promise.all([
+    sendCompletedTransactionConfirmation(textbook, textbook.seller_id),
+    sendCompletedTransactionNotification(textbook, textbook.buyer_id)
+  ])
 }
 
 // Cancel the reservation
@@ -285,4 +290,9 @@ export async function buyerConfirmTransaction(textbook) {
     user_id: textbook.buyer_id,
     timestamp: currTime
   });
+
+  await Promise.all([
+    sendCompletedTransactionConfirmation(textbook, textbook.buyer_id),
+    sendCompletedTransactionNotification(textbook, textbook.seller_id)
+  ])
 }
