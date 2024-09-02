@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/Account/LoginPage';
 import HomePage from './pages/Overview/Home/Home';
 import HowToPage from './pages/Overview/HowTo/HowTo';
 import SchoolNavPage from './pages/Overview/SchoolNav/SchoolNav';
@@ -20,6 +20,7 @@ import PrivacyPage from './pages/Overview/Privacy/Privacy';
 import TermsPage from './pages/Overview/Terms/Terms';
 import PublicInventoryPage from './pages/Overview/PublicInventory/PublicInventory';
 import { useEffect } from 'react';
+import { HandleAction } from './pages/Account/HandleAction';
 
 function App() {
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/how" element={<HowToPage />} />
             <Route path="/publicinventory" element={<PublicInventoryPage />} />
             <Route path="/signup" element={<CreateAccount />} />
+            <Route path="/handleAction" element={<HandleAction />} />
 
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
