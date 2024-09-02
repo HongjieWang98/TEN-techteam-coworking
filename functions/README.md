@@ -41,6 +41,8 @@ http://127.0.0.1:5001/[project_id]/[region]/[function_name]
 
 ## Usage w/ example curl:
 
+> NOTE, there is a block of code in each onRequest function to only allow internal use. You will have to change the blockUsage boolean to false when locally running these functions
+
 #### `addNewOrg`
 
 ```bash

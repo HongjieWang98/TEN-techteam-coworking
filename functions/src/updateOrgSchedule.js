@@ -1,11 +1,18 @@
-import { onRequest } from 'firebase-functions/v2/https';
+import { HttpsError, onRequest } from 'firebase-functions/v2/https';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import { respondWithErrorMessage } from './utils.js';
+import { militaryTimePattern, respondWithErrorMessage } from './utils.js';
 
+const devCorsConfig = [/localhost/, /textbookexchangenetwork\.com$/];
 
-const militaryTimePattern = /^([01]\d|2[0-3]):([0-5]\d)|24:00$/;
-
-export const updateOrgSchedule = onRequest(async (req, res) => {
+export const updateOrgSchedule = onRequest({ cors: devCorsConfig }, async (req, res) => {
+  // to prevent anyone from invoking our function
+  // TODO: ideally we convert this to an onCall function and only allow authenticated users to invoke this
+  const blockUsage = true;
+  if (blockUsage) {
+    throw new HttpsError(
+      'For interal use only'
+    )
+  }
   const orgData = req.body;
   console.log('Received request to update org: ' + JSON.stringify(orgData));
 
