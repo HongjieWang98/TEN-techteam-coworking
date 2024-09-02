@@ -28,7 +28,7 @@ export default function AccountCreation() {
   const navigate = useNavigate();
 
   async function fetchData() {
-    const organizations = await getOrganizations();
+    const organizations = (await getOrganizations()).filter((org) => org.isVirtual);
     setAvailableSchools(organizations);
     setSelectedSchool(organizations[0]);
   }
