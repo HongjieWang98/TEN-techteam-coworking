@@ -1,4 +1,4 @@
-import { onCall } from 'firebase-functions/v2/https';
+import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import {createTransport} from 'nodemailer';
 import { validateEmail } from './utils.js';
 import { config } from 'dotenv';
@@ -14,6 +14,13 @@ const devCorsConfig = [/localhost/, /textbookexchangenetwork\.com$/];
 
 // eventually we will want to use onCall instead of onRequest to authorize the user
 export const sendEmail = onCall({ cors: devCorsConfig }, async (req) => {
+  if (!request.auth?.uid) {
+    throw new HttpsError(
+      'unauthenticated',
+      'The function must be called while authenticated.'
+    )
+  }
+
   let transporter
   try {
     transporter = createTransport({
