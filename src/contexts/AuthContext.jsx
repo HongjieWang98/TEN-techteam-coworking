@@ -28,7 +28,8 @@ export function AuthProvider({ children }) {
       setCurrentUser(user);
       setCurrentAuthUser(authUser);
     } else {
-      alert('Please verify your email before signing in');
+      authUser.sendEmailVerification();
+      alert('Please verify your email before signing in. A new email was sent.');
     }
   }
 
