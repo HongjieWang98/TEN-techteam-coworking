@@ -13,6 +13,10 @@ function ViewListingPage() {
   useEffect(() => {
     const userId = currentUser?.id;
 
+    if (!userId) {
+      alert('Please sign in first to see your listing');
+    }
+
     async function fetchDataAndSetComponent() {
       const listingDetails = await getTextbookById(listingId, true);
       if (!listingDetails) {

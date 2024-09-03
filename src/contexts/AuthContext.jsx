@@ -18,16 +18,18 @@ export function AuthProvider({ children }) {
     // TODO handle if postUser fails, we should remove the user from firebase auth
     // save user details to our user collection
     await postUser(authUser.uid, createdUserAccount);
-    const user = await getUserById(authUser.uid);
-    setCurrentAuthUser(authUser);
-    setCurrentUser(user);
+    await authUser.sendEmailVerification();
   }
 
   async function signIn(email, password) {
     const authUser = (await auth.signInWithEmailAndPassword(email, password)).user;
-    const user = await getUserById(authUser.uid);
-    setCurrentUser(user);
-    setCurrentAuthUser(authUser);
+    if (authUser.emailVerified) {
+      const user = await getUserById(authUser.uid);
+      setCurrentUser(user);
+      setCurrentAuthUser(authUser);
+    } else {
+      alert('Please verify your email before signing in');
+    }
   }
 
   async function signOut() {
@@ -36,16 +38,39 @@ export function AuthProvider({ children }) {
     setCurrentUser(null);
   }
 
+  async function handleActionCode() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get('mode');
+    const actionCode = urlParams.get('oobCode');
+    // TODO: resetPassword has not been tested
+    if (mode === 'resetPassword') {
+      const email = window.localStorage.getItem('emailForReset');
+      await auth.verifyPasswordResetCode(actionCode);
+      window.localStorage.setItem('resetCode', actionCode);
+      window.localStorage.setItem('emailForReset', email);
+      return true;
+    } else if (mode === 'verifyEmail') {
+      await auth.applyActionCode(actionCode);
+      return true;
+    }
+
+    return false;
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        try {
-          setCurrentUser(await getUserById(user.uid));
-        } catch (e) {
-          // on account signup, the user might not be in the database yet
-          // silently ignore this error until we figure out a better way to handle this
+        if (!user.emailVerified) {
+          await signOut();
+        } else {
+          try {
+            setCurrentUser(await getUserById(user.uid));
+          } catch (e) {
+            // on account signup, the user might not be in the database yet
+            // silently ignore this error until we figure out a better way to handle this
+          }
+          setCurrentAuthUser(user);
         }
-        setCurrentAuthUser(user);
       }
     });
 
@@ -58,7 +83,8 @@ export function AuthProvider({ children }) {
     currentAuthUser,
     signIn,
     signUp,
-    signOut
+    signOut,
+    handleActionCode
   };
 
   return (
