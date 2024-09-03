@@ -5,6 +5,7 @@ import { getPreferredEmailContactInfoByUser, getPreferredEmailContactInfoByUserI
 import { getOrganizationById } from './organization';
 import { buyerCanceledTemplate, sellerAcceptedTemplate, sellerDeniedTemplate } from './emailTemplates/reservationActionEmail';
 import { listingRemovedConfirmationTemplate } from './emailTemplates/listingRemovedConfirmation';
+import { completedTransactionNotificationTemplate, confirmedTransactionTemplate } from './emailTemplates/completedTransaction';
 
 async function sendEmail(emailTo, subject, body) {
   const dryRun = process.env.NODE_ENV === 'development';
@@ -107,5 +108,27 @@ export async function sendRemovedListingConfirmation(textbook) {
     getPreferredEmailContactInfoByUser(seller),
     "Textbook removed",
     listingRemovedConfirmationTemplate(textbook)
+  );
+}
+
+// this email is when the user marks the transaction as complete
+export async function sendCompletedTransactionConfirmation(textbook, userId) {
+  const user = await getUserById(userId);
+
+  await sendEmail(
+    getPreferredEmailContactInfoByUser(user),
+    "Transaction completed",
+    confirmedTransactionTemplate(textbook)
+  );
+}
+
+// this email is when the other party marked the transaction as complete
+export async function sendCompletedTransactionNotification(textbook, userId) {
+  const user = await getUserById(userId);
+
+  await sendEmail(
+    getPreferredEmailContactInfoByUser(user),
+    "Transaction completed",
+    completedTransactionNotificationTemplate(textbook)
   );
 }
