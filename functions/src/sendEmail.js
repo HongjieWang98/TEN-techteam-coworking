@@ -14,7 +14,7 @@ const devCorsConfig = [/localhost/, /textbookexchangenetwork\.com$/];
 
 // eventually we will want to use onCall instead of onRequest to authorize the user
 export const sendEmail = onCall({ cors: devCorsConfig }, async (req) => {
-  if (!request.auth?.uid) {
+  if (!req.auth?.uid) {
     throw new HttpsError(
       'unauthenticated',
       'The function must be called while authenticated.'
