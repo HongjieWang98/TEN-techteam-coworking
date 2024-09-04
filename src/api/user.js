@@ -48,7 +48,6 @@ export async function validateUser(userAccount) {
   const schoolEmail = userAccount.contact_info.school_email;
   const universityId = userAccount.organization_id;
 
-  await checkDuplicateUserBySchoolEmail(schoolEmail);
   await validateEmailDomain(schoolEmail, universityId);
 
   // TODO Validate the rest of the fields
