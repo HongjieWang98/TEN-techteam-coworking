@@ -4,10 +4,28 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 import logoimage from '../../../images/logo2.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { getOrganizations } from '../../../api/organization';
+import SignIn from '../../../components/Login/SignIn';
+import { Container } from 'react-bootstrap';
+
+
 
 function VirtualInventory(props) {
-  const { school } = props; // destructuring prop or else would get linter error
-  return <>{/* Code for Prod 2 Inventory */}</>;
+  const { school } = props;
+
+  return (
+    <>
+      <div className="SectionSubtitle">{school} is using a virtual textbook exchange!</div>
+      <div className="SectionContent">To view the inventory, please login or create an account below.</div>
+      <div className="SectionWrapper">
+        <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '40vh' }}>
+          <div className="w-100" style={{ maxWidth: '400px' }}>
+            <SignIn />
+          </div>
+        </Container>
+      </div>
+    </>
+  );
+  
 }
 
 function InPersonInventory(props) {
