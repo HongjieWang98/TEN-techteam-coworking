@@ -3,7 +3,7 @@ import './SchoolNav.css';
 import { Container } from 'react-bootstrap';
 import { useAuthContext } from '../../../contexts/AuthContext';
 import logoimage from '../../../images/logo2.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SignIn from '../../../components/Login/SignIn';
 import { getOrganizations } from '../../../api/organization';
 
@@ -32,7 +32,16 @@ function ProdOneDesc(props) {
       <div className="SectionContent">
         {`To buy or sell textbooks, you must go in-person to the ${school} Textbook Exchange. Please reach out to your
           student government to learn more about the open times for ${school}'s in-person textbook exchange. You may browse 
-          the textbooks available in the 'browse' tab above.`}
+          the textbooks available in the 'Inventory' tab above or use the below links.`}
+      </div>
+      <div className="SectionContent">
+        <Link to="https://www.textbookexchangenetwork.com/browse">Go to Inventory</Link>
+      </div>
+      <div className="SectionContent">
+        <Link to="https://www.textbookexchangenetwork.com/presell">Go to Pre-sell</Link>
+      </div>
+      <div className="SectionContent">
+        <Link to="https://www.textbookexchangenetwork.com/listings">View your listings</Link>
       </div>
     </>
   );
