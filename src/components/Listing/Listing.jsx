@@ -86,18 +86,18 @@ function Listing({ listingData }) {
           </Row>
           <Row className="listing-row">
             <Col md={6}>
-              <DisplayInput name="buyerEmail" type="text" value={buyer?.email ?? 'N/A'} label="Buyer:" />
+              <DisplayInput name="buyerEmail" type="text" value={buyer?.contact_info.school_email ?? 'N/A'} label="Buyer:" />
             </Col>
             <Col md={6}>
-              <DisplayInput name="sellerEmail" type="text" value={seller.email} label="Seller:" />
+              <DisplayInput name="sellerEmail" type="text" value={seller.contact_info.school_email} label="Seller:" />
             </Col>
           </Row>
           <Row className="listing-row">
             <Col md={6}>
-              <DisplayInput name="buyerContact" type="text" value={buyer?.preferredContactMethod ?? 'N/A'} label="Buyer’s Preferred Contact Method:" />
+              <DisplayInput name="buyerContact" type="text" value={buyer?.preferred_contact_info ?? 'N/A'} label="Buyer’s Preferred Contact Method:" />
             </Col>
             <Col md={6}>
-              <DisplayInput name="sellerContact" type="text" value={seller.preferredContactMethod} label="Seller’s Preferred Contact Method:" />
+              <DisplayInput name="sellerContact" type="text" value={seller.preferred_contact_info} label="Seller’s Preferred Contact Method:" />
             </Col>
           </Row>
           <Row className="listing-row">
@@ -105,14 +105,14 @@ function Listing({ listingData }) {
               <DisplayCheckboxGroup
                 label="Buyer Accepted Payment Methods:"
                 options={userPaymentMethods}
-                checkedOptions={buyer?.acceptedPaymentMethods ?? []}
+                checkedOptions={buyer?.payment_method ?? []}
               />
             </Col>
             <Col md={6}>
               <DisplayCheckboxGroup
                 label="Seller Accepted Payment Methods:"
                 options={userPaymentMethods}
-                checkedOptions={seller.acceptedPaymentMethods ?? []}
+                checkedOptions={seller.payment_method ?? []}
               />
             </Col>
           </Row>
