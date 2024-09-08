@@ -73,6 +73,7 @@ export const addNewOrg = onRequest({ cors: devCorsConfig }, async (req, res) => 
         .collection('organizations')
         .add({
           ...newOrgData,
+          domain: domains.reduce((acc, domain) => ({ ...acc, [domain]: true }), {}),
           created_at: Timestamp.now(),
           updated_at: Timestamp.now(),
           deleted_at: null
