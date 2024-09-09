@@ -174,9 +174,14 @@ function Profile() {
     <>
       <Container fluid className="profile-container">
         <div className="centered-text">
-          Remember, for your university, exchanges must occur at{' '}
-          {organizationData?.exchange_location || '[location not available]'} between the hours of{' '}
-          {scheduleString || '[time not available]'}
+          <p>
+            Remember, for your university, exchanges must occur at{' '}
+            {organizationData?.exchange_location || '[location not available]'} between the hours of{' '}
+            {scheduleString || '[time not available]'}
+          </p>
+          <p>
+            Please provide feedback to us: <Link to="https://www.textbookexchangenetwork.com/browse">Click here</Link>
+          </p>
         </div>
 
         <Row>
